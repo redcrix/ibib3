@@ -1,0 +1,12 @@
+<ion-list show-delete="headerbarbuttons.ShowDelete">
+    <!-- For empty tasks list -->
+    <div ng-show="filteredTasks.length==0" class="card">
+        <div class="item item-text-wrap text-center">
+            No tasks listed
+        </div>
+    </div>
+
+    <span ng-repeat="task in ((tasks | filter:byFilterClass()) | orderBy:getSortingClass()) as filteredTasks">
+            <tasksitem task="task" ifeven="$even"></tasksitem>
+    </span>
+</ion-list>

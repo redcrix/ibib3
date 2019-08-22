@@ -1,0 +1,19 @@
+<ion-item ng-controller="PurchaseOptimizerCtrl" ng-class="ifeven? 'app-back-ground':''" class="no-padding">
+    <div  ng-class="{'app-back-ground': ifeven }"  class="row row-center" >
+        <div  class="button button-small button-outline col col-5"
+            ng-class="item.to_order? 'button-balanced':'button-assertive'" ng-click="orderIngredient();">
+            <i ng-class="item.to_order? 'ion-checkmark': 'ion-close'"></i>
+        </div>
+        <div  class="col col-20 x-smaller item-text-wrap" > {{item.name | titleCase }}
+        </div>
+        
+        <div class="col col-20 no-padding">
+            <!-- <div align="center" class="smaller"> ${{item.current_price}}</div>
+            <div align="center" class="xx-smaller item-text-wrap">(Current Cost)</div> -->
+        </div>
+        <div class="col col-60 no-padding">
+            <supplierlist toorder="item.to_order" ng-disabled="item.to_order" suppliers="item.suppliers"></supplierlist>
+        </div>
+    </div>
+</ion-item>
+

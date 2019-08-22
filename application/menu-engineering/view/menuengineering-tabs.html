@@ -1,0 +1,32 @@
+<ion-view view-title="Menu Engineering" ng-controller="MenuEngineeringTabsCtrl" ng-init="onMenuEngineeringTabsInitHandler()" >
+    
+
+    <!--<tasksfloatbutton></tasksfloatbutton>-->
+
+    <ion-floating-menu id="my-float" menu-color="#33cd5f" menu-open-color="#84e19f" has-footer="true" >
+      <ion-floating-item icon="ion-funnel" icon-color="#fff" button-color="#33cd5f" text="Group By" click="showGroupBy()"></ion-floating-item>
+      <ion-floating-item icon="ion-android-funnel" icon-color="#fff" button-color="#33cd5f" text="Sort By" click="showSortBy()"></ion-floating-item>
+      <ion-floating-item icon="ion-clipboard" ui-sref="app.dashboard.tasks()" text="Go To Tasks" icon-color="#fff" button-color="#33cd5f"></ion-floating-item>
+      <ion-floating-item is-centered="true" icon-color="white" icon="ion-android-mail" text="Export Data" button-color="#33cd5f" click="openPrompt()" ng-hide="ExportData">
+       </ion-floating-item>
+   </ion-floating-menu>
+
+    <menuengineeringmenuselector></menuengineeringmenuselector>
+
+    <ion-tabs  class="tabs-icon-top tabs-color-active-balanced menu-engg-tab">
+        <!-- Food Tab -->
+        <div>
+            <ion-tab class="app-back-ground" title="Food" icon="ion-android-restaurant" ng-click="FoodtabClickHandler()" hidden="{{ hideFoodTab }}">
+                <ion-nav-view name="tab-Food2"></ion-nav-view>
+
+            </ion-tab>
+        </div>
+        <!-- Liquor Tab -->
+        <div>
+            <ion-tab class="app-back-ground" title="Liquor" icon="ion-android-bar" ng-click="LiquortabClickHandler()" hidden="{{ hideLiquorTab }}">
+                <ion-nav-view name="tab-Liquor2"></ion-nav-view>
+
+            </ion-tab>
+        </div>
+    </ion-tabs>
+</ion-view>

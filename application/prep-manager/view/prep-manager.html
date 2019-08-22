@@ -1,0 +1,7 @@
+<ion-view title="Prep Manager"  align-title="center" ng-init="onPrepMenuItemInit()">
+
+<busyspinner spinnerhide="gotList" ></busyspinner>
+<!-- <div class="text-center" ng-if="!myIngList.length && gotList" style="margin-top: 30%;"> <h3>No Ingredients available.</h3></div> -->
+<div ng-show ="gotList">
+<ingredient-prep-content items="myIngList" type="prep" ng-if="myIngList.length >= 0"></ingredient-prep-content></div>
+</ion-view>

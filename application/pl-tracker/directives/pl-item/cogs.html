@@ -1,0 +1,27 @@
+<ion-modal-view class="cogs-add-height">
+  <ion-header-bar class="bar error-reporting-modal">
+    <h1 class="title" style="right: none;text-transform: capitalize;">{{name}} Breakout</h1>
+    <button type="button" class="button button-bal " ng-click="closeCategoryModal()">Cancel</button> 
+  </ion-header-bar>
+  <busyspinner spinnerhide="spinnerHide"></busyspinner>
+  <ion-content style="overflow: auto;" ng-if="spinnerHide" >
+    <ion-item style="padding-top: 50px;">
+          <div class = "row">
+            <div class ="col-50" style="text-align:left ;">Starting Inventory</div>
+            <div class="col-50" style="text-align:right;">${{cogsData.Starting_inventory}}</div>
+          </div>
+          <div class ="row" ng-repeat="value in cogsData.Invoices">
+          <div class ="col-20" style="text-align:left;padding-top: 5px;text-transform: capitalize;">+ invoice</div>
+          <div class="col-50" style="text-align: center;padding-top: 5px;padding-left: 15px;font-size:12px;font-weight: 500;white-space: pre-line">{{value.invoiceId}}</div>
+          <div class="col-30" style="text-align:right;padding-top: 5px;">${{value.statValue}}</div>
+        </div>
+        <div class="row "><div class="col-50" style="text-align:left;">- Ending Inventory</div>
+        <div class="col-50" style="text-align:right;">${{cogsData.Ending_inventory}}</div></div></br>
+        <div class="row">
+        <div class="col-50" style="text-align:left;text-transform: capitalize;"> {{name}} :</div>
+        <div class="col-50" style="text-align:right;">${{cogsData.cost}}</div>
+      </div>
+      </ion-item>
+        <div class="row" style="margin-bottom: 20px;"></div>      
+  </ion-content>
+</ion-modal-view>

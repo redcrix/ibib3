@@ -1,0 +1,82 @@
+<ion-view title="{{pageTitle}}" ng-init="init()" ng-controller="UserDetailsCtrl">
+    <backbuttonbar navbartitle="navBarTitle"></backbuttonbar>
+    <busyspinner spinnerhide="spinnerHide"></busyspinner>
+    <span ng-if="spinnerHide">
+    <div class="bar bar-subheader app-theme-color-level2 no-vertical-padding no-horizontal-padding">
+        <div class="app-theme-color-level2">
+            <div class="row">
+                <div class="col col-center no-vertical-padding">
+                    <span ng-repeat="message in saveStatus track by $index" class="{{ message.level }}"> {{ message.text }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <ion-content class="has-header has-subheader has-small-footer">
+        <span ng-repeat="userDetail in userDetails">
+        <div class="row no-vertical-padding">
+            <div class="col col-33 col-center">{{ ::userDetail.label }} </div>
+            <div class="col col-5 col-center" >:</div>
+            <div class="col col-center" >
+                <input class="settings-input" ng-if="userDetail.type=='text'" type="text" ng-disabled="!userDetail.editable" ng-model="user[userDetail.key]" ng-model-options="{ debounce: 100 }">
+                <input class="settings-input" ng-if="userDetail.type=='number'" type="number" ng-disabled="!userDetail.editable" ng-model="user[userDetail.key]" ng-model-options="{ debounce: 100 }">
+                <input class="settings-input" ng-if="userDetail.type=='password'" type="password" ng-disabled="!userDetail.editable" ng-model="user[userDetail.key]" ng-model-options="{ debounce: 100 }">
+                 <select class="settings-select" ng-if="userDetail.type=='drop-down'"
+                    ng-model="user[userDetail.key]"
+                    ng-options="option.value as option.display for option in dropDownOptions[userDetail.dropDownOptions]"
+                    ng-model-options="{ debounce: 100 }">
+                </select>
+            </div>
+        </div>
+       </span>
+        <ion-list>
+            <span ng-repeat="store in user.stores" ng-show="!store.deleted">
+            <ion-item class="no-padding" style="border-color:white;">
+            <div class="settings-store-card no-vertical-padding">
+                <div class="item item-divider app-theme-color-level2">
+                    <div class="row" style="margin-left:-5px;">
+                        <div class="col col-33 col-center">Store</div>
+                        <div class="col col-5 col-center">:</div>
+                        <div class="col col-center">
+                            <select class="settings-select-header"
+                                    ng-model="store[storeDetails[0].key]"
+                                    ng-options="option.value as option.display for option in dropDownOptions[storeDetails[0].dropDownOptions]"
+                                    ng-model-options="{ debounce: 100 }">
+                            </select>
+                        </div>
+                    </div>
+
+                </div>
+                <span ng-repeat="storeDetail in storeDetails | filter: { key: '!business_store_id' }">
+                    <div class="no-vertical-padding">
+                        <div class="row no-vertical-padding">
+                            <div class="col col-33 col-center smaller">{{ ::storeDetail.label }}</div>
+                            <div class="col col-5 col-center">:</div>
+                            <div class="col col-center" >
+                                <input class="settings-input" ng-if="storeDetail.type=='text'" type="text" ng-disabled="!storeDetail.editable" ng-model="store[storeDetail.key]" ng-model-options="{ debounce: 100 }">
+                                <input class="settings-input" ng-if="storeDetail.type=='number'" type="number" ng-disabled="!storeDetail.editable" ng-model="store[storeDetail.key]" ng-model-options="{ debounce: 100 }">
+                                <input class="settings-input" ng-if="storeDetail.type=='password'" type="password" ng-disabled="!storeDetail.editable" ng-model="store[storeDetail.key]" ng-model-options="{ debounce: 100 }">
+                                <select class="settings-select" ng-if="storeDetail.type=='drop-down'"
+                                    ng-model="store[storeDetail.key]"
+                                    ng-options="option.value as option.display for option in dropDownOptions[storeDetail.dropDownOptions]"
+                                    ng-model-options="{ debounce: 100 }">
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </span>
+            </div>
+            <ion-option-button class="button-assertive icon ion-trash-b mediumsize" ng-click="deleteStore(store)"> &nbspDelete Store
+            </ion-option-button>
+            </ion-item>
+            </span>
+        </ion-list>
+    </ion-content>
+    <button title="Add Store" class="button button-bal icon ion-android-add float-button button-fab-bottom-right" ng-click="addStoreClick()" fab>
+    </button>
+    <div class="bar bar-footer">
+        <button class="full-width-button app-theme-color app-theme-text" ng-click="saveClick()">
+            Save
+        </button>
+    </div>
+    </span>
+</ion-view>

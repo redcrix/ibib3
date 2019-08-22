@@ -1,0 +1,173 @@
+<ion-view title="{{pageTitle}}" align-title="center" ng-init="init()">
+    <backbuttonbar navbartitle="navBarTitle"></backbuttonbar>
+
+    <div class="spinner" ng-show="spinnerShow">
+        <ion-spinner icon="lines" class="spinner-calm"></ion-spinner>
+    </div>
+
+    <ion-content class="padding" ng-hide="spinnerShow" style="top:40px">
+
+        <form name="subsciption" novalidate="" ng-submit="createToken(subsciption)" >
+
+          <div ng-show="showCheckout">
+            <div class="center " ng-show="ResponseData.token || ResponseData.error">
+                <p ng-show="ResponseData.error">
+                    <strong></strong> <span class='error'>{{ResponseData.error}}</span>
+                </p>
+            </div>
+
+            <label class="item item-input" ng-class="{ 'has-error' : (subsciption.card.$error && subsciption.$submitted) || ResponseData.param == 'number', 'valid' : subsciption.card.$valid  && subsciption.card.$dirty && ResponseData.param != 'number' }">
+              <span class="input-label">Number : </span>
+              <input type="text" size="20" ng-model="payment.number" name="card"  placeholder="4242 4242 4242 4242" ng-change="checkType(payment.number)" required />
+              <img ng-if="cardType.cardImage" class="CardBrandIcon-inner CardBrandIcon-inner--front" ng-src="{{cardType.cardImage || '//:0' }}">
+
+              <!-- https://js.stripe.com/v3/fingerprinted/img/visa-174eee4ab72f6c7a05b8c159068d6eee.svg visa
+              https://js.stripe.com/v3/fingerprinted/img/amex-66abfdd8486f76f3ef25dd820f151918.svg amex
+              https://js.stripe.com/v3/fingerprinted/img/mastercard-cadc10ebe1a9e5868ded0d44fec013b2.svg master-card
+              https://js.stripe.com/v3/fingerprinted/img/discover-b2ccd4b9b0252166667a47c270c78dca.svg   discover
+              https://js.stripe.com/v3/fingerprinted/img/diners-1abf31f63965536a8a12d34646d98a10.svg diners Club
+              https://js.stripe.com/v3/fingerprinted/img/fingerprinted/img/jcb-576d422a7dfcef38453efabb0b9755f7.svg JCB -->
+            </label>
+
+            <div class="form-errors" ng-show="subsciption.card.$error && subsciption.$submitted" ng-messages="subsciption.card.$error">
+                <div class="form-error" ng-message="required">Card number is required.</div>
+            </div>
+
+
+            <!-- <label class="item item-input" ng-class="{ 'has-error' : (subsciption.exp_month.$error  && subsciption.$submitted) ||  ResponseData.param == 'exp_month', 'valid' : subsciption.exp_month.$valid && subsciption.exp_month.$dirty && esponseData.param != 'exp_month' }">
+              <span class="input-label">Month :</span>
+              <button class="button button-default" style="width: 100%;text-align: left;padding-left: 0px;" modal-select="" ng-model="payment.exp_month" options="monthList" on-close has-search="false"  modal-title="Select year">
+                 {{payment.exp_month || "Expiry Month"}}
+                 <div class="option">
+                   {{option}}
+                 </div>
+              </button>
+            </label> -->
+
+            <label class = "item item-input item-select">
+               <div class = "input-label">
+                  Month :
+               </div>
+               <select ng-model="payment.exp_month" ng-options="item for item in monthList">
+
+                  <option value=""> Select Month </<option>
+
+              </select>
+            </label>
+
+            <div class="form-errors" ng-show="subsciption.exp_month.$error && subsciption.$submitted" ng-messages="subsciption.exp_month.$error">
+                <div class="form-error" ng-message="required">Expiration month is required.</div>
+                <div class="form-error" ng-message="pattern">Expiration month is invalid.</div>
+            </div>
+
+            <!-- <label class="item item-input" ng-class="{ 'has-error' : (subsciption.exp_year.$error  && subsciption.$submitted) || ResponseData.param == 'exp_year', 'valid' : subsciption.exp_year.$valid && subsciption.exp_year.$dirty && ResponseData.param != 'exp_year' }">
+              <span class="input-label">Year :</span>
+              <button class="button button-default" style="width: 100%;text-align: left;padding-left: 0px;" modal-select="" ng-model="payment.exp_year" options="yearsList" on-close has-search="false"  modal-title="Select year">
+                 {{payment.exp_year || "Expiry Year"}}
+                 <div class="option">
+                   {{option}}
+                 </div>
+              </button>
+            </label> -->
+
+
+            <label class = "item item-input item-select">
+               <div class = "input-label">
+                  Year :
+               </div>
+               <select ng-model="payment.exp_year" ng-options="item for item in yearsList">
+
+                 <option value=""> Select Year </<option>
+
+              </select>
+            </label>
+
+            <div class="form-errors" ng-show="subsciption.exp_year.$error && subsciption.$submitted" ng-messages="subsciption.exp_year.$error">
+                <div class="form-error" ng-message="required">Expiration year is required.</div>
+                <div class="form-error" ng-message="pattern">Expiration year is invalid.</div>
+            </div>
+
+            <label class="item item-input">
+              <span class="input-label">CVC :</span>
+              <input type="text" size="4" name="cvc" ng-model="payment.cvc"/ ng-pattern="/^[0-9]{3,4}$/" placeholder="123">
+            </label>
+
+            <div class="form-errors" ng-show="subsciption.cvc.$error && subsciption.$submitted" ng-messages="subsciption.cvc.$error">
+                <div class="form-error" ng-message="pattern">CVC is invalid.</div>
+            </div>
+
+            <div class="terms_checkbox row" style="margin: 15px 0px 0px;">
+              <!-- <input type="checkbox" class="col-5" style="width: 25px;height: 30px;" id="checkbox_terms" name="terms" ng-model="agreement" required/> -->
+              <!-- <label for="checkbox_terms"></label> -->
+              <span class="accept col">By Clicking Subscribe you are accepting the <a ng-click="openAgreement()">Customer Agreement</a></span>
+            </div>
+
+
+
+            <div class="center">
+                <button class="button button-block button-balanced">Subscribe</button>
+            </div>
+
+
+            <label class="item item-input row">
+              <span class="input-label col">Plan Detail:</span>
+              <span class="col">
+                <span style="display:block">Monthly Subscription: ${{subscription_value}} </span>
+                <span style="display:block">Discount: ${{discount_value}}</span>
+                <span>Effective Plan: ${{actual_plan_value}}</span>
+              </span>
+            </label>
+
+        </div>
+
+        <div class="card list" ng-show="!showCheckout">
+             <div class="item item-divider text-center">
+                <div class="padding center ">
+                    <p>
+                        <strong></strong> <span class='success'> Congrats! your subscription is now Active</span>
+                    </p>
+                </div>
+             </div>
+
+
+
+
+            <div class="list">
+               <label class="item item-input">
+                 <span class="input-label">Plan name :</span>
+                 <span class="input-label">{{plan_name}}</span>
+               </label>
+
+               <label class="item item-input">
+                 <span class="input-label">Next billing date :</span>
+                 <span class="input-label">{{next_billing_date}}</span>
+               </label>
+
+               <label class="item item-input" ng-if="endsIn">
+                 <span class="input-label">Trial days :</span>
+                 <span class="input-label">{{endsIn}} </span>
+               </label>
+
+               <label class="item item-input row">
+                 <span class="input-label" style="padding-left:12px">Plan Detail:</span>
+                 <span class="col">
+                   <span style="display:block">Monthly Subscription: ${{subscription_value}} </span>
+                   <span style="display:block">Discount: ${{discount_value}}</span>
+                   <span>Effective Plan: ${{actual_plan_value}}</span>
+                 </span>
+               </label>
+
+            </div>
+        </div>
+
+        </form>
+    </ion-content>
+
+    <ion-footer ng-hide="spinnerShow">
+        <div class="content padding badge-div">
+            <div class="pci-badge"></div>
+            <div class="stripe-icon"></div>
+        </div>
+    </ion-footer>
+
+</ion-view>

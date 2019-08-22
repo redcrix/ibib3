@@ -1,0 +1,60 @@
+<ion-modal-view class="inventory-changeprice-height">
+    <form name="changePrice">
+        <ion-header-bar class="bar error-reporting-modal">
+            <h1 class="title">Change Units</h1>
+            <a class="button" ng-click="closeModalCtrl()">Cancel</a>
+        </ion-header-bar>
+        <ion-content >
+           <busyspinner spinnerhide="spinnerShow" class="changeUits-spinner"></busyspinner>
+            <div class="row no-horizontal-padding" ng-show="dataReceived">
+                <div class="col col-center no-horizontal-padding">
+            <span >
+            <div class="row">
+                <div class="col col-25 col-center">
+                    Ingredient:
+                </div>
+                <div class="col col-75 col-center">
+                    {{ configModifierItem.supplierItemAliasName | titleCase }}
+                </div>
+            </div>
+
+            <div class="row " style="padding-bottom: 10%;">
+                <div class="col col-25 col-center">Units : </div>
+                <div class="col col-75 col-center no-horizontal-padding">
+                    <div class="row no-horizontal-padding">
+                        <div class="col col-75 col-center no-horizontal-padding" >
+                            <select class="unit-select-box"  name="singleSelect" ng-model="selectedUnit" ng-change="unitOptionClick(selectedUnit, measurements_list)" ng-options="unit as unit.measurementId for unit in measurements_list"></select>
+                        </div>
+                        <!-- <div class="col col-10 col-center" ng-if="item_supplier_id != 'S130'">
+                          <button type="button"  class="btn btn-info btn-circle icon ion-plus" ng-class ="icon" ng-style="{'background-color' : buttonColor, 'color': iconColor}" style="background-color: rgb(51, 205, 95); color: rgb(255, 255, 255);" ng-click="addUnit(configModifierItem)"></button>
+                        </div> -->
+
+                    </div>
+                    <div class="row" ng-if="!isItemMapped" style="color: red;">Supplier is not mapped for this Inventory item, please contact support@peprapp.com</div>
+                </div>
+            </div>
+            <div class="row" style="padding-bottom: 50px;">
+        <div class="col col-33 col-center">Unit Price: </div>
+        <div class="col col-67 col-center">
+          <div class="row">
+            <div class="col col-75 col-center">
+              <input sync-focus-with="measurementUnitsFocus" class="inventory-config-input" string-to-number type="number" ng-model="configModifierItem.inventoryMeasurementUnitPriceStage" ng-model-options="{ debounce: 100 }">
+            </div>
+            <div class="col col-25 col-center justbolder">
+              / {{ configModifierItem.measurementNameStage }}
+            </div>
+          </div>
+        </div>
+      </div>
+            </span>
+        </div>
+        </div>
+        </ion-content>
+        <ion-footer-bar  align-title="left" style="background: #33CD5F;" >
+            <button  class="full-width-button app-theme-text" style="border: none;" ng-click="confirmSave()" ng-class="changePriceButtonColor">
+                {{ changePriceButtonText }}
+            </button>
+        </ion-footer-bar>
+
+    </form>
+</ion-modal-view>

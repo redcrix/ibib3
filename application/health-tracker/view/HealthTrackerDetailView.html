@@ -1,0 +1,31 @@
+<ion-view view-title="{{chartTitle}}" ng-init="initializeProfitView();">
+  <ion-nav-bar class="bar bar-header app-theme-color app-theme-text" align-title="left">
+     <ion-nav-back-button ng-show="!navBarTitle.showToggleButton" class="app-theme-text">
+    </ion-nav-back-button>
+      <ion-nav-buttons side="left">
+          <button class="button icon-left ion-navicon button-clear side-menu-toggle" menu-toggle="left" ng-if="navBarTitle.showToggleButton">
+          </button>
+      </ion-nav-buttons>
+      <ion-nav-buttons side="right">
+          <ionic-datepicker input-obj="datepickerObject">
+              <button class="button button-clear button-dark icon-left ion-ios-calendar-outline app-theme-text"> </button>
+          </ionic-datepicker> 
+
+          <!-- /// debug -->
+      </ion-nav-buttons>
+  </ion-nav-bar>
+    <ion-content>
+        <div class="card">
+            <isb-line-chart data="chartData" horizontal-axis-labels="chartDates" show-legend="true" legend-labels="seriesLabels" title="chartTitle" scaleprefix="'$'"></isb-line-chart>
+        </div>
+        <div class="card">
+        	<div class="item item-divider app-theme-color app-theme-text">
+    		    {{chartTitle}} data
+    		 </div>
+            <div class="row" ng-repeat="item in chartItems">
+    		  <div class="col col-50"><b>{{ item.name }}</b></div>
+    		  <div class="col col-50">{{ item.amount }}</div>
+    		</div>
+        </div>
+    </ion-content>
+</ion-view>

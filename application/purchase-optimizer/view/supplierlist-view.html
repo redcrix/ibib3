@@ -1,0 +1,7 @@
+<div class="button-bar" ng-disabled="!toorder">
+    <span ng-repeat="supplier in suppliers track by $index">
+        <div class="button button-small" ng-click="make_current($index)" ng-class="supplier.current ? 'button-positive' : ''">{{supplier.name}}
+            <div class="smaller">{{ supplier.price| currency }}</div>
+        </div>
+    </span>
+</div>

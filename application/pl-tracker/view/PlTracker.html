@@ -1,0 +1,115 @@
+<ion-view view-title="{{periodSelectionTitle}}" ng-init="initializeView();">
+    <ion-nav-buttons side="secondary">
+
+            <!-- <button ng-if="showSearchBtn" class="button button-icon icon ion-ios-search-strong" ng-click="showSearchBar()">
+            </button> -->
+
+
+            <div class="item-input-wrapper show-search-inv" style="background: white;" ng-if="searchItem">
+              <i class="icon ion-android-arrow-back back-inv-config-search" ng-click="closeSearch()"></i>
+              <input type='text' ng-model='data.searchText' class="search-inventory-config" placeholder="Search item name or id" />
+            </div>
+
+    </ion-nav-buttons>
+
+    <ion-header-bar class="bar bar-subheader app-theme-color-level2 no-vertical-padding no-horizontal-padding" ng-if="headerShow">
+        <!-- <div class="column"> -->
+            <div class="row pl-font">
+                <div class="button icon-right ion-arrow-down-b col-25" ng-click="showYear()" style="font-weight:bold;">
+                    {{ yearDetailSelection() }}
+                </div>
+                <div class="button icon-right ion-arrow-down-b col-35" ng-click="showPeriod()" style="font-weight:bold;">
+                    {{ periodDetailSelection() }}
+                </div>
+                <div style="margin-top: 6px;text-align: center;" class="col-40">{{subHeaderText()}} </div>
+                <!-- <div class="button col-30" ng-click="confirmExport()" style="font-weight:bold;"> Export
+                </div> -->
+                <!-- <div excel-export export-data="exportData" file-name="{{fileName}}"></div> -->
+            </div>
+        <!-- </div> -->
+    </ion-header-bar>
+    <ion-floating-menu class="my-float-pnl-tracker" menu-color="#33cd5f" menu-open-color="#84e19f" ng-show="showPlus">
+        <ion-floating-item is-centered="true" icon-color="white" icon="ion-android-mail" text="Export Data"
+                           button-color="#33cd5f" ng-click="confirmExport()"></ion-floating-item>
+    </ion-floating-menu>
+    <!-- <ion-floating-menu ng-show="config" id="my-float-inventory" menu-color="#33cd5f" menu-open-color="#84e19f" > -->
+
+    <!-- </ion-floating-menu> -->
+    <ion-tabs class="tabs-icon-top tabs-color-active-balanced">
+        <ion-tab title="Period" icon="ion-clipboard" on-select="periodClickHandler()">
+            <ion-nav-view name="period">
+                <div class="bar bar-subheader margin-optimizer-sort-button-bar">
+                    <div class="button-bar ">
+                        <a ng-repeat="filterbutton in filterButtons track by $index"
+                           style="text-overflow: inherit; max-width:{{ filterbutton.max_width }}"
+                           class="button button-bal no-horizontal-padding"
+                           ng-class="filterbutton.selected ? '' : 'button-out'"
+                           ng-click="filterbuttonclick($index)">
+                            <i ng-show="filterbutton.icon" class="icon icon-left {{ filterbutton.icon }}"
+                               style="vertical-align: sub;"></i>
+                            <span style="vertical-align: sub; font-size: x-small; font-weight: 600;">{{ filterbutton.label }} <br/>{{filterbutton.dateLabel}}</span></a>
+                    </div>
+                </div>
+                <busyspinner spinnerhide="spinnerHide"></busyspinner>
+                <span ng-if="spinnerHide">
+                <ion-content class="has-header has-subheader has-tabs-bottom app-back-ground" style="top: 176px;background-color:white">
+                    <div style="width: 100%; color: black; font-weight:bold; display: flex; padding: 16px 16px 10px 50px;background-color:whitesmoke">
+                        <div style="flex-basis:{{ rowSize.name }}%; flex-shrink: 0; flex-grow: 1; white-space: normal;">
+                            Name
+                        </div>
+                        <div style="flex-basis: {{rowSize.value }}%; flex-shrink: 0; flex-grow: 1">Value</div>
+                        <div style="flex-basis:{{ rowSize.percentage }}%; flex-shrink: 0; flex-grow: 1">%</div>
+                        <!--  <div style="flex-basis: {{rowSize.budget}}%; flex-shrink: 0; flex-grow: 1">Budget</div>
+                          <div style="flex-basis: {{rowSize.variance }}%; flex-shrink: 0; flex-grow: 1; text-align: end">Variance</div>-->
+                    </div>
+                    <ion-list>
+                        <div class="item item-borderless item-text-wrap text-center" ng-if="pandlData.length==0">
+                            No Information Available
+                        </div>
+                        <!--ng-click="goToPAndLCharts(item)"-->
+                        <ion-item ng-repeat="item in pandlData" >
+                            <pl-category category-data="item"></pl-category>
+                        </ion-item>
+                    </ion-list>
+                </ion-content>
+                </span>
+            </ion-nav-view>
+        </ion-tab>
+
+
+
+
+        <ion-tab title="Config" icon="ion-ios-copy" on-select="configClickHandler()">
+            <ion-nav-view name="config">
+                <map-pandl items="pnLItems" from="pnlConfig"></map-pandl>
+            </ion-nav-view>
+        </ion-tab>
+
+
+
+
+        <!--<ion-tab title="Month" icon="ion-clipboard" on-select="monthClickHandler()">-->
+            <!--<ion-nav-view name="month">-->
+                <!--<ion-content>-->
+                    <!--<div style="width: 100%; color: black; font-weight:bold; display: flex; padding: 16px 16px 10px 10px;">-->
+                        <!--<div style="flex-basis:{{ rowSize.name }}%; flex-shrink: 0; flex-grow: 1; white-space: normal;">-->
+                            <!--Name-->
+                        <!--</div>-->
+                        <!--<div style="flex-basis: {{rowSize.value }}%; flex-shrink: 0; flex-grow: 1">Value</div>-->
+                        <!--<div style="flex-basis:{{ rowSize.percentage }}%; flex-shrink: 0; flex-grow: 1">%</div>-->
+                        <!--&lt;!&ndash;  <div style="flex-basis: {{rowSize.budget}}%; flex-shrink: 0; flex-grow: 1">Budget</div>-->
+                          <!--<div style="flex-basis: {{rowSize.variance }}%; flex-shrink: 0; flex-grow: 1; text-align: end">Variance</div>&ndash;&gt;-->
+                    <!--</div>-->
+                    <!--<ion-list>-->
+                        <!--<div class="item item-text-wrap text-center" ng-if="pandlData.length==0">-->
+                            <!--No Information Available-->
+                        <!--</div>-->
+                        <!--<ion-item ng-repeat="item in pandlData" ng-click="goToPAndLCharts(item)">-->
+                            <!--<pl-category category-data="item"></pl-category>-->
+                        <!--</ion-item>-->
+                    <!--</ion-list>-->
+                <!--</ion-content>-->
+            <!--</ion-nav-view>-->
+        <!--</ion-tab>-->
+    </ion-tabs>
+</ion-view>

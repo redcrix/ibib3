@@ -1,0 +1,70 @@
+<ion-list>
+
+    <div class="card" style="margin:0px;">
+
+        <div class="item item-text-wrap text-center" ng-if="filteredInvoices.length==0">
+            No invoices found
+        </div>
+
+
+        <!-- <div class="chartWrapper">
+            <div class="chartAreaWrapper">
+                <canvas id="myChart" height="300" width="1200"></canvas>
+            </div>
+                <canvas id="myChartAxis" height="300" width="0"></canvas>
+        </div>
+
+        <canvas id="lineCh" class="chart chart-line" chart-data="data"
+        chart-labels="horizontalAxisLabels" chart-legend="true" chart-series="legendLabels"
+        options="lineChartOptions" responsive="true" chart-colours="">
+        </canvas> -->
+
+        <!-- <ion-item ng-repeat="item in invoices as filteredInvoices" class="item-thumbnail-left item-thumbnail-left-custom" ng-href="{{getUrl(item)}}"> -->
+
+
+        <ion-item  ng-repeat="item in (invoices | filter:byFilterName() | orderBy:'-total_amount' ) as filteredInvoices" class="item-thumbnail-left item-thumbnail-left-custom"  ng-href="{{getUrl(item)}}">
+        <!-- <ion-item  ng-repeat="item in (invoices | filter: {'visible': true}  | orderBy:'-total_amount' ) as filteredInvoices" class="item-thumbnail-left item-thumbnail-left-custom"  ng-href="{{getUrl(item)}}"> -->
+
+            <div class="row" ng-if="!item.due_date">
+                <div class="col col-50" style="text-align:left;max-width: 40%;">
+
+                    <span class="invoice-data-first font-dark" style="white-space: normal;">{{item.supplier_name}} </span>
+
+                    <!-- <span class="invoice-data">
+                        <p ng-if="item.paid_or_not" class="paid">Paid</p>
+                        <p ng-if="!item.paid_or_not" class="unpaid">Unpaid</p>
+                    </span> -->
+                </div>
+
+                <div class="col custom-summary" style="text-align:right">
+                    <div class="invoice-data-first"><span style="text-align:left">Total Amount :</span> <span style="padding-left:5px">$ {{item.total_amount | number : 2}}</span></div>
+                    <div class="invoice-data"><span style="text-align:left">Avg Amount :</span> <span style="padding-left:5px"> $ {{item.total_average_amount | number : 2}}</span></div>
+                    <div class="invoice-data"><span style="text-align:left">Last :</span> <span style="padding-left:5px"> $ {{item.total_average_amount | number : 2}}</span></div>
+                </div>
+            </div>
+
+            <!-- <div class="row" ng-if="item.due_date">
+                <div class="col col-50" style="text-align:left;max-width: 40%;">
+                  <span class="invoice-data-first font-dark">{{item.supplier_name}} </span>
+                  <span class="invoice-data">
+                      <p ng-if="item.paid_or_not" class="paid">Paid</p>
+                      <p ng-if="!item.paid_or_not" class="unpaid">Unpaid</p>
+                  </span>
+                </div>
+                <div class="col custom-summary" style="text-align:right">
+                    <span class="invoice-data">Total Cost: $ {{item.total_cost | number : 2}}  </span>
+                    <span class="invoice-data" ng-if="item.due_date != 0">Due date: {{item.due_date  * 1000 | date:'MM-dd-yyyy'}}</span>
+                    <span class="invoice-data" ng-if="item.due_date == 0">Due date: </span>
+
+                </div>
+                
+                <ion-option-button class="button-outline icon button-balanced ion-checkmark-circled" ng-click="toggleActionTaken(item)"></ion-option-button>
+
+
+
+            </div> -->
+
+        </ion-item>
+    </div>
+
+</ion-list>

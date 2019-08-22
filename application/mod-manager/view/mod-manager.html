@@ -1,0 +1,20 @@
+<ion-view title="Mod Manager"  align-title="center" ng-init="onMenuItemInit()">
+  <!-- <ion-nav-buttons side="secondary"> -->
+    <!-- 
+            <button ng-if="showSearchBtn" class="button button-icon icon ion-ios-search-strong" ng-click="showSearchBar()">
+            </button> -->
+            
+            
+    <!-- <div class="item-input-wrapper" style="background: white;">
+      <i class="icon ion-android-arrow-back back-inv-config-search" ng-click="closeSearch()"></i>
+      <input type='text' ng-model='data.searchText' class="search-mod-config" placeholder="Search item name or id" />
+    </div> -->
+            
+  <!-- </ion-nav-buttons>  -->
+<!-- <ion-content>  -->
+<!-- <busyspinner spinnerhide="gotList" ></busyspinner> -->
+<div class="spinner" ng-hide="gotList"><ion-spinner icon="lines" class="spinner-calm"></ion-spinner><br/><div style="text-align:center;"><span class="spinner-text">pepr is working hard,</span> <br/><span class="spinner-text">Please wait!! (approx 25sec)</span> </div></div>
+<div class="text-center" ng-if="!myIngList.length && gotList" style="margin-top: 50%;"> <h3>No Ingredients available.</h3></div> 
+<ingredient-content items="myIngList" type="mod" ng-if="myIngList.length"></ingredient-content>
+<!-- </ion-content> -->
+</ion-view>

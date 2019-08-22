@@ -1,0 +1,97 @@
+<script id="form-errors.html" type="text/ng-template">  
+  <div class="form-error" ng-message="required">This field is required.</div>
+  <div class="form-error" ng-message="minlength">This field is must be at least 5 characters.</div>
+  <div class="form-error" ng-message="maxlength">This field is must be less than 50 characters</div>
+</script>  
+<script src="path/to/angular.js"></script>
+<script src="path/to/angular-messages.js"></script>
+<ion-view view-title="Forgot Password" align-title="Left">
+     <backbuttonbar navbartitle="navBarTitle"></backbuttonbar>
+    <!-- <busyspinner spinnerhide="spinnerHide"></busyspinner>
+    <span ng-if="spinnerHide"> -->
+       <ion-header-bar class="bar error-reporting-modal">
+        
+      <h3 class="title">Reset Your Password</h3>
+      <!-- <a class="button"  ng-click="closeUnitModal()">Cancel</a> -->
+        <!--  <a class="button" ng-click="closeModal()">Cancel</a> -->
+    </ion-header-bar>
+
+    <ion-content class="has-header has-subheader padding" >
+   <!-- <h3 class="text-center">Reset Your Password</h3>-->
+    <ion-slide-box show-pager="false">
+      <ion-slide>
+        <div class="box blue">
+            <form name="forgotPw" novalidate="">
+
+            <div class="list">
+                <label class="item item-input" ng-class="{ 'has-error' : forgotPw.userEmail.$invalid}">
+                    <span class="input-label">Username</span>
+                    <input type="text" placeholder="Enter Your username" ng-model="reset.userEmail" name="name" required>
+                </label>
+                <div class="form-errors" ng-show="forgotPw.userEmail.$error && forgotPw.$submitted" ng-messages="forgotPw.userEmail.$error">
+                    <div class="form-error" ng-message="required">Username is required.</div>
+                </div>
+              <!--<div class="form-errors" ng-show="forgotPw.userEmail.$error && forgotPw.$submitted" ng-messages="forgotPw.userEmail.$error">
+                  <div class="form-error" ng-message="required">Username is required.</div>
+              </div>
+                <div class="form-errors" ng-messages="forgotPw.email.$error" ng-messages-include="form-errors.html"></div>-->
+                <button class="button button-full app-theme-color app-theme-text" ng-click="codePage(reset.userEmail)" ng-disabled="forgotPw.$invalid">
+                    Submit
+                </button>
+            </div>
+        </form>
+       </div>
+      </ion-slide>
+      <ion-slide>
+        <div class="box blue">
+                <!-- <button ng-click="nextSlide()">Next slide!</button> -->
+                 
+            
+                <div class="text-center paid">
+          Check {{emailId}} and enter the OTP here.
+        </div>
+                <form name="enterCode">
+                    <div class="list list-inset">
+                       <label class="item item-input" ng-class="{ 'has-error' : enterCode.code.$invalid}">
+                        <span class="input-label">Enter OTP</span>
+                          <input type="text" name="code" placeholder="Enter Code" ng-model="reset.code" required>
+
+                        </label>
+                        <div class="form-errors" ng-messages="enterCode.code.$error">
+                          <div class="form-error" ng-message="required">OTP is required.</div>
+                        </div>
+                    </div>
+           <button class="button button-full app-theme-color app-theme-text" ng-click="sendCode(reset.code)" ng-disabled="enterCode.$invalid">
+                        Submit
+                    </button>
+                </form>
+              </div>
+      </ion-slide>
+    </ion-slide-box>
+
+
+       <!-- <form name="forgotPw" novalidate="" ng-submit="signIn(signinForm)">
+
+            <div class="list">
+                <label class="item item-input" ng-class="{ 'has-error' : forgotPw.email.$invalid}">-->
+                    <!-- <span class="input-label">Username</span> -->
+                  <!--  <input type="text" placeholder="Enter Your username" ng-model="reset.userEmail" name="email" required>
+                </label>
+                <div class="form-errors" ng-messages="forgotPw.email.$error" ng-messages-include="form-errors.html"></div>
+                <button class="button button-full app-theme-color app-theme-text" ng-click="codePage()" ng-disabled="forgotPw.$invalid">
+                    Submit
+                </button>
+
+
+            </div>
+
+        </form>-->
+    </ion-content>
+
+    <!-- <script id="templates/form-errors.html" type="text/ng-template">
+      <div class="form-error" ng-message="required">This field is required.</div>
+      <div class="form-error" ng-message="minlength">This field is must be at least 5 characters.</div>
+      <div class="form-error" ng-message="maxlength">This field is must be less than 50 characters</div>
+    </script>   -->
+
+</ion-view>

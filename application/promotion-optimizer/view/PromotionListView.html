@@ -1,0 +1,13 @@
+<div class="card">
+    <div class="item item-divider item-balanced">
+        <div class="row" ui-sref-if="{{ !hidemore }}"
+             ui-sref-val="app.promotionOptimizerpromotions()">
+            <div class="col col-90">{{ cardheader }}</div>
+            <div ng-hide="hidemore" class="col"><i class="ion-android-more-horizontal"></i></div>
+        </div>
+    </div>
+
+    <ion-list ng-repeat="item in items | orderBy:'-sales' | limitTo:itemdisplaylimit">
+        <promotionitem promotion="item" detaillink="false" maxsales="maxsales" ifeven="$even"></promotionitem>
+    </ion-list>
+</div>

@@ -1,0 +1,85 @@
+<ion-view view-title="Ingredients Price Tracker" align-title="center" ng-init="onOperationsInitHandler()">
+    <ion-nav-bar class="bar bar-header app-theme-color app-theme-text" align-title="center">
+        <ion-nav-back-button ng-show="!navBarTitle.showToggleButton" class="app-theme-text">
+        </ion-nav-back-button>
+        <ion-nav-buttons side="left">
+            <button class="button icon-left ion-navicon button-clear side-menu-toggle" menu-toggle="left"
+                    ng-if="navBarTitle.showToggleButton">
+            </button>
+
+        </ion-nav-buttons>
+        <ion-nav-buttons side="secondary">
+            <button class="button button-icon icon ion-ios-search-strong" ng-click="showFilterBar()">
+            </button>
+        </ion-nav-buttons>
+    </ion-nav-bar>
+
+    <ion-header-bar class="bar bar-subheader bar-stable app-theme-color-level2 app-theme-text-level2 no-vertical-padding no-horizontal-padding">
+        <div class="row no-vertical-padding" style="margin-top: 8px;">
+            <!-- <div class="col col-25 col-center"></div> -->
+            <div class="col col-100 col-center">{{ latestDateTextDisplay() }}</div>
+            <!-- <div class="col col-25 col-center"> -->
+
+                <!--<button class="button button-clear icon-right ion-ios-calendar-outline app-theme-text2"-->
+                <!--ng-click="openDatePicker()" style="float: right;"></button>-->
+            </div>
+        </div>
+
+        <span ng-if="spinnerHide">
+            <div id="set-spin" ng-show="!graphSpinnerHide">
+                <busyspinner spinnerhide="graphSpinnerHide"  class="ingredients-graph-spineer"></busyspinner>
+            </div>
+
+            <span ng-if="graphSpinnerHide">
+                <div style="margin-top:6px; margin-bottom:2px; margin-left: 5px; margin-right: 5px;" class="card chartBar"
+                 ng-click="chartClickHandler('total_sales')"
+                 ng-swipe-right="moveDateBackward()" ng-swipe-left="moveDateForward()">
+                <isb-line-chart ng-if="graphData" data="ingData.data" horizontal-axis-labels="ingData.dates"
+                                legend-labels="salesSeriesLabels" title="graphIngName"
+                                scaleprefix="'$'" responsive="true"></isb-line-chart>
+                                <div ng-if="!graphData" class="noData" style="vertical-align:middle; line-height: 200px;display: inline-block;height: 200px;width:220px;white-space: nowrap;">No Data Available</div>
+
+                </div>
+            </span>
+            <div style="margin-top:0px; margin-bottom:0px; margin-left: 5px; margin-right: 5px;" class="card tblHead">
+                <div class="row app-back-ground no-vertical-padding no-horizontal-padding">
+                    <div class="col col-50" style="text-align: left;" ng-click="sortIngredientsBy('name')">Name&nbsp
+                        <i ng-if="sortDirections.name" class="icon" ng-class="sortDirections.name=='asc'?'ion-arrow-up-b':'ion-arrow-down-b'"></i>
+                    </div>
+                    <div class="col col-25" ng-click="sortIngredientsBy('price')">Price&nbsp
+                        <i ng-if="sortDirections.price" class="icon" ng-class="sortDirections.price=='asc'?'ion-arrow-up-b':'ion-arrow-down-b'"></i>
+                    </div>
+                    <div class="col col-25" ng-click="sortIngredientsBy('unit')">Units&nbsp
+                        <i ng-if="sortDirections.unit" class="icon"  ng-class="sortDirections.unit=='asc'?'ion-arrow-up-b':'ion-arrow-down-b'"></i>
+                    </div>
+                </div>
+            </div>
+        </span>
+
+    </ion-header-bar>
+
+    <busyspinner spinnerhide="spinnerHide"></busyspinner>
+
+
+    <ion-content  id="chartTblHead">
+
+        <span ng-if="spinnerHide">
+
+        <busyspinner spinnerhide="spinnerINGHide"></busyspinner>
+        <div style="margin-top:0px; margin-bottom:0px; margin-left: 5px; margin-right: 5px;" class="card">
+        <div class="row item smaller" style="padding-top: 10px;padding-bottom: 10px;height: 55px;" ng-class="ing.clicked? 'ingredient-price-selected-row': ''"
+             ng-repeat="ing in ingredients" ng-click="change_display_ingredient(ing)">
+          <div class="col col-50 col-center ">{{ ::ing.name | titleCase}}
+              <div ng-if="::ing.supplier_name" class="ing-price-trckr x-smaller">({{ ::ing.supplier_name}})</div>
+          </div>
+          <div class="col col-25 col-center text-center item-text-wrap">{{ ::ing.price | number:2}}
+          </div>
+
+
+          <div class="col col-25  text-right  col-center ">{{::ing.unit}}
+          </div>
+        </div>
+        </div>
+        </span>
+    </ion-content>
+</ion-view>

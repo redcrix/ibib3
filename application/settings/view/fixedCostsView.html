@@ -1,0 +1,28 @@
+<ion-view title="{{pageTitle}}" ng-init="initializeView();">
+  <backbuttonbar navbartitle="navBarTitle"></backbuttonbar>
+  <div class="bar bar-subheader bar-stable app-theme-color app-theme-text">
+    <h3 class="title">Fixed Costs Details</h3>
+  </div>
+  <ion-content view-title="Fixed Costs Details">
+    <div class="card">
+    </div>
+    <div class="row row center">
+        <div class="col text-center">
+        <h4>Fixed Cost</h4>
+        </div>
+        <div class="col text-center">
+        <h4>Current Value</h4>
+        </div>
+    </div>
+    <ion-item ng-repeat="item in finalDictionaryById" ui-sref="app.fixedCostDetail({id:item.key, name:item.name})">
+        <div class="row row center">
+          <div class="col text-center">
+          <h3>{{item.name}}</h3>
+          </div>
+          <div class="col text-center">
+          <h3>{{item.value}}</h3>
+          </div>
+        </div>
+    </ion-item>
+  </ion-content>
+</ion-view>

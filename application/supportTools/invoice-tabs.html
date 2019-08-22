@@ -1,0 +1,69 @@
+<ion-view>
+  <ion-tabs class="tabs-icon-top tabs-top tabs-positive">
+
+    <ion-tab title="Submitted" icon="ion-home" href="#/invoiceManager/submitted">
+      <ion-nav-view name="submitted-tab"></ion-nav-view>
+    </ion-tab>
+
+    <ion-tab title="Draft" icon="ion-ios7-information" href="#/invoiceManager/drafts">
+      <ion-nav-view name="draft-tab"></ion-nav-view>
+    </ion-tab>
+  </ion-tabs>
+</ion-view>
+
+
+<ion-view title="Invoice Manager" align-title="center" ng-init="init()">
+  <busyspinner spinnerhide="!showLoader"></busyspinner>
+  <ion-content style="top: 0 !important;">
+    <ion-tabs delegate-handle="invoiceTabs" ng-hide="showLoader" class="tabs-icon-top tabs-top tabs-color-active-balanced">
+      <ion-tab title="Submitted" icon-on="ion-ios-checkmark" icon-off="ion-ios-checkmark-outline" on-select="submittedClick()" href="#/invoiceManager/submitted">
+        <ion-nav-view name="invoice-submitted-tab"></ion-nav-view>
+      </ion-tab>
+
+      <ion-tab title="Drafts" icon-on="ion-ios-copy" icon-off="ion-ios-copy-outline" on-select="draftClick()" href="#/invoiceManager/drafts">
+        <ion-nav-view name="invoice-drafts-tab"></ion-nav-view>
+      </ion-tab>
+    </ion-tabs>
+  </ion-content>
+
+  <ion-footer-bar align-title="left" style="background: #33CD5F;" ng-hide="showLoader" ng-click="composeClicked()" ng-if="!config">
+    <div style="width: 100%; text-align: center;font-size: 20px; padding-top: 1%; color: #FFF;">Enter New Invoice</div><br/>
+  </ion-footer-bar>
+</ion-view>
+
+
+<script id="templates/invoice-submitted.html" type="text/ng-template">
+  <ion-view title="Invoice Manager">
+    <ion-content class="has-one-footer">
+      <ion-list>
+        <ion-item id="inv-submitted-list_{{item.draft_id}}" style="padding: 16px 49px 16px 16px;" ng-repeat="item in inventoryEntries.submitted"  ng-if="item.inventory_status == 'submitted'">
+          <invoice-list-submit-item  on-tap="onSubmittedItemTap(item)" item="item"></invoice-list-submit-item>
+          <ion-option-button class="button-assertive-new" on-tap="allowEdit(item)" mode="editMode">Edit </ion-option-button>
+        </ion-item>
+      </ion-list>
+      <div ng-show="!showLoader && (!invoiceEntries.submitted||  invoiceEntries.submitted.length < 1)" style="padding:120px 16px 16px 16px;text-align: center;font-size: 25px;">
+        No Invoices to Show!
+      </div>
+    </ion-content>
+  </ion-view>
+</script>
+
+
+<script id="templates/invoice-drafts.html" type="text/ng-template">
+  <ion-view title="Invoice Manager">
+    <ion-content class="has-one-footer">
+      <ion-list>
+        <ion-item  style="padding: 0px 0px 0px 16px" id="inv-list_{{item.draft_id}}" style="padding: 0px 9px 0px 16px" ng-repeat="item in invoiceEntries.draft">
+          <invoice-list-item on-tap="onItemTap(item)" item="item" style="float:left; "></invoice-list-item>
+          <ion-option-button class="button-assertive" on-tap="deleteDraft(item)">Delete</ion-option-button>
+        </ion-item>
+      <div ng-if="(noInvDiv && inventoryEntries.draft.length == 0)  " style="padding:120px 16px 16px 16px;text-align: center;font-size: 25px;">
+        No Inventories to Show!
+      </div>
+
+
+      </ion-list>
+
+    </ion-content>
+  </ion-view>
+</script>

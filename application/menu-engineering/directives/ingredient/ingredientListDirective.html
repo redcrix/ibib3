@@ -1,0 +1,31 @@
+<div class="card">
+    <span ng-if="isRecipeZero()">
+        <div style="padding-right: 10px" class="item item-balanced no-padding ">
+            <div class="row">
+                <div class="col col-10 item-icon-left">
+                    <i style="color: red;" class="icon ion-alert-circled app-back-ground"></i>
+                </div>
+                <div class="col">Recipe information unavailable</div>
+            </div>
+        </div>
+    </span>
+    <span ng-if="!isRecipeZero()">
+    <div style="padding-right: 10px" class="item item-divider item-balanced no-padding">
+        <div class="row">
+            <div class="col col-40 item-text-wrap">Cost</div>
+            <!--<div style="margin-left:-6px" class="col col-10">:</div>-->
+            <div class="col col-30"></div>
+            <div style="padding-left: 9px" class="col col-20">{{ ::(totalingredientscost() | currency)}}</div>
+            <!--<div style="padding-left: 9px" class="col"><i class="icon" ng-class="totalingredientscostchange()>0 ? 'ion-arrow-up-b redflag' : 'ion-arrow-down-b greenflag'"></i> {{ ::(totalingredientscostchange() | makePositive | currency) }}-->
+            <!--</div>-->
+            <!--            <div class="col col-5"></div>-->
+        </div>
+    </div>
+
+    <ion-list class="item paddingzero">
+        <span ng-repeat="ingredient in ingredients  | orderBy:'-ingredientCost'">
+            <menuengineeringingredientitem ingredient="ingredient" ifeven="$even"></menuengineeringingredientitem>
+        </span>
+    </ion-list>
+    </span>
+</div>

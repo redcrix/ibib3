@@ -1,0 +1,151 @@
+<ion-view title="{{ ctrl.inventory_name }}" align-title="center" ng-init="ctrl.init()">
+    <backbuttonbar navbartitle="navBarTitle"></backbuttonbar>
+
+    <ion-nav-buttons side="secondary">
+        <button class="button button-icon icon ion-ios-search-strong" ng-click="ctrl.showFilterBar()">
+        </button>
+    </ion-nav-buttons>
+    <!-- <div class="spinner" ng-show="ctrl.showLoader" style="z-index: 10">
+        <ion-spinner icon="lines" class="spinner-calm spinner spinner-lines"></ion-spinner>
+    </div> -->
+    <busyspinner spinnerhide="!ctrl.showLoader"></busyspinner>
+    <span ng-show="!ctrl.showLoader">
+        <ion-header-bar  id="headerbar"  class="bar bar-subheader app-theme-color-level2 no-vertical-padding no-horizontal-padding">
+        <div class="app-theme-color-level2">
+            <!--<div class="row">-->
+                <!--<div class="col col-center no-vertical-padding">-->
+                    <!--<span ng-repeat="saveStatus in ctrl.saveStatus track by $index" class="{{ saveStatus.level }}"> {{ saveStatus.text }}</span>-->
+                <!--</div>-->
+            <!--</div>-->
+
+            <!--<div ng-show="ctrl.isLocationAvailable" class="row">-->
+                <!--<div class="col no-vertical-padding no-horizontal-padding" ng-click="ctrl.selectGrouping()">-->
+                    <!--<div class="row no-vertical-padding no-horizontal-padding">-->
+                        <!--<div class="col  col-offset-25 col-10 col-center no-vertical-padding no-horizontal-padding">-->
+                            <!--<i class="icon large ion-funnel"></i>-->
+                        <!--</div>-->
+                        <!--<div class="col col-67 col-center no-vertical-padding no-horizontal-padding">-->
+                            <!--<span>{{ctrl.categoryText[ctrl.currentView]}}&nbsp</span>-->
+                            <!--<i class="icon ion-arrow-down-b"></i>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+
+            <div class="inventory-list-header">
+            <div style="flex-basis:{{ ctrl.rowSize.name }}%; flex-shrink: 0; flex-grow: 1; white-space: normal;">Name</div>
+            <div style="flex-basis: {{ ctrl.rowSize.price }}%; flex-shrink: 0; flex-grow: 1">Price</div>
+            <div style="flex-basis:{{ ctrl.rowSize.qty }}%; flex-shrink: 0; flex-grow: 1">Qty</div>
+            <div style="flex-basis: {{ ctrl.rowSize.units}}%; flex-shrink: 0; flex-grow: 1">Units</div>
+            <div style="flex-basis: 2%; flex-shrink: 0; flex-grow: 1">Par</div>
+
+            <div style="flex-basis: {{ ctrl.rowSize.value }}%; flex-shrink: 0; flex-grow: 1; text-align: end">Value</div>
+        </div>
+        </div>
+
+    </ion-header-bar>
+     <ion-floating-menu id="my-float-inventory" menu-color="#33cd5f" menu-open-color="#84e19f">
+        <ion-floating-item is-centered="true" icon-color="white" text="Group By" icon="ion-funnel" button-color="#33cd5f"
+        click="ctrl.showSortingActionsheet()">
+        </ion-floating-item>
+        <ion-floating-item is-centered="true" icon-color="white" text="Export Data" icon="ion-android-mail" button-color="#33cd5f" click="ctrl.openPrompt()">
+        </ion-floating-item>
+        <ion-floating-item id="inv-summary" is-centered="true" icon-color="white" icon="ion-clipboard" text="Inventory Summary" button-color="#33cd5f" click="ctrl.openInventorySummary()"></ion-floating-item>
+        <!-- <ion-floating-item id="inv-summary" is-centered="true" icon-color="white" text="Variance Report" icon="ion-android-mail" button-color="#33cd5f" click="ctrl.openVarianceReport()">
+        </ion-floating-item> -->
+            <!--<ion-floating-item is-centered="true" icon-color="white" icon="ion-ios-pricetag"-->
+                               <!--button-color="#33cd5f" click="ctrl.createOrderClicked()"></ion-floating-item>-->
+        </ion-floating-menu>
+
+        <ion-content class="has-header has-subheader has-one-footer" style="margin-top: 0px; margin-bottom: 20px !important;">
+            <ion-list>
+                <ion-item ng-repeat="item in ctrl.items" style="border: 0; padding: 0;">
+                    <product-category category-data="item" mode="'view'" filter-view="ctrl.currentView"></product-category>
+                </ion-item>
+            </ion-list>
+        </ion-content>
+            <ion-footer-bar  align-title="left" style="flex-flow: column; height: auto">
+            <div class="row item-divider" style="padding: 12px;">
+                <div style=" width: 100%; display: flex;justify-content: space-around; align-items: center; flex-flow: row" class="col-100">
+                    <div>Total value of Inventory: </div>
+                    <div>{{(ctrl.totalValue || 0) | currency }}</div>
+
+                <!-- <ion-floating-button ng-if="!ctrl.connectionLostWatcher()" click="ctrl.showSortingActionsheet()" has-footer="false" icon="ion-funnel" button-color="white" id="my-float-inventory">
+                </ion-floating-button> -->
+
+                <!-- <ion-floating-button click="ctrl.showSortingActionsheet()" has-footer="false" icon="ion-funnel" button-color="white" id="my-float-submitted-inventory">
+                </ion-floating-button> -->
+
+
+                </div>
+            </div>
+        </ion-footer-bar>
+    </span>
+    <script id="inv-summary-modal.html" type="text/ng-template">
+        <ion-modal-view>
+            <ion-header-bar class="bar error-reporting-modal">
+                <h1 class="title">Inventory Summary</h1>
+                <a class="button" ng-click="closeSummaryModal()">Cancel</a>
+            </ion-header-bar>
+            <ion-content style="top: 20%">
+              <!-- <busyspinner spinnerhide="summaryDataReceived"></busyspinner> -->
+                <div class="spinner" style="height: 260px;" ng-hide="summaryDataReceived">
+                    <ion-spinner icon="lines" class="spinner-calm"></ion-spinner><br/>
+                    <div style="text-align:center;">
+                        <span class="spinner-text">Pepr is working hard,</span> <br/>
+                        <span class="spinner-text">Please wait! (approx 15 sec)</span>
+                    </div>
+                </div>
+                <ion-tabs class="tabs-bottom">
+                    <ion-tab title="P&L Categories">
+                      <ion-nav-view name="P&L Categories">
+                        <ion-content >
+                          <span ng-if="summaryDataReceived">
+                            <span ng-repeat="data in summaryData">
+                                <div style="" class="card tbl-head inv-summary-tbl">
+                                    <div class="row app-back-ground">
+                                        <div class="col col-33"
+                                             style="text-align: left;font-size: 12px;{{data.style}}">{{data.label}}
+                                        </div>
+                                        <div class="col col-10"
+                                             style="text-align: center;{{data.style}}">:
+                                        </div>
+                                        <div class="col col-50"
+                                             style="text-align: right;font-size: 12px;{{data.style}}">$ {{data.value }}
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </span>
+                           </span>
+                        </ion-content>
+                      </ion-nav-view>
+                    </ion-tab>
+                    <ion-tab title="Minor Categories">
+                        <ion-nav-view name="Minor Categories">
+                            <ion-content style="position: center;">
+                                <span ng-if="summaryDataReceived">
+                                    <span ng-repeat="data in minorSummaryData">
+                                        <div style="" class="card tbl-head inv-summary-tbl">
+                                            <div class="row app-back-ground">
+                                                <div class="col col-33"
+                                             style="text-align: left;font-size: 12px;{{data.style}}">{{data.minorCategory}}
+                                                </div>
+                                            <div class="col col-10"
+                                             style="text-align: center;{{data.style}}">:
+                                            </div>
+                                            <div class="col col-50"
+                                             style="text-align: right;font-size: 12px;{{data.style}}">$ {{data.myCalculatedData|number:2 }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </span>
+                            </span>
+                          </ion-content>
+                        </ion-nav-view>
+                    </ion-tab>
+                </ion-tabs>
+            </ion-content>
+        </ion-modal-view>
+    </script>
+</ion-view>

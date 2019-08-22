@@ -1,0 +1,90 @@
+<ion-view title=" ordering_name " align-title="center" >
+    <ion-nav-buttons side="secondary">
+
+        <button class="button button-icon icon ion-ios-search-strong" ng-click="showFilterBar()">
+        </button>
+
+    </ion-nav-buttons>
+    <ion-nav-buttons >
+        <button class="button back-button buttons app-theme-text button-clear header-item " ng-click="ionicGoBack()" style="transition-duration: 0ms;"><i class="icon ion-ios-arrow-back"></i>
+            <span class="back-text" style="transition-duration: 0ms; transform: translate3d(0px, 0px, 0px);"></span>
+        </button>
+
+    </ion-nav-buttons>
+
+    <busyspinner spinnerhide="!showLoader"></busyspinner>
+    <span ng-show="!showLoader">
+    <ion-header-bar  id="headerbar"  class="bar bar-subheader app-theme-color-level2 no-vertical-padding no-horizontal-padding" style="top: 9%;">
+        <div class="app-theme-color-level2">
+            <div class="row">
+                <div class="col col-center no-vertical-padding">
+                    <span ng-repeat="saveStatus in saveStatus track by $index" class="{{ saveStatus.level }}"> {{ saveStatus.text }}</span>
+    </div>
+    </div>
+
+    <div ng-show="isLocationAvailable" class="row no-vertical-padding">
+        <div class="col no-vertical-padding no-horizontal-padding" ng-click="selectGrouping()">
+            <div class="row no-vertical-padding no-horizontal-padding">
+                <div class="col  col-offset-25 col-10 col-center no-vertical-padding no-horizontal-padding">
+                    <i class="icon large ion-funnel"></i>
+                </div>
+                <div class="col col-67 col-center no-vertical-padding no-horizontal-padding">
+                    <span>{{categoryText[currentView]}}&nbsp</span>
+                    <i class="icon ion-arrow-down-b"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="inventory-list-header">
+        <div style="flex-basis: {{ rowSize.last }}%; flex-shrink: 0; flex-grow: 1;">LO</div>
+        <div style="flex-basis: {{ rowSize.value }}%; flex-shrink: 0; flex-grow: 1;">Price</div>
+        <div style="flex-basis:{{ rowSize.par }}%; flex-shrink: 0; flex-grow: 1">PAR</div>
+        <div style="flex-basis: {{ rowSize.qih}}%; flex-shrink: 0; flex-grow: 1">QIH</div>
+        <div style="flex-basis: {{ rowSize.order}}%; flex-shrink: 0; flex-grow: 1; text-align: end;">Order</div>
+
+    </div>
+    </div>
+
+    </ion-header-bar>
+    <ion-floating-menu id="my-float-inventory" menu-color="#33cd5f" menu-open-color="#84e19f">
+        <ion-floating-item
+            is-centered="true"
+            icon-color="white"
+            icon="ion-funnel"
+            text="Group By"
+            button-color="#33cd5f"
+            click="selectGrouping()">
+       </ion-floating-item>
+    </ion-floating-menu>
+
+    <ion-content class="has-header has-subheader " style="margin-top: 45px;bottom: 55px;">
+        <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width height=device-height">
+        <ion-list>
+            <ion-item ng-show="!spinnerShow" ng-repeat="item in items" style="border: 0; padding: 0;">
+                <ordering-product-category category-data="item" mode="'edit'" type="'draft'"></ordering-product-category>
+            </ion-item>
+        </ion-list>
+    </ion-content>
+
+
+    <div class="spinner" ng-show="spinnerShow" style="z-index: 10">
+      <ion-spinner icon="lines" class="spinner-calm spinner spinner-lines"></ion-spinner>
+      <div style="text-align:center;">
+                        <span class="spinner-text">Pepr is working hard,</span> <br/>
+                        <span class="spinner-text">Please wait!</span>
+                    </div>
+    </div>
+
+    <div class="bar bar-footer"align-title="left" style="flex-flow: column; height: auto">
+        <div class="row item-divider" style="padding: 12px;">
+            <div style=" width: 100%; display: flex;justify-content: space-around; align-items: center; flex-flow: row" class="col-100">
+                <div>Total value of Order: </div>
+                <div>${{(totalValue || 0).toFixed(2)}}</div>
+            </div>
+        </div>
+
+
+    </div>
+    </span>
+</ion-view>

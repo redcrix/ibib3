@@ -1,0 +1,118 @@
+<!-- Old Dashboard -->
+ <ion-view ng-init="initializeView()">
+
+  <!--  <ion-nav-buttons side="secondary">
+       <button class="button button-icon icon ion-information-circled" style="color: #fff;" ng-click="showModal()">
+       </button>
+   </ion-nav-buttons> -->
+
+  <ion-nav-title>
+    {{pageTitle}}
+  </ion-nav-title>
+
+  <!--  <ion-header-bar style="width:100%" class="bar bar-subheader bar-stable app-theme-color-level2 app-theme-text-level2 has-header" has-header="true">
+          <div class="col text-center"> Summary of Last Week </div>
+      </ion-header-bar> -->
+
+   <ion-header-bar style="width:100%" class="bar bar-subheader bar-stable app-theme-color-level2 app-theme-text-level2 has-header" has-header="true">
+    <div class="row no-vertical-padding">
+      <div class="col-21 col no-vertical-padding " style="padding:unset;">
+        <button class="button button-clear icon-right ion-arrow-down-b inv-config-arrow app-theme-text2" ng-click="showPeriod()" style="font-weight:bold; float: left;font-size: 80%;"> {{timePeriod | titleCase}}
+        </button>
+      </div>
+      <div class="col col-24 col-center no-vertical-padding">
+        <!-- <div>{{ timePeriod=='DAILY'? 'Summary of ' : 'Week of ' }}
+                    {{latestDate}}
+                </div> -->
+                <div style="font-size: 80%;" >
+          {{latestDate}}
+        </div>
+      </div>
+      <div class="icon-right ion-arrow-down-b col-48" ng-click="showPeriodSelect()" style="font-weight:bold;font-size: 80%;margin-top: 2%;">
+        {{ periodDetailSelection() }}
+      </div>
+      <div class="col col-10 col-center no-vertical-padding">
+        <button class="button button-clear icon-right ion-ios-calendar-outline app-theme-text2" ng-click="openDatePicker()" style="float: right;"></button>
+      </div>
+    </div>
+  </ion-header-bar>
+  <ion-floating-menu id="my-sales-export" menu-color="#33cd5f" menu-open-color="#84e19f">
+    <!-- click="ctrl.openPrompt()" -->
+    <ion-floating-item is-centered="true" icon-color="white" icon="ion-android-mail" text="Export Data"
+    button-color="#33cd5f" click="openPrompt()"></ion-floating-item>
+</ion-floating-menu>
+
+  <ion-content class="has-subheader">
+    <busyspinner spinnerhide="spinnerHide"></busyspinner>
+    <span ng-if="spinnerHide">
+          <span ng-repeat="dataCardPair in dataCardsPairs">
+              <div class="row no-vertical-padding" style="display: flex;flex-wrap: wrap;">
+                <!-- ng-if="summaryData['actual_'+dataCards[dataCardIndex].name]" -->
+                  <div class="no-vertical-padding" ng-repeat="dataCardIndex in dataCardPair"
+                       ng-class="$odd? 'vertical-split':''" style="flex-grow: 1;flex-basis: 50%;">
+                    <summarycard card-name="dataCards[dataCardIndex].name"
+                                 card-data="summaryData['actual_'+dataCards[dataCardIndex].name]"
+                                 card-data-filter="dataCards[dataCardIndex].dataFilter"
+                                 card-diff="summaryData['diff_'+dataCards[dataCardIndex].name]"
+                                 card-diff-filter="dataCards[dataCardIndex].diffFilter"
+                                 reverse-diff-color="dataCards[dataCardIndex].reverseDiffColor"
+                                 click-destination="dataCards[dataCardIndex].clickDestination">
+                    </summarycard>
+
+                  </div>
+              </div>
+          </span>
+    </span>
+  </ion-content>
+</ion-view>
+
+<!-- New Dashboard  -->
+<!-- <ion-view ng-init="initializeView()">
+
+  <ion-nav-buttons side="secondary">
+      <button class="button button-icon icon ion-information-circled" style="color: #fff;" ng-click="modal.show()">
+      </button>
+  </ion-nav-buttons>
+
+  <ion-nav-title>
+    {{pageTitle}}
+  </ion-nav-title>
+  <ion-header-bar style="width:100%" class="bar bar-subheader bar-stable app-theme-color-level2 app-theme-text-level2 has-header" has-header="true">
+    <div class="row no-vertical-padding">
+      <div class="col col-25 col-center no-vertical-padding">
+        <button class="button button-clear icon-right ion-arrow-down-b app-theme-text2 period-btn" ng-click="showPeriod()" style="font-weight:bold; float: left;"> {{timePeriod | titleCase}}
+                </button>
+      </div>
+      <div class="col col-50 col-center no-vertical-padding">
+        <div>
+          {{latestDate}}
+        </div>
+      </div>
+      <div class="col col-25 col-center no-vertical-padding">
+        <button class="button button-clear icon-right ion-ios-calendar-outline app-theme-text2" ng-click="openDatePicker()" style="float: right;"></button>
+      </div>
+    </div>
+  </ion-header-bar>
+
+  <ion-content class="has-subheader">
+    <busyspinner spinnerhide="spinnerHide"></busyspinner>
+    <span ng-if="spinnerHide">
+          <span ng-repeat="dataCardPair in newDataCardsPairs">
+                      <div class="no-vertical-padding" ng-repeat="dataCardIndex in dataCardPair" ng-if="newDataCards[dataCardIndex].visible && summaryData['actual_'+newDataCards[dataCardIndex].name] && summaryData['diff_'+newDataCards[dataCardIndex].name]">
+                        <summarycard card-name="newDataCards[dataCardIndex].mainName"
+                                     card-data="summaryData['actual_'+newDataCards[dataCardIndex].name]"
+                                     card-data-filter="newDataCards[dataCardIndex].dataFilter"
+                                     card-diff="summaryData['diff_'+newDataCards[dataCardIndex].name]"
+                                     card-diff-filter="newDataCards[dataCardIndex].diffFilter"
+                                     reverse-diff-color="newDataCards[dataCardIndex].reverseDiffColor"
+                                     click-destination="newDataCards[dataCardIndex].childData[0].clickDestination"
+                                     card-icon="newDataCards[dataCardIndex].mainIcon"
+                                     child-card="newDataCards[dataCardIndex].childData">
+
+                      </summarycard>
+
+                     </div>
+          </span>
+    </span>
+  </ion-content>
+</ion-view> -->

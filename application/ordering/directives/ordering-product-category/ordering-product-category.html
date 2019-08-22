@@ -1,0 +1,19 @@
+<div ng-show="ctrl.categoryData.ingredients.length > 0">
+    <div style="width: 100%; padding: 16px 16px 16px 10px;display: flex; fle-flow: row; justify-content: flex-start;" class="item-divider" ng-click="toggleGroup(ctrl.categoryData)">
+        <i class="icon" ng-class="isGroupShown(ctrl.categoryData) ? 'ion-ios-minus-outline' : 'ion-ios-plus-outline'"></i>
+        <!-- <div ng-if="ctrl.categoryData.type == 'ingredient_category' || ctrl.categoryData.type == 'supplier_name' || ctrl.type == 'submitted'">{{ctrl.categoryData.name}}</div> -->
+        <!-- <div ng-if="ctrl.categoryData.type == 'last_updated_at'">{{ctrl.categoryData.name * 1000 | date :  'MM-dd-yyyy'}}</div> -->
+        <div>&nbsp;&nbsp;{{ctrl.categoryData.name}}</div>
+        <div style="margin-left: auto;margin-right: -5px;">${{(ctrl.categoryData.totalValue||0).toFixed(2)}}</div>
+    </div>
+    <ion-list class="sub-list paddingzero">
+        <ion-item ng-repeat="item in ctrl.categoryData.ingredients"  ng-if="!item.searchHidden" ng-show="isGroupShown(ctrl.categoryData)" class="no-padding">
+          <!-- ng-if="($root.qtyRecommended && item.showRecommended) || (!$root.qtyRecommended)" -->
+            <ordering-product-item node-data="item" mode="ctrl.mode"></ordering-product-item>
+            <!-- <ion-option-button class="button-positive" ng-click="addQuantity(item)"> Add Quantity
+            </ion-option-button>
+            <ion-option-button class="button-balanced" ng-click="changeUnit(item)"> Change Unit
+            </ion-option-button> -->
+        </ion-item>
+    </ion-list>
+</div>

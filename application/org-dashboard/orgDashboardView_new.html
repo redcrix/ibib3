@@ -1,0 +1,394 @@
+
+<ion-view view-title="Organizational Dashboard" ng-controller ="OrgDashboardManagerCtrl_new" ng-init= "initializeDashboardView()">
+  <ion-content scroll="false">
+    <!-- <ion-tabs class="tabs-icon-top tabs-color-active-balanced">
+      <ion-tab title="Period" icon="ion-clipboard" on-select="periodClickHandlerOverView()">
+        <ion-nav-view name="period"> -->
+
+    
+
+    <!-- <div class="bar bar-subheader" ng-if="filterButtons.length">
+      <div class="button-bar ">
+        <a ng-repeat="filterbutton in filterButtons track by $index" style="text-overflow: inherit; max-width:{{ filterbutton.max_width }}" class="button button-bal no-horizontal-padding" ng-class="filterbutton.selected ? '' : 'button-out'" ng-click="filterbuttonclickOverView($index)">
+                <i ng-show="filterbutton.icon" class="icon icon-left {{ filterbutton.icon }}" style="vertical-align: sub;"></i>
+                <span style="vertical-align: sub; font-size: x-small; font-weight: 600;">{{ filterbutton.label }} : &nbsp;{{filterbutton.dateLabel}}</span></a>
+      </div>
+    </div> -->
+    <busyspinner spinnerhide="spinnerHideOverView"></busyspinner>
+    <span ng-if="spinnerHideOverView">
+        <div class="row padding" style="padding:0vh">
+            <div class="col col-20" style="padding:0vh"> 
+              <div>
+                    <div class="button icon-right ion-arrow-down-b " ng-click="showYear()" 
+                      style="
+                        width: 100%;border-radius: 3vh;
+                        margin-bottom: 1vh;
+                        height: 5vh;
+                        min-height: 0;
+                        font-size: 2vh;">
+                                {{ yearDetailSelection() }}
+                    </div>
+                    <div class="button icon-right ion-arrow-down-b " ng-click="showPeriodOverView()" 
+                      style="
+                        width: 100%;border-radius: 3vh;
+                        margin-bottom: 1vh;
+                        height: 5vh;
+                        min-height: 0;
+                        font-size: 2vh;">
+                                {{ periodDetailSelectionOverView() }}
+                    </div>
+                    <div class="button icon-right ion-arrow-down-b " ng-click="showWeek()" 
+                      style="
+                        width: 100%;border-radius: 3vh;
+                        margin-bottom: 1vh;
+                        height: 5vh;
+                        min-height: 0;
+                        font-size: 2vh;">
+                                {{ weekSelection() }}
+                    </div>
+              </div> 
+              <div>
+                  <div>
+                        <div class="row item item-text-wrap text-center item item-thumbnail-left "
+                            style="margin-right: 5vh;
+                                    margin-left: 0vh;
+                                    margin-top:3vh;
+                                    border-bottom: 0.5vh solid #47e461;
+                                    border-radius: 2vh;
+                                    height:14vh;
+                                    min-height: 0;">   
+                              <div class=" col-25">
+                                    <img src="img/sales_icon.png" 
+                                    style="max-width: 11vh;">
+                              </div>
+                              <div class="col-75">      
+                                    
+                                     <h2 
+                              style="padding-top: 1vh;
+                                     font-size: 4vh;">
+                                                    {{cuml_sales | number : 0}}</h2>
+                                    <div style="font-size: 2vh">
+                                           <div>TOTAL SALES</div>
+                                    </div>
+                             </div>
+                        </div>    
+                           
+                        <div class="row item item-text-wrap text-center item item-thumbnail-left "
+                              style="margin-right: 5vh;
+                                    margin-left: 0vh;
+                                    margin-top:3vh;
+                                    border-bottom: 0.5vh solid #47e461;
+                                    border-radius: 2vh;
+                                    height:14vh;
+                                    min-height: 0;"> 
+                              <div class=" col-25">
+                                    <img src="img/cost_icon.jpg" style="max-width: 11vh;">
+                              </div>
+                              <div class="col-75">  
+                                      <h2 
+                              style="padding-top: 1vh;
+                                     font-size: 4vh;">
+                                                    {{cuml_cogs | number : 2}} %</h2>
+                                      <div>
+                                           <div style="font-size: 2vh">TOTAL COGS</div>
+                                           <div style="font-size: 3vh">${{cuml_cogs_sum | number : 0}}</div>
+                                      </div>               
+                              </div>
+                        </div>
+                           
+                        <div class="row item item-text-wrap text-center item item-thumbnail-left "
+                              style="margin-right: 5vh;
+                                    margin-left: 0vh;
+                                    margin-top:3vh;
+                                    border-bottom: 0.5vh solid #47e461;
+                                    border-radius: 2vh;
+                                    height:14vh;
+                                    min-height: 0;"> 
+                              <div class=" col-25">
+                                    <img src="img/labor_icon.png" style="max-width: 11vh;">
+                              </div>
+                              <div class="col-75">  
+                                  <h2 
+                          style="padding-top: 1vh;
+                                 font-size: 4vh;">
+                                                   {{cuml_com_labour| number : 2}} %</h2>
+                                  <div style="font-size: 2vh">
+                                     <div>COMBINED LABOUR</div>
+                                     <div style="font-size: 3vh">${{cuml_com_labour_sum | number : 0}}</div>
+                                  </div>
+                             </div>
+                          </div>   
+                           
+                          <div class="row item item-text-wrap text-center item item-thumbnail-left "
+                                style="margin-right: 5vh;
+                                      margin-left: 0vh;
+                                      margin-top:3vh;
+                                      border-bottom: 0.5vh solid #47e461;
+                                      border-radius: 2vh;
+                                      height:14vh;
+                                      min-height: 0;"> 
+                                <div class=" col-25">
+                                      <img src="img/profit_icon.jpg" style="max-width: 11vh;">
+                                </div>
+                                <div class="col-75">  
+                                        <h2 
+                                style="padding-top: 1vh;
+                                       font-size: 4vh;">
+                                                     {{cuml_prime_profit | number : 2}}%</h2>
+                                        <div style="font-size: 2vh">
+                                           <div>PRIME PROFIT</div>
+                                           <div style="font-size: 3vh">${{cuml_prime_profit_sum | number : 0}}</div>
+                                        </div>
+                               </div>
+                         </div>
+                  </div>
+                  
+              </div>
+             </div> 
+             <div class="col col-75" style="padding:0vh"> 
+                      <div class=" row no-vertical-padding" style="text-align:center;margin-bottom: 1vh;background-color: #f8f8f8;">
+                          
+                              <div class="col">UNIT</div>
+                              <div class="col">SALES</div>
+                              <div class="col">COGS</div>
+                              <div class="col">COMBINED LABOR</div>
+                              <div class="col">PRIME PROFIT</div>
+                     </div>
+             <ion-content class="has-header has-subheader app-back-ground" scroll="false" style="position:inherit">
+                <div>
+                  <span ng-repeat="business in businessList">
+                     <div class="row" style ="height:6.5vh; text-align: center;padding: 1vh;">
+                            <div class=" col col-center no-vertical-padding" style="height:100%; margin-right: 1vh;">
+                                 <div style="font-weight: bold;">
+                                   {{business.business_name}}
+                                 </div>
+                               </div>
+                               <!-- SALES-->
+                               <div class="col col-center no-vertical-padding ">
+                                <div class="item item-text-wrap text-center" 
+                                  ng-class=" (overViewData[business.business_id+ ':' +dataCardsOverView[0].field]  -
+                                        overViewData[business.business_id + ':' +dataCardsOverView[0].field +':budget'])/
+                                         overViewData[business.business_id + ':' +dataCardsOverView[0].field +':budget']  < 0 ? 'border-red' : 'border-green'"
+
+                                 style="height:6vh; margin-right: 1vh;
+                                 border-bottom: 0.3vh solid;
+                                 border-radius: 2vh;
+                                 padding:0.5vh;">
+                                 <div class="row" style="height: 6vh;padding: 0;">
+                                    <div class="col col-50" style="padding:0vh;text-align: center">
+                                      <div style="top: -0.5vh;position: relative;left:6vh">${{overViewData[business.business_id+ ":" +dataCardsOverView[0].field]| number : 0}}
+                                      </div>
+                                       <div 
+                                       ng-class=" (overViewData[business.business_id+ ':' +dataCardsOverView[0].field]  -
+                                        overViewData[business.business_id + ':' +dataCardsOverView[0].field +':budget'])/
+                                         overViewData[business.business_id + ':' +dataCardsOverView[0].field +':budget']  < 0 ? 'bg-red' : 'bg-green'"
+
+                                       style="top: -1.5vh;
+                                          position: relative;
+                                          font-size: 1.5vh;">                                    
+                                       {{(overViewData[business.business_id+ ":" +dataCardsOverView[0].field] - overViewData[business.business_id + ":" +dataCardsOverView[0].field +":budget"])|currency:'$':true}}
+                                       </div>
+                                    </div>
+                                      <div class="col" style="padding:0; ">
+                                        <div style="top: -0.5vh;position: relative;"> 
+                                          <br/>
+                                        </div>
+                                        <div 
+                                        ng-class=" (overViewData[business.business_id+ ':' +dataCardsOverView[0].field]  -
+                                        overViewData[business.business_id + ':' +dataCardsOverView[0].field +':budget'])/
+                                         overViewData[business.business_id + ':' +dataCardsOverView[0].field +':budget'] < 0 ? 'bg-red' : 'bg-green'"
+
+                                        style="top: -1.5vh;
+                                          position: relative;
+                                          font-size: 1.5vh;"">
+                                        {{
+                                         (overViewData[business.business_id+ ":" +dataCardsOverView[0].field]  -
+                                        overViewData[business.business_id + ":" +dataCardsOverView[0].field +":budget"])/
+                                         overViewData[business.business_id + ":" +dataCardsOverView[0].field +":budget"]*100 | number : 2 
+                                          }}%
+
+                                      </div>
+                                      </div>
+                                    </div> 
+                                  </div> 
+                               </div>
+                               <!-- COGS-->
+                               <div class="col col-center no-vertical-padding" >
+
+                                 <div class="item item-text-wrap text-center" 
+                                  ng-class=" ((overViewData[business.business_id+ ':' +dataCardsOverView[4].field]/
+                                         overViewData[business.business_id+ ':' +dataCardsOverView[0].field] ) -
+
+                                         (overViewData[business.business_id + ':' +dataCardsOverView[4].field +':budget']/
+                                         overViewData[business.business_id + ':' +dataCardsOverView[0].field +':budget']))  > 0 ? 'border-red' : 'border-green'"
+
+                                 style="height:6vh; margin-right: 1vh;
+                                 border-bottom: 0.3vh solid;
+                                 border-radius: 2vh;
+                                 padding:0.5vh;">
+                                 <div class="row" style="height: 6vh;padding: 0;">
+                                    <div class="col col-50" style="padding:0vh;text-align: center">
+                                      <div style="top: -0.5vh;position: relative;">${{overViewData[business.business_id+ ":" +dataCardsOverView[4].field]| number : 0}}
+                                      </div>
+                                       <div 
+                                       ng-class=" ((overViewData[business.business_id+ ':' +dataCardsOverView[4].field]/
+                                         overViewData[business.business_id+ ':' +dataCardsOverView[0].field] ) -
+
+                                         (overViewData[business.business_id + ':' +dataCardsOverView[4].field +':budget']/
+                                         overViewData[business.business_id + ':' +dataCardsOverView[0].field +':budget']))  > 0 ? 'bg-red' : 'bg-green'"
+
+                                       style="top: -1.5vh;
+                                          position: relative;
+                                          font-size: 1.5vh;">                                    
+                                       {{(overViewData[business.business_id+ ":" +dataCardsOverView[4].field] - overViewData[business.business_id + ":" +dataCardsOverView[4].field +":budget"])|currency:'$':true}}
+                                       </div>
+                                    </div>
+                                      <div class="col" style="padding:0; ">
+                                        <div style="top: -0.5vh;position: relative;"> 
+                                         {{ (overViewData[business.business_id+ ":" +dataCardsOverView[4].field]/
+                                         overViewData[business.business_id+ ":" +dataCardsOverView[0].field] )* 100 | number : 2}}%</div>
+                                        <div 
+                                        ng-class=" ((overViewData[business.business_id+ ':' +dataCardsOverView[4].field]/
+                                         overViewData[business.business_id+ ':' +dataCardsOverView[0].field] ) -
+
+                                         (overViewData[business.business_id + ':' +dataCardsOverView[4].field +':budget']/
+                                         overViewData[business.business_id + ':' +dataCardsOverView[0].field +':budget']))  > 0 ? 'bg-red' : 'bg-green'"
+
+                                        style="top: -1.5vh;
+                                          position: relative;
+                                          font-size: 1.5vh;"">
+                                        {{
+                                              ((overViewData[business.business_id+ ":" +dataCardsOverView[4].field]/
+                                         overViewData[business.business_id+ ":" +dataCardsOverView[0].field] ) -
+
+                                         (overViewData[business.business_id + ":" +dataCardsOverView[4].field +":budget"]/
+                                         overViewData[business.business_id + ":" +dataCardsOverView[0].field +":budget"]))*100 | number : 2 
+                                          }}%
+
+                                      </div>
+                                      </div>
+                                    </div> 
+                                  </div> 
+                               </div>
+                               <!-- COMBINED LABOR-->
+                               <div class=" col col-center no-vertical-padding" >
+                                 <div class="item item-text-wrap text-center" 
+                                 ng-class=" ((overViewData[business.business_id+ ':' +dataCardsOverView[3].field]/
+                                         overViewData[business.business_id+ ':' +dataCardsOverView[0].field] ) -
+
+                                         (overViewData[business.business_id + ':' +dataCardsOverView[3].field +':budget']/
+                                         overViewData[business.business_id + ':' +dataCardsOverView[0].field +':budget']))  > 0 ? 'border-red' : 'border-green'"
+
+                                 style="height:6vh; margin-right: 1vh;
+                                 border-bottom: 0.3vh solid;
+                                 border-radius: 2vh;
+                                 padding:0.5vh;">
+                                  <div class="row" style="height: 6vh;padding: 0;">
+                                    <div class="col col-50" style="padding:0vh;text-align: center">
+                                      <div style="top: -0.5vh;position: relative;">${{overViewData[business.business_id+ ":" +dataCardsOverView[3].field]| number : 0}}
+                                      </div>
+                                       <div
+                                        ng-class=" ((overViewData[business.business_id+ ':' +dataCardsOverView[3].field]/
+                                         overViewData[business.business_id+ ':' +dataCardsOverView[0].field] ) -
+
+                                         (overViewData[business.business_id + ':' +dataCardsOverView[3].field +':budget']/
+                                         overViewData[business.business_id + ':' +dataCardsOverView[0].field +':budget']))  > 0 ? 'bg-red' : 'bg-green'"
+                                          style="top: -1.5vh;
+                                          position: relative;
+                                          font-size: 1.5vh;">                                    
+                                          {{(overViewData[business.business_id+ ":" +dataCardsOverView[3].field] - overViewData[business.business_id + ":" +dataCardsOverView[3].field +":budget"])|currency:'$':true}}
+                                       </div>
+                                    </div>
+                                      <div class="col" style="padding:0; ">
+                                        <div style="top: -0.5vh;position: relative;"> {{ (overViewData[business.business_id+ ":" +dataCardsOverView[3].field]/
+                                         overViewData[business.business_id+ ":" +dataCardsOverView[0].field] )* 100 | number : 2}}%</div>
+                                        <div 
+                                         ng-class=" ((overViewData[business.business_id+ ':' +dataCardsOverView[3].field]/
+                                         overViewData[business.business_id+ ':' +dataCardsOverView[0].field] ) -
+
+                                         (overViewData[business.business_id + ':' +dataCardsOverView[3].field +':budget']/
+                                         overViewData[business.business_id + ':' +dataCardsOverView[0].field +':budget']))  > 0 ? 'bg-red' : 'bg-green'"
+                                        style="top: -1.5vh;
+                                          position: relative;
+                                          font-size: 1.5vh;"">
+                                          {{
+                                              ((overViewData[business.business_id+ ":" +dataCardsOverView[3].field]/
+                                         overViewData[business.business_id+ ":" +dataCardsOverView[0].field] ) -
+
+                                         (overViewData[business.business_id + ":" +dataCardsOverView[3].field +":budget"]/
+                                         overViewData[business.business_id + ":" +dataCardsOverView[0].field +":budget"]))*100 | number : 2 
+                                          }}%
+                                        </div>
+                                      </div>
+                                    </div> 
+                                  </div>
+                               </div>
+                               <!-- PROFIT AFTER PRIME-->
+                               <div class=" col col-center no-vertical-padding" >
+                                 <div class="item item-text-wrap text-center" 
+                                 ng-class="((overViewData[business.business_id+ ':' +dataCardsOverView[1].field]/
+                                         overViewData[business.business_id+ ':' +dataCardsOverView[0].field] ) -
+
+                                         (overViewData[business.business_id + ':' +dataCardsOverView[1].field +':budget']/
+                                         overViewData[business.business_id + ':' +dataCardsOverView[0].field +':budget'] )) > 0 ? 'border-green' : 'border-red'"
+
+                                 style="height:6vh; margin-right: 1vh;
+                                 border-bottom: 0.3vh solid #47e461;
+                                 border-radius: 2vh;
+                                 padding:0.5vh;">
+                                 <div class="row" style="height: 6vh;padding: 0;">
+                                    <div class="col col-50" style="padding:0vh;text-align: center">
+                                      <div style="top: -0.5vh;position: relative;">${{overViewData[business.business_id+ ":" +dataCardsOverView[1].field]| number : 0}}
+                                      </div>
+                                       <div 
+                                      ng-class=" ((overViewData[business.business_id+ ':' +dataCardsOverView[1].field]/
+                                         overViewData[business.business_id+ ':' +dataCardsOverView[0].field] ) -
+
+                                         (overViewData[business.business_id + ':' +dataCardsOverView[1].field +':budget']/
+                                         overViewData[business.business_id + ':' +dataCardsOverView[0].field +':budget']))  > 0 ? 'bg-green' : 'bg-red'"
+                                       style="top: -1.5vh;
+                                          position: relative;
+                                          font-size: 1.5vh;">                                    
+                                        {{(overViewData[business.business_id+ ":" +dataCardsOverView[1].field] - overViewData[business.business_id + ":" +dataCardsOverView[1].field +":budget"])|currency:'$':true}}
+                                       </div>
+                                    </div>
+                                      <div class="col" style="padding:0; ">
+                                        <div style="top: -0.5vh;position: relative;">
+                                         {{ (overViewData[business.business_id+ ":" +dataCardsOverView[1].field]/
+                                         overViewData[business.business_id+ ":" +dataCardsOverView[0].field] )* 100 | number : 2}}%</div>
+                                        <div 
+                                        ng-class=" ((overViewData[business.business_id+ ':' +dataCardsOverView[1].field]/
+                                         overViewData[business.business_id+ ':' +dataCardsOverView[0].field] ) -
+
+                                         (overViewData[business.business_id + ':' +dataCardsOverView[1].field +':budget']/
+                                         overViewData[business.business_id + ':' +dataCardsOverView[0].field +':budget'])) > 0 ? 'bg-green' : 'bg-red'"
+                                        style="top: -1.5vh;
+                                          position: relative;
+                                          font-size: 1.5vh;"">
+                                          {{
+                                              ((overViewData[business.business_id+ ":" +dataCardsOverView[1].field]/
+                                         overViewData[business.business_id+ ":" +dataCardsOverView[0].field] ) -
+
+                                         (overViewData[business.business_id + ":" +dataCardsOverView[1].field +":budget"]/
+                                         overViewData[business.business_id + ":" +dataCardsOverView[0].field +":budget"]))*100 | number : 2 
+                                          }}%
+
+                                         
+                                       
+                                       
+                                          </div>
+                                      </div>
+                                    </div> 
+                                  </div>
+                               </div>
+                     </div>
+                </div> 
+             </ion-content>
+           </div>
+         </div>
+    </span>
+    <!-- </ion-nav-view>
+    </ion-tab>
+    </ion-tabs> -->
+  </ion-content>
+</ion-view>

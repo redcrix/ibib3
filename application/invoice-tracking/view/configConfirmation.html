@@ -1,0 +1,26 @@
+<ion-modal-view class="add-info-modal" align-title="center">
+        <ion-header-bar class="bar error-reporting-modal" >
+            <h1 class="title">Confirmation</h1>
+            <button  class="button app-theme-text" style="border: none;background: #33CD5F;text-align: right;color: white;font-size: 15px" ng-click="closeModalCtrl()" >
+                Cancel
+            </button>
+        </ion-header-bar>
+        <ion-content>
+        <h4>Are you sure you want to discard changes ?</h4>
+        </ion-content>
+        <div class="bar bar-footer no-vertical-padding" style="flex-flow: column; height: auto">
+            <div class="row">
+                <div class="col">
+                    <button  class="app_theme_color" class="full-width-button  app-theme-text" ng-click="saveChanges()" style="width: 100%">
+                    Save
+                    </button>
+                </div>
+            <div class="col">
+                <button style="margin-left: 10%;width: 100%" class="full-width-button button " ng-click="discardChanges()">
+                Discard
+                </button>
+            </div>
+        </div>
+    </div>
+        
+</ion-modal-view>

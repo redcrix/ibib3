@@ -1,0 +1,24 @@
+<ion-view  align-title="center">
+    <!-- <ion-floating-button id="my-float-inv" ng-click="mapItems()"  class="custom-save" icon-color="white" icon="ion-android-checkmark-circle" button-color="#33cd5f">
+    </ion-floating-button> -->
+<ion-tabs class="tabs-icon-top tabs-top tabs-color-active-balanced inv-map-tabs" delegate-handle="myhandle" style="padding-top: 50px">
+
+    <ion-tab title="To be Mapped" icon-on="ion-ios-circle-filled" icon-off="ion-ios-circle-outline" on-select="toBeMapClick()">
+        <ion-content>
+            <ion-nav-view name="to-be-mapped-tab" style="top:15px;">
+                <to-be-mapped bar="navBarTitle" items="items"></to-be-mapped>
+            </ion-nav-view>
+        </ion-content>
+    </ion-tab>
+    <!-- ************************************************** Mapped Tab *********************************************** -->
+    <ion-tab title="Mapped" icon-on="ion-ios-checkmark" icon-off="ion-ios-checkmark-outline" on-select="mappedClick()">
+        <ion-content>
+            <ion-nav-view name="mapped-tab" style="top:95px;">
+                <mapped-tab bar="navBarTitle" items="items"></mapped-tab>
+
+            </ion-nav-view>
+        </ion-content>
+    </ion-tab>
+</ion-tabs>
+
+</ion-view>

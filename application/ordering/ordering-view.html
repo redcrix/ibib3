@@ -1,0 +1,66 @@
+<ion-view title="{{ ctrl.ordering_name }}" align-title="center" ng-init="ctrl.init()">
+    <ion-nav-buttons side="secondary">
+        <!-- <backbuttonbar navbartitle="navBarTitle"></backbuttonbar> -->
+        <button class="button button-icon icon ion-ios-search-strong" ng-click="ctrl.showFilterBar()">
+        </button>
+    </ion-nav-buttons>
+    <div class="spinner" ng-show="ctrl.showLoader" style="z-index: 10">
+        <ion-spinner icon="lines" class="spinner-calm spinner spinner-lines"></ion-spinner>
+        <div style="text-align:center;">
+           <span class="spinner-text">Pepr is working hard,</span> <br/>
+           <span class="spinner-text">Please wait!</span>
+        </div>
+    </div>
+    <span ng-show="!ctrl.showLoader">
+    <ion-header-bar  id="headerbar"  class="bar bar-subheader app-theme-color-level2 no-vertical-padding no-horizontal-padding">
+        <div class="app-theme-color-level2">
+            <!--<div class="row">-->
+                <!--<div class="col col-center no-vertical-padding">-->
+                    <!--<span ng-repeat="saveStatus in ctrl.saveStatus track by $index" class="{{ saveStatus.level }}"> {{ saveStatus.text }}</span>-->
+    <!--</div>-->
+    <!--</div>-->
+
+    <div ng-show="ctrl.isLocationAvailable" class="row">
+        <div class="col no-vertical-padding no-horizontal-padding" ng-click="ctrl.selectGrouping()">
+            <div class="row no-vertical-padding no-horizontal-padding">
+                <div class="col  col-offset-25 col-10 col-center no-vertical-padding no-horizontal-padding">
+                    <i class="icon large ion-funnel"></i>
+                </div>
+                <div class="col col-67 col-center no-vertical-padding no-horizontal-padding">
+                    <span>{{ctrl.categoryText[ctrl.currentView]}}&nbsp</span>
+                    <i class="icon ion-arrow-down-b"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div style="width: 100%; background: #E3E3E3; color: rgb(139, 69, 19); font-weight:bold; position: absolute; height: 40px; display: flex; justify-content: space-between;align-items: center;padding: 16px 16px 10px 10px;">
+        <div style="flex-basis:{{ ctrl.rowSize.name }}%; flex-shrink: 0; flex-grow: 1; white-space: normal;">Name</div>
+        <div style="flex-basis: {{ ctrl.rowSize.last }}%; flex-shrink: 0; flex-grow: 1">LO</div>
+        <div style="flex-basis: {{ ctrl.rowSize.value }}%; flex-shrink: 0; flex-grow: 1; ">Value</div>
+        <div style="flex-basis:{{ ctrl.rowSize.par }}%; flex-shrink: 0; flex-grow: 1">PAR</div>
+        <div style="flex-basis:{{ ctrl.rowSize.qih }}%; flex-shrink: 0; flex-grow: 1">QIH</div>
+        <div style="flex-basis: {{ ctrl.rowSize.order}}%; flex-shrink: 0; flex-grow: 1;text-align: end">Order</div>
+    </div>
+    </div>
+
+    </ion-header-bar>
+
+
+    <ion-content class="has-header has-subheader has-one-footer" style="margin-top: 26px; margin-bottom: 20px !important;">
+        <ion-list>
+            <ion-item ng-repeat="item in ctrl.items" style="border: 0; padding: 0;">
+                <ordering-product-category category-data="item" mode="'view'" type="'submitted'"></ordering-product-category>
+            </ion-item>
+        </ion-list>
+    </ion-content>
+    <ion-footer-bar align-title="left" style="flex-flow: column; height: auto">
+        <div class="row item-divider" style="padding: 12px;">
+            <div style=" width: 100%; display: flex;justify-content: space-around; align-items: center; flex-flow: row" class="col-100">
+                <div>Total value of Order: </div>
+                <div>${{(ctrl.totalValue || 0).toFixed(2)}}</div>
+            </div>
+        </div>
+    </ion-footer-bar>
+    </span>
+</ion-view>

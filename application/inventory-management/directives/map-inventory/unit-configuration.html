@@ -1,0 +1,153 @@
+<ion-modal-view class="unit-config-modal">
+  <!--style="width: 90%; height: 60%; top: 20%; left: 5%; right: 5%; bottom: 20%;  min-height: 50%;"-->
+    <ion-header-bar class="bar error-reporting-modal">
+      <h1 class="title" style="text-align: center;right: none;">Billing Unit</h1>
+      <a class="button" ng-click="closeUnitModal(current_selected)" ng-if="showCancelBtn">Cancel</a>
+    </ion-header-bar>
+    <!-- <button
+      style="display:hidden"
+      class="button upload-btn" id="unitConfig"
+      modal-select="" ng-model="mySelect"
+      options="measurements_list"
+      modal-title="Select Unit"
+      hide-reset='true'
+      on-select="shoutLoudUnit(newValue, oldValue)"
+      modal-class="camera-set"
+      has-search="true"
+      on-close on-reset="shoutReset()" >
+        <div class="option">
+          <h2>{{option.measurement_name}}
+          </h2>
+        </div>
+    </button> -->
+    <ion-content style="overflow: auto;">
+          <ion-slide-box show-pager="false">
+            <ion-slide>
+              <div class="box blue">
+                <h5 class="text-center">Please select a Billing unit corresponding to Invoice price</h5>
+                <form name="addUnit" ng-submit="addPopup1()" novalidate style="padding: 10px;">
+                    <div class="row">
+                        <div class="col">
+                            <div class="item-text-wrap unit-config-supplier">{{current_selected.supItems}}</div>
+                            <div class="inv-map-supplier" style="min-width: 80px;">{{current_selected.supplier}}</div>
+                            <div class="inv-map-supplier" style="margin-top: 0px;">{{current_selected.invoiceNum}}</div>
+                        </div>
+                    </div>
+                   <!-- start  -->
+                   <div class="row">
+                        <div class="col col-33">
+                            <span>Price :</span>
+                        </div>
+                        <div class="col col-33" style="padding-left: 0px;" >
+                          <div class="item-text-wrap unit-config-price-div" a>
+                         <input type="number" id="priceee" name="" ng-model="current_selected.supplierItemPrice" ng-disabled="locationAccepted" style="height: 20px;" ng-class=" locationAccepted ? 'unit-config-price-disabled' : 'unit-config-price-enabled'">
+                         </div>
+                          <div class="inv-map-supplier" style="margin-top: 0px;">{{current_selected.date *1000 | date:'medium'}}</div>
+                        </div>
+                        <div class="col col-33">
+                            <div class="button-bar no-vertical-padding unit-config-price-wrong-div">
+                                <a class="button button-small "
+                                   ng-class="(PnLOption.name == item.selectedName) ? 'button-bal' : 'button-out '"
+                                   class="button button-small"
+                                   ng-click="priceClick(current_selected)" style="padding: 0 0px;">
+                                  <div class="row no-vertical-padding no-horizontal-padding">
+                                      <div class="col col-center no-vertical-padding no-horizontal-padding" style="color:red;">
+                                          Price wrong?
+                                      </div>
+                                  </div>
+                                </a>
+                            </div>
+                        </div>
+                  </div>
+                  <!-- stop -->
+
+                  <!-- start select unit -->
+                  <div class="row">
+                    <div class="col col-33">
+                      <span>Select Unit :</span>
+                    </div>
+                    <div class="col col-33">
+                       <select class="unit-select-box"  name="singleSelect" ng-model="current_selected.measurementId" placeholder="Search" required>
+                          <option value="{{units.measurement_id}}" ng-repeat="units in measurements_list" placeholder="Search">{{units.measurement_name}}</option>
+                        </select>
+                        <i class="icon ion-arrow-down-b inv-config-arrow" style="position: absolute;right: 10px;color: black;margin-right: 35%;margin-top: -7%;"></i>
+                        <p ng-show="addUnit.singleSelect.$invalid && addUnit.singleSelect.$touched" class="help-block error">Unit is required.</p>
+                    </div>
+                  </div>
+                  <!-- stop -->
+                  <div class="popup-buttons">
+                      <!-- <button type="button" class="button button-default " ng-class="button-default" ng-click="closeUnitModal(current_selected)">Cancel</button> -->
+                      <button type="submit" class="button button-bal " ng-disabled="addUnit.$invalid" ><b>Add</b></button>
+                      <!-- <button class="button button-bal " ng-click="setUnit()" ><b>Test</b></button> -->
+                  </div>
+                </form>
+              </div>
+            </ion-slide>
+            <ion-slide>
+              <div class="box blue">
+                <!-- <button ng-click="nextSlide()">Next slide!</button> -->
+                <h5 class="text-center">Your inventory unit is in {{current_selected.measurementId}}.</h5>
+
+                <form name="addUnitCovFactor" ng-submit="addPopup2()" novalidate style="padding: 10px;">
+
+                          <div class="row" style="margin-left: 8%;">
+                              <div class="col col-33" style="text-align: right;">
+                                <span class="unit-config2-span">
+                                  How many
+                                </span>
+                              </div>
+
+                              <div class="col col-33">
+                                <span class="unit-config2-num-field">
+                                <input type="number" name="size" ng-model="current_selected.convertion_factor" required>
+                                </span>
+                                <p ng-show="addUnitCovFactor.size.$invalid && addUnitCovFactor.size.$touched" class="help-block error">size is required.</p>
+                              </div>
+                              <div class="col col-33">
+                                <!-- <span class="unit-config2-span">
+                                  {{current_selected.measurementId}}
+                                </span> -->
+                                <span class="unit-config2-num-field">
+                                  <select class="unit-select-box" name="singleSelectOne"  ng-model="current_selected.selected_measurement_id" required>
+                                    <option value="{{units.measurement_id}}" ng-repeat="units in measurements_list">{{units.measurement_name}}</option>
+                                  </select>
+                                  <i class="icon ion-arrow-down-b inv-config-arrow" style="position: absolute;right: 6px;color: black;top: 27%;"></i>
+                                </span>
+                                <br><br>
+                                <p ng-show="addUnitCovFactor.singleSelectOne.$invalid && addUnitCovFactor.singleSelectOne.$touched" class="help-block error">Unit is required.</p>
+                              </div>
+                          </div>
+                          <div class="row" style="margin-left: 8%;">
+                              <div class="col col-33" style="text-align: right;">
+                                <span class="unit-config2-span">
+                                  is in one
+                                </span>
+                              </div>
+                              <div class="col col-33">
+                                <span class="unit-config2-num-field">
+                                  <select class="unit-select-box" name="singleSelectOne"  ng-model="current_selected.conv_measurement_id" required>
+                                    <option value="{{units.measurement_id}}" ng-repeat="units in measurements_list">{{units.measurement_name}}</option>
+                                  </select>
+                                  <i class="icon ion-arrow-down-b inv-config-arrow" style="position: absolute;color: black;margin-right: 31%;top: 50%;right:0px;"></i>
+                                </span>
+                                <br><br>
+                                <p ng-show="addUnitCovFactor.singleSelectOne.$invalid && addUnitCovFactor.singleSelectOne.$touched" class="help-block error">Unit is required.</p>
+                              </div>
+                              <div class="col col-33">
+                              </div>
+                          </div>
+                          <div class="popup-buttons">
+                              <button type="submit" class="button button-bal " ng-disabled="addUnitCovFactor.$invalid">Save</button>
+                              <button type="button" class="button button-bal " ng-click="closeUnitModal(current_selected)"><b>I don't know</b></button>
+                          </div>
+                </form>
+              </div>
+            </ion-slide>
+          </ion-slide-box>
+      </ion-content>
+    <!-- <ion-footer-bar>
+      <button class="full-width-button app-theme-text" ng-click="confirmSave()" ng-class="saveButtonColor">
+                {{ saveButtonText }}
+            </button>
+    </ion-footer-bar> -->
+</ion-modal-view>

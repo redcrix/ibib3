@@ -1,0 +1,27 @@
+<ion-modal-view class="supplier-confirm">
+   <ion-header-bar>
+      <h1 class = "title">Add image</h1>
+   </ion-header-bar>
+
+   <ion-content>
+     <!-- <div class="button-bar">
+       <a class="button button-full app-theme-color-level2"  style="margin-top: 0px;" ng-click="showCamera('myPromptCameras')">
+           {{mySupplier.supplier_name}}
+       </a>
+     </div> -->
+     <ion-item  class="item-button-right">
+         {{mySupplier.supplier_name}}
+         <div class="buttons" style="right:0px">
+           <button class="button app-theme-color-level2" ng-click="showCamera(buttonName)">
+               <i class="icon ion-compose"></i>
+           </button>
+         </div>
+     </ion-item>
+
+     <div class="text-center padding"> Do you want to add more ? </div>
+     <div class="popup-buttons">
+         <button ng-click="closeModal(0)" class="button button-default" >No</button>
+         <button ng-click="closeModal(1)" class="button button-bal" ><b>Yes</b></button>
+     </div>
+   </ion-content>
+</ion-modal-view>

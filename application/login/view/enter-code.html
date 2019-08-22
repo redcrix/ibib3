@@ -1,0 +1,32 @@
+<script id="form-errors.html" type="text/ng-template">  
+  <div class="form-error" ng-message="required">This field is required.</div>
+  <div class="form-error" ng-message="minlength">This field is must be at least 5 characters.</div>
+  <div class="form-error" ng-message="maxlength">This field is must be less than 50 characters</div>
+</script> 
+<ion-view view-title="Forgot Password" align-title="Left" ng-controller="forgotPwCtrl">
+    <backbuttonbar navbartitle="navBarTitle"></backbuttonbar>
+    <!-- <busyspinner spinnerhide="spinnerHide"></busyspinner>
+    <span ng-if="spinnerHide"> -->
+
+
+    <!-- <ion-content class="has-header has-subheader" style="top: 100px; bottom: 44px;"> -->
+    <h3 class="text-center">Enter Your Code</h3> 
+    <ion-content class="has-header has-subheader padding" >
+
+        <div class="text-center paid">
+          Check your mail or SMS and enter the code here.
+        </div>
+        <form name="enterCode">
+            <div class="list list-inset">
+                <label class="item item-input" ng-class="{ 'has-error' : enterCode.code.$invalid}">
+                    <input type="text" name="code" placeholder="Enter Code" ng-model="reset.code" required>
+
+                </label>
+                <div class="form-errors" ng-messages="enterCode.code.$error" ng-messages-include="form-errors.html"></div>
+            </div>
+            <button class="button button-full app-theme-color app-theme-text" ng-click="resetPassword()" ng-disabled="enterCode.$invalid">
+                Submit
+            </button>
+        </form>
+    </ion-content>
+</ion-view>

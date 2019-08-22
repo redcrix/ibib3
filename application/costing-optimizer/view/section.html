@@ -1,0 +1,18 @@
+<ion-view view-title="{{ section.section_name  | titleCase  }}" ng-init="onSectionInit()"
+          ng-controller="MarginOptimizerCtrl">
+    <button class="button button-bal icon ion-clipboard float-button button-fab-bottom-right"
+            ui-sref="app.dashboard.tasks()" fab>
+        <!--<div style="font-size:xx-small;margin-top:-8px;">Dashboard</div>-->
+    </button>
+    <backbuttonbar navbartitle="navBarTitle"></backbuttonbar>
+    <busyspinner spinnerhide="spinnerhide"></busyspinner>
+    <div ng-show="spinnerhide">
+
+        <ion-content class="has-header">
+            <filterbuttonbar filterbuttons="filterButtons"></filterbuttonbar>
+            <marginoptimizeritemlist section="section" hidemore="true" itemdisplaylimit="99999"
+                                     sortingclass="userSortingClass()"></marginoptimizeritemlist>
+
+        </ion-content>
+    </div>
+</ion-view>

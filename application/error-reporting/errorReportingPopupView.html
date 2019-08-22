@@ -1,0 +1,92 @@
+<ion-modal-view>
+  <form name="itemEdit">
+    <ion-header-bar class="bar error-reporting-modal">
+      <h1 class="title">Error Report</h1>
+      <a class="button" ng-click="closeModalCtrl()">Cancel</a>
+    </ion-header-bar>
+    <ion-content>
+      <busyspinner spinnerhide="dataReceived"></busyspinner>
+      <span ng-if="dataReceived">
+            <div class="row">
+                <div class="col col-33 col-center">
+                    Page:
+                </div>
+                <div class="col col-67 col-center">{{ reportedItem.page | titleCase}} </div>
+            </div>
+
+            <div class="row">
+
+                <div class="col col-33 col-center">
+                     Component:
+                </div>
+                <div class="col col-67 col-center">{{ reportedItem.component | titleCase }} </div>
+
+            </div>
+
+            <!--<div class="row">-->
+                <!--<div class="col col-33 col-center">Location: </div>-->
+                <!--<div class="col col-67 col-center">-->
+                    <!--<select class="error-report-select" ng-model="errorReport.selectedStore"-->
+                            <!--ng-options="option.store_id as option.store_name for option in stores"-->
+                            <!--ng-model-options="{ debounce: 100 }">-->
+                    <!--</select>-->
+                <!--</div>-->
+            <!--</div>-->
+
+            <!--<div class="row">-->
+                <!--<div class="col col-33 col-center">-->
+                    <!--Error:-->
+                <!--</div>-->
+                <!--<div class="col col-67 col-center">-->
+                    <!--<select class="settings-select" ng-model="errorReport.error_message"-->
+                            <!--ng-options="option.error_id as option.error_message for option in cannedErrorOptions"-->
+                            <!--ng-model-options="{ debounce: 100 }">-->
+                    <!--</select>-->
+                <!--</div>-->
+
+
+            <!--</div>-->
+
+
+            <ion-list>
+                <span ng-repeat="option in cannedErrorOptions track by $index">
+                    <ion-item class="no-horizontal-padding no-vertical-padding" style="width:90%; left:5%; right:5%;" ng-click="selectError($index)">
+                        <div class="row" ng-class="option.selected? 'selected-error-msg justbolder' : 'un-selected-error-msg'">
+                            <div class="col">
+                                {{ option.error_message }}
+                            </div>
+                        </div>
+                    </ion-item>
+
+                </span>
+
+      </ion-list>
+
+      <div class="row" ng-if="errorReport.selected_error.error_message == 'Custom' || errorReport.selected_error.error_message == 'Units is Incorrect' || errorReport.selected_error.error_message == 'Price is incorrect' || errorReport.selected_error.error_message == 'Price is Incorrect'">
+        <div class="col">
+          <label class="item item-input text" ng-if="errorReport.selected_error.error_message == 'Custom'">
+                    <textarea placeholder="Please describe in detail the error you encountered" rows="5" ng-model="errorReport.comments" ng-Required="true" name="description"></textarea>
+          </label>
+          <label class="item item-input text" ng-if="errorReport.selected_error.error_message == 'Units is Incorrect'">
+                    <textarea placeholder="Please enter the expected units" rows="5" style=" -webkit-appearance: none;
+                    -moz-box-shadow: inset 0 0 10px #11c1f3 !important;
+                    -webkit-box-shadow: inset 0 0 10px #11c1f3 !important;
+                    box-shadow: inset 0 0 10px #11c1f3 !important;"
+                    ng-model="errorReport.comments" ng-Required="true" name="description"></textarea>
+          </label>
+          <label class="item item-input text" ng-if="errorReport.selected_error.error_message == 'Price is incorrect' || errorReport.selected_error.error_message == 'Price is Incorrect'">
+                    <textarea placeholder="Please enter the expected price" rows="5" ng-model="errorReport.comments" ng-Required="true" name="description"></textarea>
+          </label>
+        </div>
+      </div>
+
+
+      </span>
+    </ion-content>
+    <div class="bar buttonbar-footer-larger no-vertical-padding">
+      <button class="full-width-button app-theme-text" ng-click="sendErrorReport()" ng-class="sendButtonColor">
+                {{ sendButtonText }}
+            </button>
+    </div>
+  </form>
+</ion-modal-view>

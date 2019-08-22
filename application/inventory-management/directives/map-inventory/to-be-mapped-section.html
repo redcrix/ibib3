@@ -1,0 +1,62 @@
+
+    <!-- <ion-floating-button id="my-float-inv" ng-click="mapItems()"  class="custom-save" icon-color="white" icon="ion-android-checkmark-circle" button-color="#33cd5f">
+    </ion-floating-button> -->
+    <!-- <ion-content> -->
+           <ion-nav-view name="to-be-mapped-tab" style="top:135px;">
+                <busyspinner spinnerhide="dataReceived" class="inv-mapping-spinner"></busyspinner>
+
+                <button style="display:hidden" class="button upload-btn" id="{{my_map}}" modal-select="" ng-model="mySelect" options="editInv.supItems"  modal-title="Select Inventory" hide-reset='true' on-select="shoutLoud(newValue, oldValue)" modal-class="camera-set" has-search="true"  on-close on-reset="shoutReset()" >
+                    <div class="option">
+                      <h2 ng-style=" option.supItemAlias== 'Create New Inventory Item' ? {'color':'blue'} : {'color':'black'}">{{option.supItemAlias}}
+                        <span class="inv-map-supplier" ng-show="option.supItemId">({{option.category}})</span>
+                      </h2>
+                    </div>
+                </button>
+                <span ng-show="dataReceived" class="map-inv-list">
+                    <!-- <ion-list class="map-inv-list"> -->
+                        <div class="text-center item app-theme-text-level2" ng-if="supplierItems.length <= 0 && dataReceived">
+                            No Information Available
+                        </div>
+                        <ion-item style="padding: 0px 9px 0px 0px;" ng-repeat="items in supplierItems | filter:searchText  | orderBy:'supItems'  track by $index" ng-if="!items.saved && items.supItems && !items.isNA && (!items.invItemId || items.invItemId.length == 0)">
+
+                        <!-- <ion-item style="padding: 0px 9px 0px 0px;" collection-repeat="items in supplierItems | filter:searchText | orderBy:'supItems' | filter : {isShowing: true} track by $index"  item-height="120" item-width="100%"> -->
+                        <!-- <ion-item style="padding: 0px 9px 0px 0px;" ng-repeat="items in getSupplierItems()  | orderBy:'supItems' track by $index" ng-if="!item.saved">  -->
+                            <div class="row">
+                                <div class="col col-33">
+                                    <input type="hidden" name="" value="{{items.supItemIds}}">
+                                    <div class="item-text-wrap" style="line-height: 20px;font-size: 14px;">{{items.supItems}}</div>
+                                    <div class="inv-map-supplier" style="">{{items.supplier}}</div>
+                                    <div class="inv-map-supplier" style="margin-top: 0px;">{{items.supItemIds}}</div>
+
+                                </div>
+                                <div class="col col-33" style="padding-left: 0px;" >
+
+                                    <div class="item item-input-inset" ng-click="setInventory(items,1,$index)" style="border:none;padding: 0px;cursor: auto;width: 140%;margin-top: 10%" >
+                                        <div class="item-input-wrapper" style="background: {{items.bg}}">
+                                          <i class="icon ion-ios-search" ></i>
+                                         <b> <input type="text" ng-model="items.selectedInvItemId.supItemAlias" placeholder="Search" class="map-inv-drop-down"  disabled></b>
+                                          <i class="icon ion-arrow-down-b" style="position: absolute;right: 10px;color: {{items.color}}"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col col-33 col-offset-10">
+                                    <ul class="list inv-item-mapping-na-ul">
+                                        <li class="item item-toggle" style="padding: 6px;border: none;font-size: 12px;font-weight: bold;">
+                                            NA
+                                            <label class="toggle toggle-balanced inv-item-mapping-na">
+                                            <input type="checkbox" ng-disabled="false" ng-model="items.isNA" ng-change="detectNA(items,$index)">
+                                            <div class="track">
+                                                <div class="handle"></div>
+                                            </div>
+                                            </label>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </ion-item>
+                    <!-- </ion-list> -->
+                </span>
+
+        </ion-nav-view>
+
+    <!-- </ion-content>         -->

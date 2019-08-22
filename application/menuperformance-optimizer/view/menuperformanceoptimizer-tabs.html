@@ -1,0 +1,35 @@
+<ion-view view-title="Menu Performance Optimizer" ng-controller="MenuPerformanceOptimizerCtrl"
+          ng-init="onMenuPerformanceOptimizerInitHandler()">
+
+    <button class="button button-positive icon ion-clipboard float-button button-fab-bottom-right"
+            ui-sref="app.dashboard.tasks()" fab>
+        <!--<div style="font-size:xx-small;margin-top:-8px;">Dashboard</div>-->
+    </button>
+    <!--<button class="button button-positive icon ion-ios-gear float-button button-fab-top-left"-->
+    <!--ng-click="showMenus()" fab>-->
+    <!--&lt;!&ndash;<div style="font-size:xx-small;margin-top:-8px;">Dashboard</div>&ndash;&gt;-->
+    <!--</button>-->
+
+
+    <ion-tabs class="tabs-icon-top tabs-color-active-balanced">
+
+
+        <!-- Food Tab -->
+        <div ng-controller="MenuPerformanceOptimizerCtrl">
+            <ion-tab title="Food" icon="ion-android-restaurant" ng-click="FoodtabClickHandler()"
+                     class="{{CategoryExists('Food')}}">
+                <ion-nav-view name="tab-Food"></ion-nav-view>
+            </ion-tab>
+        </div>
+        <!-- Liquor Tab -->
+        <div ng-controller="MenuPerformanceOptimizerCtrl">
+            <ion-tab title="Liquor" icon="ion-android-bar" ng-click="LiquortabClickHandler()"
+                     class="{{CategoryExists('Liquor')}}">
+
+                <ion-nav-view name="tab-Liquor"></ion-nav-view>
+
+            </ion-tab>
+        </div>
+
+    </ion-tabs>
+</ion-view>

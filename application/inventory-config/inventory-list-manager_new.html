@@ -1,0 +1,181 @@
+<ion-view title="Inventory List Manager" align-title="center" ng-init="InventoryListManagerCtrl_new.init()">
+
+	<ion-content class="container-fluid" style="padding: 20px;">
+		<div class="container-fluid">
+			<form>
+				<div class="col-lg-4">
+					<label class="item item-input rcorners">
+						<input class="webInputSearch" type="text" placeholder="Search" ng-model="searchAll">
+						<i class="icon ion-search placeholder-icon" style="margin-right: 10px"></i>
+					</label>
+				</div>
+				<div class="col-lg-4"></div>
+				<div class="col-lg-4">
+					<label class="toggle toggle-balanced" style="top: 0px;">
+						<input type="checkbox" ng-model="adddeactive" ng-true-value="" ng-false-value="'active'"><!-- ng-change="showDeactive(adddeactive)"-->
+						<div class="track">
+							<div class="handle"></div>
+						</div>
+					</label>
+					<span style="vertical-align: top;">View deactivated inventory items</span>
+				</div>
+			</form>
+
+			<div id="my_row" class="row">
+				<div class="col">
+					<button type="button" ng-click="addInvItem()" class="btn btn-sm btn-warning">Add Inventory Item</button>
+				</div>
+				<div class="col">
+					<button type="button" ng-click="updateInvItem()" class="btn btn-sm btn-info">Save</button>
+				</div>
+			</div>
+		</div>
+
+		<!-- 	<div ui-grid="{ data: users }" class="myGrid"></div> -->
+		<div id="grid1" ui-grid="gridOptions" ui-grid-expandable class="grid" ng-if="gridOptions.data && gridOptions.data.length>0"></div>
+		<!-- <div id="grid1" ui-grid="gridOptions"  ui-grid-grouping class="grid"></div> -->
+		<div ng-repeat="category in categoryList" style="margin-top: 10px;
+																											border-style: solid;
+																											border-width: 0.5px;
+																											border-radius: 5px;">
+			<div class="item-stable" ng-click="toggleGroup(category)" ng-class="{active: isGroupShown(category)}" style="height: 35px;display: table;overflow: hidden;">
+				<div style="display: table-cell; vertical-align: middle;padding-left: 10px;">
+					<i class="icon" ng-class="isGroupShown(category) ? 'ion-minus' : 'ion-plus'"></i>
+					&nbsp;
+					{{category}}
+				</div>
+			</div>
+			<div ui-grid="{ data: inventoryList[category] }" class="myGrid" ng-style="{ 'display' : isGroupShown(category) ? 'block' : 'none' }"></div>
+			<div id={{item.inv_item_id}} ng-repeat="item in inventoryList[category]" ng-show="isGroupShown(category)">
+				<div style="margin: 12px;
+										border-style: solid;
+										border-width: 0.5px;
+										border-radius: 5px;">
+					<div class="row" ng-model="item.disableEdit">
+						<div class="col item-stable" ng-click="toggleItems(item);fetchSupplierDetails(item.inv_item_id);" ng-class="{active: isInvListShown(item)}">
+							<i class="icon" ng-class="isInvListShown(item) ? 'ion-minus' : 'ion-plus'"></i>
+							&nbsp;
+						</div>
+						<div class="col">{{item.item_name}}</div>
+						<div class="col">{{item.units}}</div>
+						<div class="col"><input type="text" placeholder={{item.unit_price}} ng-disabled={{editMode}}></div>
+						<div class="col">{{item.price_change}}</div>
+						<div class="col"><input type="text" placeholder={{item.par}} ng-disabled={{editMode}}></div>
+						<div class="col"><select ng-disabled="item.disableEdit">
+								<option ng-repeat="category in categoryList">{{category}}</option>
+							</select></div>
+						<div class="col"><select ng-disabled={{editMode}}>
+								<option ng-repeat="plCategory in plCategoryList">{{plCategory}}</option>
+							</select></div>
+						<div class="col"><input type="checkbox" ng-checked="item.Auto_update =='active'" ng-disabled={{editMode}}></div>
+						<div class="col"><input type="checkbox" ng-checked="item.active =='active'" ng-true-value="'active'" ng-false-value="'inactive'"" ng-disabled={{editMode}}></div>
+			<div class=" col"><button ng-click="editRow(item)">Edit</button></div>
+						<div class="col"><button>Duplicate</button></div>
+						<div class="col"><button>Delete</button></div>
+					</div>
+					<div class="row" ng-repeat="suppData in supplierDataList" ng-show="isInvListShown(item)">
+						<div class="col">{{suppData.supp_name}}</div>
+						<div class="col">{{suppData.item_num}}</div>
+						<div class="col">{{suppData.desc}}</div>
+						<div class="col">{{suppData.unit}}</div>
+						<div class="col">{{suppData.unit_price}}</div>
+						<div class="col">{{suppData.purchase_date}}</div>
+						<div class="col">{{suppData.billing_units}}</div>
+						<div class="col">{{suppData.billing_price}}</div>
+						<div class="col"><button>Delete</button></div>
+					</div>
+				</div>
+			</div>
+			<script id="add-inventory-item-modal.html" type="text/ng-template">
+				<ion-modal-view >
+        <ion-content style="overflow: auto;">
+
+          <div class="col col-90"><h1 class="text-center add-inv-header-name">{{addPopTitle}}</h1></div>
+          <form name="form.addInvItem" ng-submit="addInventoryItem()" novalidate style="padding: 10px;">
+
+            <div class="row">
+              <div class="col-lg-4 add-inv-div-web">
+                <label for="fname">Item Name<span style="color: #ff1744;">*</span> :</label>
+              </div>
+              <div class="col-lg-8">
+                <input class="form-control input-sm webInput" placeholder="Inventory Item Name" name="invName" type="text" ng-model="invItem.name" ng-maxlength="20" required/>
+                <p ng-show="form.addInvItem.invName.$error.required && form.addInvItem.invName.$touched" class="help-block error">Inventory Item Name is required.</p>
+                <p ng-show="form.addInvItem.invName.$error.maxlength" class="help-block error">Inventory Item Name is too long</p>
+              </div>
+            </div>
+
+            <div class="row add-inv-div-web">
+              <div class="col-lg-4">
+                <label for="Cname">Category<span style="color: #ff1744;">*</span> :</label>
+              </div>
+              <div class="col-lg-8">
+                <select class="web-select form-control" ng-model="invItem.category" name="invCategory" required="" ng-options="addCat for addCat in getInventoryItemInfoWeb.category">
+                <option value="" disabled selected>Category</option>
+                </select>
+                <p ng-show="form.addInvItem.invCategory.$invalid && form.addInvItem.invCategory.$touched" class="help-block error">Category is required.</p>
+              </div>
+            </div>
+
+            <div class="row add-inv-div-web">
+              <div class="col-lg-4">
+                <label for="lname">P&L Category<span style="color: #ff1744;">*</span> :</label>
+              </div>
+              <div class="col-lg-8">
+                <select class="web-select form-control" ng-model="invItem.pl_cat" name="invplCategory" required="" ng-options="addPLCat for addPLCat in getInventoryItemInfoWeb.pl_cat">
+                <option value="" disabled selected>P&L Category</option>
+                </select>
+                <p ng-show="form.addInvItem.plcategory.$invalid && form.addInvItem.plcategory.$touched" class="help-block error">P&L Category is required.</p>
+              </div>
+            </div>
+
+            <div class="row add-inv-div-web">
+              <div class="col-lg-4">
+                <label for="lname">Units<span style="color: #ff1744;">*</span> :</label>
+              </div>
+              <div class="col-lg-8">
+                 <select class="web-select form-control" ng-model="invItem.measurement" name="invUnit" required="" ng-options="addUnits for addUnits in getInventoryItemInfoWeb.units" ng-disabled="addDuplicate">
+                <option value="" disabled selected>Units</option>
+                </select>
+                <p ng-show="form.addInvItem.invUnit.$invalid && form.addInvItem.invUnit.$touched" class="help-block error">Unit is required.</p>
+              </div>
+            </div>
+            <div class="row add-inv-div-web">
+              <div class="col-lg-4">
+                <label for="fname">Unit Price<span style="color: #ff1744;">*</span> :</label>
+              </div>
+              <div class="col-lg-8">
+                <input class="form-control input-sm webInput" placeholder="Unit Price" name="invPrice" type="number"  ng-model="invItem.price" required ng-blur="checkVal(invItem.price)" ng-change="toTwoDigit(invItem.price)" string-to-number ng-disabled="addDuplicate"/>
+                <p ng-show="form.addInvItem.invPrice.$invalid && form.addInvItem.invPrice.$touched" class="help-block error">Price is required.</p>
+                <p ng-show="PriceError" class="help-block error">Please enter number only.</p>
+              </div>
+            </div>
+             <div class="row add-inv-div-web">
+              <div class="col-lg-4">
+                <label for="fname">Par Value :</label>
+              </div>
+              <div class="col-lg-8">
+                <input class="form-control input-sm webInput" placeholder="Par Value" type="number" name="invPAr" ng-model="invItem.par" ng-change="toTwoDigitPar(invItem.par)" string-to-number/>
+                <p ng-show="form.addInvItem.invPAr.$invalid && form.addInvItem.invPAr.$touched && form.addInvItem.invPAr.$error.number" class="help-block error">Please enter number only.</p>
+              </div>
+            </div>
+             <div class="row add-inv-div-web">
+              <div class="col-lg-4">
+                <label for="fname">Insert at position :</label>
+              </div>
+              <div class="col-lg-8">
+                <input class="form-control input-sm webInput" placeholder="Insert at position" type="number" class="add-inv-par" name="invPos" ng-model="pos" ng-change="toTwoDigitPar(pos)" string-to-number/>
+              </div>
+              <p ng-show="form.addInvItem.invPos.$invalid && form.addInvItem.invPos.$touched && form.addInvItem.invPos.$error.number" class="help-block error">Please enter number only.</p>
+            </div>
+            <div class="popup-buttons">
+                <button type="button" class="button button-default " ng-class="button-default" ng-click="closeModal()">Cancel</button>
+                <button type="submit" class="button button-bal " ng-disabled="form.addInvItem.$invalid" ><b>Add</b></button>
+            </div>
+          </form>
+        </ion-content>
+      </ion-modal-view>
+    </script>
+		</div>
+
+	</ion-content>
+</ion-view>

@@ -1,0 +1,77 @@
+<ion-item ng-if="item.showItem" class="no-padding">
+  <div id="menu-list_{{item.menuItem}}" class="row smaller paddingzero" ng-click="goToItem()">
+    <div class="col col-50 no-right-padding">
+      <!-- <div class="row no-right-padding item-text-wrap justbolder" on-hold="showCoversion(item)">{{::(item.menuItemName | titleCase) }}</div> -->
+      <div class="row no-right-padding item-text-wrap justbolder">{{::(item.menuItemName | titleCase) }}</div>
+      <div class="row">
+        <div class="col">
+          <iconquantity iconname="priceicon" iconsize="'large'" quantity="iconedPrice" quantitytext="'PRICE'" showtext="true">
+          </iconquantity>
+        </div>
+        <div class="col">
+          <iconquantity iconname="quantityicon" iconsize="'large'" quantity="iconedQuantity" quantitytext="'QUANTITY'" showtext="true">
+          </iconquantity>
+        </div>
+
+      </div>
+
+    </div>
+    <div class="col">
+
+      <div class="row">
+        <div class="col col-10"><i class="icon larger {{ ::getIcon('sales') }}"></i></div>
+        <div class="col col-50">
+          <progress style="margin-left:6px; margin-top: 0px; margin-bottom: 0px;" class="thresholdmeter" max="{{::item.maxSales}}" value={{::item.dollarSales}}></progress>
+        </div>
+        <div class="col">{{ ::(item.dollarSales | currency:'$':0) }}</div>
+        <!--<div style="font-size:70%;">(sales)</div>-->
+      </div>
+      <!-- <div ng-if="item.costPercent*100>0" class="row"> -->
+      <div ng-if="item.baseCost>0" class="row">
+        <div class="col col-10"><i class="icon larger {{ ::getIcon('cost') }}"></i></div>
+        <div class="col col-50">
+          <progress style="margin-left:6px; margin-top: 0px; margin-bottom: 0px;" class="thresholdmeter" ng-class="(item.costPercent*100)>item.menuItemThresholdCost? 'redflag':'greenflag'" max="1" value="{{ ::item.costPercent }}"></progress>
+        </div>
+        <div class="col">{{::((item.costPercent*100) | number:0)}}%
+          <!--<div style="font-size:70%;">(cost percentage)</div>-->
+        </div>
+      </div>
+      <!-- <div ng-if="item.baseCost*100<=0" class="row small-info">
+                <div class="col">Recipe unavailable
+                </div>
+            </div> -->
+      <div ng-if="item.baseCost<=0" class="row small-info">
+        <div class="col">recipe unavailable
+        </div>
+      </div>
+      <div ng-if="item.basePrice*100<=0 && item.baseCost*100>0" class="row small-info">
+        <div class="col">Update Menu Price
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--<div class="col col-5 col-center" ng-click="showReportPopover($event,'menu item')" style="float: right;padding-right: 1em;margin-top: -4em;">-->
+  <!--<i class="icon larger ion-android-more-vertical"></i>-->
+  <!--</div>-->
+  <div class="col col-5 error-reporting-center" ng-click="showReportPopover($event, 'menu item')" style="float: right;">
+    <i class="icon larger ion-android-more-vertical"></i>
+  </div>
+
+  <!--<ion-option-button class="button-balanced icon ion-ios-arrow-forward mediumsize"-->
+  <!--ng-click="decide('Margin Optimizer','Change Price', item)"> &nbspChange price-->
+  <!--</ion-option-button>-->
+  <!--<ion-option-button class="button-assertive icon ion-close-circled mediumsize"-->
+  <!--ng-click="decide('Margin Optimizer','Remove', item)"> &nbspRemove-->
+  <!--</ion-option-button>-->
+
+  <ion-option-button class="button-balanced icon ion-ios-arrow-forward mediumsize" ng-click="decide(item)"> &nbspAdd Task
+  </ion-option-button>
+  <!-- <ion-option-button class="button-energized" ng-click="editConfig(item)"> Edit Config
+    </ion-option-button>
+ -->
+
+
+</ion-item>
+<span ng-if="showdetails">
+  <detailedmenuitemsales getdataoninit="getdataoninit" item="item" ifeven="ifeven"></detailedmenuitemsales>
+</span>

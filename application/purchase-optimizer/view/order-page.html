@@ -1,0 +1,21 @@
+<ion-view title="{{pageTitle}}" ng-controller="PurchaseOptimizerCtrl" ng-init="onOrderPageInit()">
+     <backbuttonbar navbartitle="navBarTitle"></backbuttonbar>
+    <busyspinner spinnerhide="spinnerhide"></busyspinner>
+    <div ng-show="spinnerhide">
+
+        <ion-content class="has-header">
+                <purchaseitemlist section="new_orders" hidemore="true" itemdisplaylimit="99999"
+                                         filterperformanceclass="filterPerformanceClass"
+                                         userperformanceclass="userPerformanceClass"></purchaseitemlist>
+        </ion-content>
+
+    </div>
+    <ion-footer-bar ng-click="confirmOrder()" align-title="left" class="app-theme-color app-theme-text">
+        <div class="row ">
+            <div style=" margin-left: auto; margin-right: auto; display: block;" class="col-100 app-theme-text">
+               Confirm Order
+            </div>
+        </div>
+
+    </ion-footer-bar>
+</ion-view>

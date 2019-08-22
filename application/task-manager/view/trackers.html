@@ -1,0 +1,39 @@
+<ion-view title="My Dashboard">
+    <div class="bar bar-subheader bar-stable app-theme-color app-theme-text">
+        <div class="buttons" ng-show="items.length>0">
+            <button class="button button-icon icon ion-ios-minus-outline" ng-click="buttons.ShowDelete = !buttons.ShowDelete;"></button>
+        </div>
+        <h3 class="title">Tracked Items</h3>
+    </div>
+    <ion-content class="has-subheader">
+
+        <ion-list show-delete="buttons.ShowDelete">
+            <!--show-reorder="shouldShowReorder">-->
+            <ion-item ng-repeat="item in items" ng-class-odd="'oddlist'">
+
+                <div class="row">
+                    <div class="col col-60 item-text-wrap">{{item.name}}<br>
+                        <div class="small-text">(from :{{item.source}})</div>
+                    </div>
+
+                    <div class="col col-20">{{item.punit}}{{item.value| number:1}}{{item.tunit}}
+                        <br>
+                        <div class="small-text">({{item.property}})</div>
+                    </div>
+                    <div class="col col-20">
+                        <i class="icon" ng-class="item.change>0 ? 'ion-arrow-up-b redflag' : 'ion-arrow-down-b greenflag'"></i> {{item.change| makePositive | number:1}}
+                    </div>
+                </div>
+                <ion-delete-button class="ion-minus-circled" ng-click="items.splice($index, 1)">
+                </ion-delete-button>
+                <!--<ion-reorder-button class="ion-navicon"-->
+                <!--on-reorder="reorderItem(item, $fromIndex, $toIndex)">-->
+                <!--</ion-reorder-button>-->
+                <!--<ion-option-button class="button-outline icon"-->
+                <!--ng-class = "item.actiontaken ? 'button-assertive ion-android-cancel' : 'button-balanced ion-checkmark-circled'"-->
+                <!--ng-click="toggledone($index)"></ion-option-button>-->
+
+            </ion-item>
+        </ion-list>
+    </ion-content>
+</ion-view>

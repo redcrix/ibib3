@@ -1,0 +1,43 @@
+.side-menu-bg-color {
+  /*background-color: rgb(1, 170, 173) !important;*/
+    background-color: #33cd5f !important;
+}
+
+.side-menu-toggle {
+  color: white !important;
+}
+
+.side-menu-selection-active {
+/*  color: rgba(239, 71, 58, 0.95);*/
+ color: #33cd5f;
+  }
+
+.item-complex .item-content, .item{
+    background-color: white;
+}
+
+.app-back-ground {
+	 background-color: whitesmoke;
+}
+.white-back-ground {
+	 background-color: white;
+}
+
+.expanded {
+    background-image: url('../img/app_logo.jpg');
+    background-size: 120%;
+    transition: all .5s ease-in-out;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: 15% bottom;
+}
+
+.checklist-icon{
+	/*background-color: #fff;*/
+    background: url('../img/checklist-icon.png');
+    /*background-size: cover;
+    margin: 0 auto;
+    border-radius: 0%;
+    height: 60px;
+    width: 200px; */
+}

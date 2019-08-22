@@ -1,0 +1,50 @@
+<ion-view view-title="" ng-controller="dashboardCtrl">
+  <ion-tabs class="tabs-icon-top tabs-color-active-balanced">
+    <!-- Alerts Tab -->
+    <!--<div ng-controller="alertsCtrl">-->
+    <!--<ion-tab title="Alerts" icon="ion-alert" badge="items.length" ng-click="alertsClickHandler()">-->
+    <!--<ion-nav-view name="tab-alerts"></ion-nav-view>-->
+    <!--</ion-tab>-->
+    <!--</div>-->
+
+    <!-- Summary Tab -->
+    <div ng-controller="SummaryCtrl" ng-init="onSummaryInit();">
+      <ion-tab title="Summary" icon="ion-clipboard" ng-click="summaryClickHandler()">
+        <ion-nav-view name="tab-summary"></ion-nav-view>
+      </ion-tab>
+    </div>
+
+
+
+
+    <!-- Top 10 Tab -->
+    <div ng-controller="top10Ctrl" ng-init="onTop10Init();">
+      <ion-tab title="Top 5" icon="ion-clipboard" ng-click="top10ClickHandler()">
+        <ion-nav-view name="tab-top10"></ion-nav-view>
+      </ion-tab>
+    </div>
+
+    <!-- Tasks Tab -->
+    <div ng-controller="DashboardTasksCtrl" ng-init="onTasksInit();">
+      <ion-tab title="Tasks" icon="ion-clipboard" badge="taskcount" ng-click="tasksClickHandler()">
+        <ion-nav-view name="tab-tasks"></ion-nav-view>
+      </ion-tab>
+    </div>
+
+    
+    <!--  Overview Tab -->
+     <!-- <div ng-controller="OverviewCtrl" ng-init="onSummaryInit();" ng-if="overViewVisible">
+      <ion-tab title="Overview" icon="ion-clipboard" ng-click="overviewClickHandler()">
+        <ion-nav-view name="tab-overview"></ion-nav-view>
+      </ion-tab>
+    </div> -->
+
+    <!-- Tracker Tab -->
+    <!--<div ng-controller="trackerCtrl">-->
+    <!--<ion-tab title="Tracking" icon="ion-speedometer" badge="items.length" ng-click="trackersClickHandler()">-->
+    <!--<ion-nav-view name="tab-trackers"></ion-nav-view>-->
+    <!--</ion-tab>-->
+    <!--</div>-->
+
+  </ion-tabs>
+</ion-view>

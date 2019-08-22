@@ -1,0 +1,53 @@
+<ion-view title="Pay History : {{ employee.first_name + employee.last_name  }} - {{ employee.job_role }}" ng-controller="PayHistoryCtrl" >
+    <backbuttonbar navbartitle="navBarTitle"></backbuttonbar>
+    <busyspinner spinnerhide="spinnerHide"></busyspinner>
+    <span ng-if="spinnerHide">
+    <div class="bar bar-subheader app-theme-color-level2 no-vertical-padding no-horizontal-padding">
+        <div class="app-theme-color-level2">
+            <div class="row">
+                <div class="col col-center no-vertical-padding">
+                    <span ng-repeat="message in saveStatus track by $index" class="{{ message.level }}"> {{ message.text }}</span>
+                </div>
+            </div>
+        </div>
+        <ion-item class="item-divider no-vertical-padding">
+                <div class="row">
+                    <div class="col col-50">Date</div>
+                    <div class="col">Pay</div>
+                </div>
+        </ion-item>
+    </div>
+    <ion-content class="has-subheader has-header" style="top: 114px; bottom: 88px;">
+        <ion-list id="employeelist" class="has-header">
+
+            <span ng-repeat="pay in payHistory | orderBy:'salary_date'" ng-if="!pay.deleted">
+                <ion-item class="white-back-ground no-vertical-padding">
+                <div class="row no-vertical-padding">
+                    <div class="col col-50 col-center" ng-click="change_date(pay)">{{ pay.salary_date | convertDateToText }}</div>
+                    <div class="col col-center"><input style="width:100%;" type="number" ng-model="pay.salary" ng-model-options="{ debounce: 100 }"></div>
+                </div>
+                    <!--<ion-option-button class="button-energized ion-edit icon mediumsize" ng-click="change_date(pay)"> &nbspChange Date-->
+            <!--</ion-option-button>-->
+                    <ion-option-button class="button-assertive icon ion-trash-b mediumsize" ng-click="deleteStore(pay)"> &nbspDelete
+            </ion-option-button>
+            </ion-item>
+            </span>
+
+        </ion-list>
+
+
+ </ion-content>
+    <div class="bar bar-footer no-vertical-padding" style="flex-flow: column; height: auto">
+        <div class="row">
+            <div class="col no-vertical-padding small-info" style="text-align:center;">
+                All values are for a period of 28 days.
+            </div>
+        </div>
+        <div class="row">
+            <button class="full-width-button app-theme-color app-theme-text" ng-click="saveClick()">
+                    Save
+            </button>
+        </div>
+    </div>
+    </span>
+</ion-view>

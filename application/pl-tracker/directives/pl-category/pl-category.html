@@ -1,0 +1,12 @@
+<div style="width: 100%; padding: 16px 16px 16px 10px;display: flex; fle-flow: row; justify-content: flex-start;" class="item-divider" on-tap="toggleList()">
+   <div class="ion-ios-minus-outline" ng-show="expandbutton"data-expand style="margin-right: 10px;"></div> <div class='capitalize' style="flex-basis:35%">{{categoryData.name}}</div>
+   <div style="margin-left: auto; text-align:right; flex-basis:20%">{{(categoryData.total_value | currency:undefined:0)}}</div>
+   <div style="margin-left: auto; text-align:right; flex-basis:10%">{{(categoryData.percentage)}}%</div>
+</div>
+
+<!-- <div ng-show="categoryData.list.length >= 0" ng-click="goToPAndLCharts(categoryData)"> -->
+<div ng-show="categoryData.list.length >= 0">
+    <div style="transition: max-height 0.4s ease-in;" class="sub-list">
+        <pl-item ng-repeat="item in categoryData.list" node-data="item"></pl-item>
+    </div>
+</div>

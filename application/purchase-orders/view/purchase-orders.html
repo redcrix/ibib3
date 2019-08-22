@@ -1,0 +1,27 @@
+<ion-view view-title="Ingredient purchase orders">
+    <ion-tabs class="tabs-icon-top tabs-color-active-positive">
+        <!-- Tasks Tab -->
+        <div ng-controller="PurchaseOrdersCtrl" ng-init="onPurchaseOrdersInit();">
+            <ion-tab title="Orders" icon="ion-clipboard" badge="orders.length">
+                <div class="card"></div>
+                <ion-content class="has-subheader">
+                    <ion-list show-delete="buttons.ShowDelete">
+                        <ion-item ng-repeat="order in orders track by $index" class="item" ng-click="showOrderDetails({{ $index }})">
+                            <div class="row row-center">
+                                <div class="col col-60 item-text-wrap">
+                                    <div style="font-size: small;color:green;"></div>
+                                    <!--<br>-->
+                                    {{order.name | titleCase }}
+                                    <!--<br>-->
+                                </div>
+                            </div>
+                            <ion-delete-button class="ion-minus-circled" ng-click="DeleteTask($index)">
+                            </ion-delete-button>
+                        </ion-item>
+                    </ion-list>
+                </ion-content>
+            </ion-tab>
+        </div>
+    </ion-tabs>
+</ion-view>
+

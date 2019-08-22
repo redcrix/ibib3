@@ -1,0 +1,47 @@
+<ion-view title="{{headerTitleINV}}">
+  <ion-nav-buttons side="secondary">
+
+    <div class="item-input-wrapper show-search-inv" style="background: white;" ng-show="searchItem">
+      <i class="icon ion-android-arrow-back back-inv-config-search" ng-click="closeSearch()"></i>
+      <input type='text' ng-model='data.searchText' class="search-inventory-config" placeholder="Search item name or id" />
+    </div>
+  </ion-nav-buttons>
+
+  <div class="bar bar-subheader bar-stable  app-theme-color-level2 app-theme-text inv-config-tab">
+      <!-- <filterbuttonbar class="inv-config-filter-btn" ng-click="changeTab()" filterbuttons="filterButtons" allowalldeselected="false"></filterbuttonbar> -->
+      <div class="inv-config-filter-btn" style="height:100%;">
+      <div class="button-bar" style="height:inherit;">
+      <a ng-repeat="filterbutton in filterButtons track by $index"
+         style="max-width:50%;text-align: center; font-size: 14px; display: flex;align-items: center;justify-content: center;"
+         class="button button-bal no-horizontal-padding"
+         ng-class="filterbutton.isLocked ? 'is-locked' : !filterbutton.clicked ? 'button-out' : '' "
+         ng-click="changeTab();filterbuttonclick($index)">
+         <i ng-show="filterbutton.icon" class="icon icon-left {{ filterbutton.icon }}" ></i>
+         <span  class="item-text-wrap" style="text-align: center;">{{ filterbutton.label }} </span></a>
+      </div>
+      </div>
+  </div>
+
+  <ion-content class="has-header has-subheader has-tabs-top app-back-ground" style="top: 70px;">
+      <div ng-show='map_inventory'>
+        <busyspinner spinnerhide="changeScreen"></busyspinner>
+        <span ng-if='invItems'>
+            <map-inventory bar="navBarTitle" items="invItems"></map-inventory>
+        </span>
+      </div>
+      <span ng-show='inactive'>
+        <inactive-items bar="navBarTitle"></inactive-items>
+      </span>
+      <!-- <ion-tab title="Config" icon="ion-clipboard" on-select="configClickHandler()">
+        <ion-nav-view name="config"> -->
+          <span ng-show='pnl_config'>
+            <!-- <map-pandl items="pnLItems" from="invConfig"></map-pandl> -->
+            <pandl-map-config bar="navBarTitle"></pandl-map-config>
+            <!-- <map-pandl items=""></map-pandl> -->
+          </span>
+        <!-- </ion-nav-view>
+      </ion-tab> -->
+
+  </ion-content>
+
+</ion-view>

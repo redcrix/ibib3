@@ -1,0 +1,66 @@
+<ion-view title="{{pageTitle}}" ng-init="init()" ng-controller="PayManagerCtrl">
+    <backbuttonbar navbartitle="navBarTitle"></backbuttonbar>
+    <busyspinner spinnerhide="spinnerHide"></busyspinner>
+    <span ng-if="spinnerHide">
+    <div class="bar bar-subheader app-theme-color-level2 no-vertical-padding no-horizontal-padding">
+        <div class="app-theme-color-level2">
+            <div class="row">
+                <div class="col col-center no-vertical-padding">
+                    <span ng-repeat="message in saveStatus track by $index" class="{{ message.level }}"> {{ message.text }}</span>
+                </div>
+            </div>
+        </div>
+        <div class="app-theme-color-level2">
+            <div class="app-theme-color-level2" style="text-align: center" ng-click="showStores()">
+                <span class="col-center"> <i class="icon x-large ion-location"> </i>&nbsp&nbsp</span>
+                <span class="col-center justbolder">{{ storeSelected.text }}
+                </span>
+                <span class="col-center">&nbsp&nbsp<i class="icon col-center"
+                                                      ng-class="dropdown_click? 'ion-arrow-up-b':'ion-arrow-down-b'"></i></span>
+            </div>
+        </div>
+        <ion-item class="item-divider no-vertical-padding">
+                <div class="row">
+                    <div class="col col-50">Name</div>
+                    <div class="col col-25">Role</div>
+                    <div class="col col-25">Pay</div>
+                </div>
+        </ion-item>
+    </div>
+    <ion-content class="has-subheader has-header" style="top: 140px; bottom: 88px;">
+        <ion-list id="employeelist">
+
+            <span ng-repeat="employee in employees" ng-show="filterEmployees(employee.business_store_id)">
+            <ion-item class="no-vertical-padding">
+            <div class="row no-vertical-padding">
+                <div class="col  col-50 no-vertical-padding  col-center">{{ ::(employee.first_name + " " + employee.last_name) }}
+                    <div class="small-info">{{ ::employee.business_store_id }}</div>
+                </div>
+                <div class="col col-20 no-vertical-padding  col-center">{{ ::employee.job_role }}</div>
+                <div class="col col-25 no-vertical-padding  col-center"><input style="width:100%; text-align: center;"
+                                                                               type="number"
+                                                                               ng-model="employee.salary"
+                                                                               ng-model-options="{ debounce: 100 }"></div>
+                <div class="col col-5 no-vertical-padding col-center" ui-sref="{{ ::employee.historyLink }}">
+                    <i class="icon-right ion-chevron-right"></i>
+                </div>
+            </div>
+            </ion-item>
+            </span>
+        </ion-list>
+    </ion-content>
+
+        <div class="bar bar-footer no-vertical-padding" style="flex-flow: column; height: auto">
+        <div class="row">
+            <div class="col no-vertical-padding small-info" style="text-align:center;">
+                All values are for a period of 28 days.
+            </div>
+        </div>
+        <div class="row">
+            <button class="full-width-button app-theme-color app-theme-text" ng-click="saveClick()">
+                    Save
+            </button>
+        </div>
+    </div>
+    </span>
+</ion-view>

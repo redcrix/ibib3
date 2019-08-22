@@ -1,0 +1,41 @@
+<ion-item ng-click="getIngredientData()" class=" paddingzero" ng-class="ifeven? 'app-back-ground':'white-back-ground'">
+    <div class="row smaller">
+        <div class="col"></div>
+        <div class="col col-center">
+            <i class="ion-arrow-down-b">&nbsp</i> &nbspUsage details &nbsp
+            <i class="ion-arrow-down-b">&nbsp</i>
+        </div>
+        <div class="col"></div>
+    </div>
+</ion-item>
+<ion-item ng-show="isGroupShown(ingredientDataGroup)" ng-click="toggleGroup(ingredientDataGroup)"
+          class="item item-divider item-accordion paddingzero app-back-ground">
+    <div class="row smaller">
+        <div class="col col-50 item-text-wrap">Menu Item</div>
+        <!--<div class="col">Sales</div>-->
+        <div class="col">Qty</div>
+    </div>
+</ion-item>
+
+<ion-item ng-show="isGroupShown(ingredientDataGroup)" class="item-accordion paddingzero "
+          ng-repeat="menuItem in ingredientDataGroup.ingredientData | orderBy:'-sales'">
+    <div class="row smaller">
+        <div class="col col-50 item-text-wrap">
+            <div> {{ ::(menuItem.name | titleCase) }}</div>
+        </div>
+        <!--<div class="col">{{menuItem.sales}}</div>-->
+        <div class="col">{{ ::(menuItem.ingredientQuantity) }}</div>
+    </div>
+</ion-item>
+<ion-item ng-show="isGroupShown(ingredientDataGroup)"
+          class="item item-divider item-accordion paddingzero app-back-ground">
+    <div class="row smaller">
+        <div class="col col-50 item-text-wrap">
+            <div> {{ ::(ingredientDataGroup.ingredientDataTotal.name | titleCase) }}</div>
+        </div>
+        <!--<div class="col"></div>-->
+        <!--<div class="col"></div>-->
+        <!--<div class="col">{{ingredientDataGroup.ingredientDataTotal.sales}}</div>-->
+        <div class="col">{{ ::(ingredientDataGroup.ingredientDataTotal.ingredientQuantity) }}</div>
+    </div>
+</ion-item>

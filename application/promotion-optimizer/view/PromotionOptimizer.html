@@ -1,0 +1,22 @@
+<ion-view view-title="Promotion Optimizer" ng-controller="PromotionOptimizerCtrl" align-title="left"
+          ng-init="onPromotionOptimizerInitHandler()">
+    <button class="button button-positive icon ion-clipboard float-button button-fab-bottom-right"
+            ui-sref="app.dashboard.tasks()" fab>
+        <!--<div style="font-size:xx-small;margin-top:-8px;">Dashboard</div>-->
+    </button>
+
+    <ion-content class="app-back-ground">
+        <div class="spinner" ng-hide="spinnerHide">
+            <ion-spinner icon="lines" class="spinner-calm"></ion-spinner>
+        </div>
+
+        <span ng-show="spinnerHide">
+            <promotionitemlist ng-show="promotions.length>0" items="promotions" cardheader="Promotions"
+                               hidemore="false" itemdisplaylimit="3" maxsales="maxSales"></promotionitemlist>
+
+            <candidateitemlist ng-show="candidates.length>0" items="candidates" cardheader="Promotion Candidates"
+                               hidemore="false" itemdisplaylimit="3"></candidateitemlist>
+
+              </span>
+    </ion-content>
+</ion-view>

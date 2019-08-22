@@ -1,0 +1,19 @@
+<div ng-if="section.showSection" ng-show="filtered.length>0" class="list" style="overflow-y: scroll;cursor: auto;">
+    <div style="margin: 5px 0px;">
+        <div class="item item-divider item-balanced no-horizontal-padding no-vertical-padding">
+            <div class="row" ng-click="toggleDisplayItemsLimit()">
+                <div class="col col-75">{{ (section.groupDisplayName | titleCase) }}</div>
+                <!--<div class="col">{{ ::((section.dollarSales) | currency)}}</div>-->
+                <div class="col" ng-hide="hidemore">&nbsp&nbsp&nbsp<i ng-class="expansionIconClass"></i></div>
+            </div>
+        </div>
+        <ion-list class="item paddingzero">
+            <span ng-repeat="item in (section.menuItems | filter:greaterThan('dollarSales', 0))| limitTo:itemdisplaylimit as filtered" ng-if="!item.searchHidden">
+
+
+                <menuengineeringmenuitem item="item" detaillink="true"
+                                     ifeven="false" showdetails="false"></menuengineeringmenuitem>
+            </span>
+        </ion-list>
+    </div>
+</div>

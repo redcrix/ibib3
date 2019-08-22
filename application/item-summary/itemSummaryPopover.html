@@ -1,0 +1,36 @@
+`<ion-modal-view>
+    <ion-header-bar class="bar error-reporting-modal">
+      <h1 class="title" style="text-align: center;right: none;">Item Summary</h1>
+      <a class="button" ng-click="closeItemSummaryModal()">Cancel</a>
+    </ion-header-bar>
+      <ion-content style="overflow: auto;" >
+        <busyspinner spinnerhide="!spinnerShow" class="purchase-track-spinner"></busyspinner>
+        <span ng-show="dataReceived" style="text-align:center">
+        	<div class="row">
+            <div class="col"> Inventory Item Name: <span style="font-weight: bold">{{invItemName}}</span></div> 
+          </div>
+        	<div class="row">
+           <div class="col"> Inventory Item Price: <span style="font-weight: bold">{{price | currency}} </span></div>
+          </div> 
+        	<div class="row" style="font-weight: bold">
+        		<div class="col col-25">Category </div>
+        		<div class="col col-25">Quantity </div>
+        		<div class="col col-25">Unit </div>
+        		<div class="col col-25">Value </div>
+        	</div>
+        	<div class="row" ng-repeat="category in categories">
+            <div class="col col-25"> {{category.category_name}}</div>
+            <div class="col col-25">{{category.quantity}} </div>
+            <div class="col col-25">{{category.unit}} </div>
+            <div class="col col-25">{{category.value | currency}} </div>
+          </div>
+          <div class="row" style="font-weight: bold">
+            <div class="col col-25"> Total</div>
+            <div class="col col-25">{{totalQuantity}} </div>
+            <div class="col col-25">{{unit}} </div>
+            <div class="col col-25">{{totalValue | currency}} </div>
+          </div>
+        </span>
+        <div ng-show="dataReceivederr" style="text-align: center; vertical-align:middle; line-height: 300px;display: inline-block;color: lightblue;height: 300px;width:300px;white-space: nowrap;font-size: 30px;margin: auto;padding: 10px;"><b>Data Not Found</b></div>
+    </ion-content>
+</ion-modal-view>

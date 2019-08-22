@@ -1,0 +1,92 @@
+<!-- Old Dashboard -->
+<!-- <div class="card">
+  <div class="row no-vertical-padding no-horizontal-padding">
+    <div class="col col-center text-center" style="font-size: medium;" ui-sref="{{ ::clickDestination }}">{{ cardName }}
+      <div class="item item-borderless">
+        {{ cardDataDisplay }}
+
+        <div class="subscripttag" ng-style="colorReverser * cardDiff >= 0 ? {'color':'#33cd5f'} : {'color':'#ff1744'}">{{ cardDiffDisplay }}
+        </div> -->
+<!--<div class="subscripttag"-->
+<!--ng-style="cardDiff >= 0 ? {'color':'#33cd5f'} : {'color':'#ff1744'}">{{ cardDiffDisplay }}-->
+<!--</div>-->
+<!-- </div> -->
+<!-- </div>
+    <div class="col col-5 col-center" ng-click="showReportPopover($event, cardName)"
+         style="float: right;padding-right: 1em;">
+        <i class="icon larger ion-android-more-vertical"></i>
+    </div>
+    </div>
+</div> -->
+
+<div class="card">
+  <div class="row no-vertical-padding no-horizontal-padding">
+    <div class="col col-center text-center" style="font-size: medium;">
+      <!-- <div class="col col-center text-center" style="font-size: medium;" ui-sref="{{ ::clickDestination }}"> -->
+
+      {{ cardName }}
+      <div class="item item-borderless">
+        {{ cardDataDisplay }}
+
+        <div class="subscripttag" ng-style="colorReverser * cardDiff >= 0 ? {'color':'#33cd5f'} : {'color':'#ff1744'}">{{ cardDiffDisplay }}
+        </div>
+
+        <!--<div class="subscripttag"-->
+        <!--ng-style="cardDiff >= 0 ? {'color':'#33cd5f'} : {'color':'#ff1744'}">{{ cardDiffDisplay }}-->
+        <!--</div>-->
+      </div>
+    </div>
+    <div class="col col-5 col-center" ng-click="showReportPopover($event, cardName)" style="float: right;padding-right: 1em;">
+      <i class="icon larger ion-android-more-vertical"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<!-- New Dashboard -->
+
+<!-- <div class="card" >
+    <div class="row no-vertical-padding no-horizontal-padding" style="width: 100%; padding: 16px 16px 16px 10px;display: flex; fle-flow: row; justify-content: flex-start;" class="item-divider" >
+        <div class="col col-25 " style="padding-top: 5%;text-align: center">
+            <i class="{{cardIcon}} set-card-icon"></i>
+            <div class="col" style="font-size: 13px;flex-basis:35%" ui-sref="{{ ::clickDestination }}">{{ cardName }}
+            </div>
+        </div>
+        <div class="col col-75 col-center" ng-click="showReportPopover($event, cardName)"
+             style="float: right;padding-right: 1em;text-align: right">
+            <i class="icon larger ion-android-more-vertical" style="float: right;margin-top: 5%"></i>
+
+            <div class="item item-borderless">
+                {{ cardDataDisplay }}
+                <div class="subscripttag"
+                     ng-style="colorReverser * cardDiff >= 0 ? {'color':'#33cd5f'} : {'color':'#ff1744'}">{{ cardDiffDisplay }}
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+    <ion-item class="item-stable" ng-click="toggleGroup(group)" style="padding: 0px;" on-tap="toggleList()">
+        <div class="icon ion-chevron-up" data-expand style="padding-top: 5%;text-align: center;margin-right: 10px;">
+        </div>
+    </ion-item>
+
+     <div class="sub-list" style="transition: max-height 0.8s ease-in;">
+            <span ng-repeat="dataCardPair in childCard" ng-if="summaryData['actual_'+dataCardPair.name]">
+                 <subsummarycard sub-card-name="dataCardPair.name"
+                                sub-card-data="summaryData['actual_'+dataCardPair.name]"
+                                sub-card-data-filter="dataCardPair.dataFilter"
+                                sub-card-diff="summaryData['diff_'+dataCardPair.name]"
+                                sub-card-diff-filter="dataCardPair.diffFilter"
+                                reverse-diff-color="dataCardPair.reverseDiffColor"
+                                click-destination="dataCardPair.clickDestination"
+                                sub-data-cards="childCard.summary"
+                                sub-card-icon="dataCardPair.childIcon">
+                 </subsummarycard>
+            </span>
+        </div>
+    </div>
+</div> -->

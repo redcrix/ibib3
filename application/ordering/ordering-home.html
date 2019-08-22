@@ -1,0 +1,78 @@
+<!--  <ion-view title="{{pageTitle}}" align-title="center" ng-init="ctrl.init()">
+    <div class="spinner" ng-show="ctrl.showLoader" style="z-index: 10">
+        <ion-spinner icon="lines" class="spinner-calm spinner spinner-lines"></ion-spinner>
+        <div style="text-align:center;">
+          <span class="spinner-text">Pepr is working hard,</span> <br/>
+          <span class="spinner-text">Please wait!</span>
+        </div>
+    </div>
+    <ion-content style="top: 0 !important;">
+        <ion-tabs delegate-handle="orderingTabs" ng-hide="ctrl.showLoader" class="tabs-icon-top tabs-top tabs-color-active-balanced">
+
+            <ion-tab title="Submitted" icon-on="ion-ios-checkmark" icon-off="ion-ios-checkmark-outline" on-select="ctrl.submittedClick()" href="#/ordering/submitted">
+              <ion-nav-view name="ordering-submitted-tab">
+
+              </ion-nav-view>
+            </ion-tab>
+            <ion-tab title="Draft-tabs" icon-on="ion-ios-copy" icon-off="ion-ios-copy-outline" on-select="ctrl.draftTabsClick()">
+                <ion-nav-view name="draft-tab">
+
+                </ion-nav-view>
+            </ion-tab>
+        </ion-tabs>
+    </ion-content>
+    <ion-footer-bar align-title="left" style="background: #33CD5F;" ng-hide="ctrl.showLoader" ng-click="ctrl.composeClicked()">
+        <div style="width: 100%; text-align: center;font-size: 20px; padding-top: 1%; color: #FFF;"> Add New Order</div>
+    </ion-footer-bar>
+</ion-view> -->
+
+<ion-view title="{{pageTitle}}" align-title="center" ng-init="ctrl.init()">
+    <div class="spinner" ng-show="ctrl.showLoader" style="z-index: 10">
+        <ion-spinner icon="lines" class="spinner-calm spinner spinner-lines"></ion-spinner>
+        <div style="text-align:center;">
+          <span class="spinner-text">Pepr is working hard,</span> <br/>
+          <span class="spinner-text">Please wait!</span>
+        </div>
+    </div>
+    <ion-content style="top: 0 !important;">
+        <ion-tabs delegate-handle="orderingTabs" ng-hide="ctrl.showLoader" class="tabs-icon-top tabs-top tabs-color-active-balanced">
+            <ion-tab title="Submitted" icon-on="ion-ios-checkmark" icon-off="ion-ios-checkmark-outline">
+                <ion-nav-view name="submitted-tab">
+                    <ion-content padding="true">
+                        <ion-content class="has-one-footer" padding="true">
+                            <ion-list>
+                                <ion-item style="padding: 0px 9px 0px 16px" ng-repeat="item in ctrl.orderingEntries.submitted">
+                                    <ordering-list-submit-item item="item" on-tap="ctrl.onSubmittedItemTap(item)"></ordering-list-submit-item>
+                                    <!--<ion-option-button class="button-assertive">Delete</ion-option-button>-->
+                                </ion-item>
+                            </ion-list>
+                            <div ng-show="!ctrl.showLoader && (!ctrl.orderingEntries.submitted||  ctrl.orderingEntries.submitted.length < 1)" style="padding:120px 16px 16px 16px;text-align: center;font-size: 25px;">
+                                No Orders to Show!
+                            </div>
+                        </ion-content>
+                    </ion-content>
+                </ion-nav-view>
+            </ion-tab>
+            <ion-tab title="Drafts" icon-on="ion-ios-copy" icon-off="ion-ios-copy-outline">
+                <ion-nav-view name="drafts-tab">
+                    <ion-content padding="true">
+                        <ion-content class="has-one-footer" padding="true">
+                            <ion-list>
+                                <ion-item style="padding: 0px 9px 0px 16px" ng-repeat="item in ctrl.orderingEntries.draft">
+                                    <ordering-list-item on-tap="ctrl.onItemTap(item)" item="item"></ordering-list-item>
+                                    <ion-option-button class="button-assertive" on-tap="ctrl.deleteDraft(item)">Delete</ion-option-button>
+                                </ion-item>
+                            </ion-list>
+                            <div ng-show="!ctrl.showLoader && (!ctrl.orderingEntries.draft || ctrl.orderingEntries.draft.length < 1)" style="padding:120px 16px 16px 16px;text-align: center;font-size: 25px;">
+                                No Orders to Show!
+                            </div>
+                        </ion-content>
+                    </ion-content>
+                </ion-nav-view>
+            </ion-tab>
+        </ion-tabs>
+    </ion-content>
+    <ion-footer-bar align-title="left" style="background: #33CD5F;" ng-hide="ctrl.showLoader" ng-click="ctrl.composeClicked()">
+        <div style="width: 100%; text-align: center;font-size: 20px; padding-top: 1%; color: #FFF;"> Add New Order</div>
+    </ion-footer-bar>
+</ion-view>

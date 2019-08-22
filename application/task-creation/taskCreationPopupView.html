@@ -1,0 +1,135 @@
+<ion-modal-view>
+    <form name="itemEdit">
+        <ion-header-bar class="bar error-reporting-modal">
+            <h1 class="title">Task Creation</h1>
+            <a class="button" ng-click="closeModalCtrl()">Cancel</a>
+        </ion-header-bar>
+        <busyspinner spinnerhide="!spinnerShow" class="purchase-track-spinner"></busyspinner>
+        <busyspinner spinnerhide="dataReceived" class="purchase-track-spinner"></busyspinner>
+        <ion-content>
+            <!-- <div class="row">
+                <div class="col col-33 col-center">
+                    Page:
+                </div>
+                <div class="col col-67 col-center">{{ taskItem.page | titleCase}}</div>
+            </div>
+            <div class="row">
+                <div class="col col-33 col-center">
+                    Component:
+                </div>
+                <div class="col col-67 col-center">{{ taskItem.component | titleCase }}</div>
+            </div> -->
+            
+            <div class="row smaller paddingzero">
+                <div class="col col-33 no-right-padding">
+                    <div class="row no-right-padding item-text-wrap justbolder">{{::(taskItem.name | titleCase) }}</div>
+                </div>
+                <div class="col col-33 no-right-padding">
+                    <div class="row no-horizontal-padding no-vertical-padding">
+                        <div  style="opacity: 0.6;" class="col col-center no-horizontal-padding no-vertical-padding">
+                            <i class="icon ion-pricetag large"></i>
+                        </div>
+                        <div style="margin-left:-60%;" class="col no-horizontal-padding no-vertical-padding">
+                            <div class="row no-horizontal-padding no-vertical-padding justbolder">{{ iconedPrice }}</div>
+                            <div class="row no-horizontal-padding no-vertical-padding" style="font-size: x-small; opacity: 0.5;">PRICE</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col col-33 no-right-padding">
+                    <div class="row no-horizontal-padding no-vertical-padding">
+                            <div  style="opacity: 0.6;" class="col col-center no-horizontal-padding no-vertical-padding">
+                                <i class="icon ion-cash large"></i>
+                            </div>
+                            <div style="margin-left:-60%;" class="col no-horizontal-padding no-vertical-padding">
+                                <div class="row no-horizontal-padding no-vertical-padding justbolder">{{::((taskItem.cost*100) | number:0)}}%</div>
+                                <div class="row no-horizontal-padding no-vertical-padding" style="font-size: x-small; opacity: 0.5;">COST</div>
+                            </div>
+                        </div>
+                </div>
+            </div>
+            <button style="display:hidden" class="button upload-btn" id="my_maps" modal-select="" ng-model="mySelect" options="data.suppliers"  modal-title="Select Supplier" hide-reset='true' on-select="shoutLoud(newValue, oldValue)" modal-class="camera-set" has-search="true"  on-close on-reset="shoutReset()" >
+                <div class="option">
+                  <h2>{{option.supplier_alias_name}}</h2>
+                </div>
+            </button>
+            <ion-list>
+                <span ng-repeat="option in taskOptions track by $index" ng-if="option.task_message != 'Custom'">
+                    <ion-item class="no-horizontal-padding no-vertical-padding" style="width:90%; left:5%; right:5%;">
+                        <div class="row"
+                             ng-class="option.selected? 'selected-error-msg justbolder' : 'un-selected-error-msg'" ng-click="selectTask($index,option)">
+                            <div class="col col-50" style="font-size: 95%;">
+                                {{ option.task_message }}
+                            </div>                           
+                        </div>
+                        
+                        <div class="col col-35 col-center no-horizontal-padding">
+                            <span ng-if="isGroupShown(option)">
+                                <div class="row" ng-if="option.task_message != 'Remove'" style="font-size: 95%;padding-bottom: 3%;">
+                                     <span class="col-50">{{ option.task_message }} to: </span>
+                                     <div class="col-50" ng-if="option.task_message != 'Change Supplier'">
+                                        <label class="item item-input" ng-class="option.task_message != 'Portion Size' ? 'no-unit' : 'set-unit'">
+                                            <span ng-if="option.task_message != 'Remove' && option.task_message != 'Change Supplier' && option.task_message != 'Portion Size'">$</span>
+                                            <input type="number" ng-model="option.textVal" ng-change="textValChanged(option)" style="padding-right: 20px">
+                                        </label>
+                                        <label class="item item-input portion-unit" ng-if="option.task_message == 'Portion Size'">
+                                            {{taskItem.portionUnit}}                                           
+                                        </label>
+                                    </div>
+                                     <div class="col col-50" ng-if="option.task_message == 'Change Supplier'" style="padding-left: 0px;" >
+                                        <div class="item item-input-inset" style="border:none;padding: 0px;cursor: auto;width: 100%;" ng-click="setInventory(option,2,$index)">
+                                            <div class="item-input-wrapper">
+                                              <i class="icon ion-ios-search" ></i>
+                                              <input type="text" ng-model="option.supplier.supplier_alias_name" ng-change="textValChanged(option)" placeholder="Search" class="map-inv-drop-down" disabled>
+                                              
+                                              <i class="icon ion-arrow-down-b" style="position: absolute;right: 10px;"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    Comments:
+                                    <label class="item item-input class="col-50"  style="padding: 0px;width: 63.5%;height: 60px;margin-left: 10%;">
+                                        <input type="text" name="" ng-model="option.commentVal" ng-change="textValChanged(option)">
+                                    </label>
+                                </div>                                
+                            </span>                            
+                        </div>                
+                    </ion-item>
+                </span>
+            </ion-list>
+            <div class="row" align-title="left" ng-class="option.selected? 'selected-error-msg justbolder' : 'un-selected-error-msg'" ng-if="taskOptions.length > 1" style="margin-top: 1%;background: #33CD5F;height: 44px;line-height: 25px;width: 90%;margin-left: 5%;margin-right: 5%;" ng-click="addTaskToList()">
+                <!-- <button class="full-width-button app-theme-text" ng-class="sendButtonColor" ng-click="addTaskToList()">
+                    Add Task
+                </button> -->
+                <div style="width: 100%; text-align: center;font-size: 20px; padding-top: 1%; color: #FFF;">Add Task</div><br/>
+            </div>
+            <ion-list class="task-added-list">
+                Tasks:
+                <h5 ng-if="!filteredList.length && task">No Task to show!</h5>
+                <span ng-repeat="filtered in filteredList track by $index">
+                    <ion-item class="no-horizontal-padding no-vertical-padding task-list-item" ng-click="selectTask($index)">
+                        <div class="row"">
+                            <div class="col col-33 task-list-msg">
+                                {{ filtered.task_message }}
+                            </div>
+                            <div class="col col-33 task-list-text-val" ng-if="filtered.task_message != 'Change Supplier'">
+                                {{filtered.textVal | currency}}
+                            </div>
+                            <div class="col col-33 task-list-sup" ng-if="filtered.task_message == 'Change Supplier'">
+                                {{filtered.supplier.supplier_alias_name | titleCase}}
+                            </div>
+                            <div class="col col-33 task-list-comment-val">
+                                {{filtered.commentVal}}
+                            </div>
+                        </div>
+                                            
+                    </ion-item>
+                </span>
+            </ion-list>            
+        </ion-content>       
+        <ion-footer-bar align-title="left" style="background: #33CD5F;"  ng-click="createTask()">
+            <div style="width: 100%; text-align: center;font-size: 20px; padding-top: 1%; color: #FFF;">{{ sendButtonText }}</div><br/>
+        </ion-footer-bar>
+    </form>
+</ion-modal-view>

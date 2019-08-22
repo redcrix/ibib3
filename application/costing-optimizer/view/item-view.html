@@ -1,0 +1,49 @@
+<ion-item class="no-padding" ng-controller="MarginOptimizerCtrl" ng-class="ifeven? 'app-back-ground':''">
+    <div ng-class="ifeven? 'app-back-ground':''" class="row smaller paddingzero" ui-sref-if="{{ detaillink }}" ui-sref-val="app.marginoptimizermenuitem({menuitem_id:'{{item.reference_key}}'})">
+        <div class="col col-50 item-text-wrap"> {{item.item_name | titleCase }}
+            <div class="row">
+                <div style="margin: auto; width:90%;" class="col" ng-class="item.cost_percent>item.threshold_cost_percent? 'redflag':'greenflag'"> {{item.price | currency}}
+                    <div style="margin: auto; width:90%;" class="subscripttag">(Price)</div>
+                </div>
+                <div style="margin: auto; width:70%;" class="col"> {{ item.sales_quantity | number:0}}
+                    <div style="margin: auto; width:100%;" class="subscripttag">(Quantity)</div>
+                </div>
+
+            </div>
+
+            <!--<div><span class="thresholdmeterlabel" style="margin-top : 10px;">{{item.cost_percent | number:0}}%</span>-->
+            <!--<progress class="thresholdmeter" style="margin-top : 10px;margin-bottom : 5px;"-->
+            <!--ng-class="item.cost_percent>item.threshold_cost_percent? 'redflag':'greenflag'" max="100"-->
+            <!--value={{item.cost_percent}}></progress>-->
+            <!--<div class="subscripttag">(Cost Percentage)</div>-->
+            <!--</div>-->
+
+            <!--<div>-->
+            <!--&lt;!&ndash;<span class="thresholdmeterlabel"> {{dummysales | number:0}}</span>&ndash;&gt;-->
+            <!--<progress style="margin-top: 6px; margin-bottom: 0px;" class="thresholdmeter" max="{{maxsales}}"-->
+            <!--value={{item.sales}}></progress>-->
+            <!--<div class="subscripttag">(Sales)</div>-->
+            <!--</div>-->
+
+        </div>
+        <div class="col">
+
+            <div>
+
+                <progress style="margin-top: 0px; margin-bottom: 0px;" class="thresholdmeter" max="{{item.max_sales}}" value={{item.sales}}></progress>
+                <span class="xx-smaller">${{item.sales | number:0}}</span>
+                <div style="font-size:70%;">(sales)</div>
+            </div>
+            <div>
+
+                <progress style="margin-top: 2px; margin-bottom: 0px;" class="thresholdmeter" ng-class="item.cost_percent>item.threshold_cost_percent? 'redflag':'greenflag'" max="100" value={{item.cost_percent}}></progress>
+                <span class="xx-smaller ">{{item.cost_percent | number:0}}%</span>
+                <div style="font-size:70%;">(cost percentage)</div>
+            </div>
+        </div>
+    </div>
+    <ion-option-button class="button-balanced icon ion-ios-arrow-forward mediumsize" ng-click="decide('Margin Optimizer','Change Price', item, item.item_name)"> &nbspChange price
+    </ion-option-button>
+    <ion-option-button class="button-assertive icon ion-close-circled mediumsize" ng-click="decide('Margin Optimizer','Remove', item, item.item_name)"> &nbspRemove
+    </ion-option-button>
+</ion-item>

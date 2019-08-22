@@ -1,0 +1,166 @@
+<!-- <button class="button button-icon icon ion-ios-search-strong" ng-if="!spinnerShow" ng-click="showFilterBar()"></button> -->
+<ion-header-bar style="height: unset;top: 5%;display: block;cursor: auto;">
+<div class="row">
+  <div class="item-input-wrapper mod-search-wrapper" style="background: white;">
+    <span ng-click="closeSearch()">
+      <i class="icon ion-android-arrow-back back-inv-config-search" ></i>
+    </span>
+    <input type='text' ng-model='data.searchText' class="search-mod-config" placeholder="Search item name" style="width: 100%;" />
+
+  </div>
+</div>
+
+<div class="row">
+  <div class="row">
+    <ul class="list mod-ul">
+      <li class="item item-toggle">
+        View prep items without recipes
+       <label class="toggle toggle-balanced">
+         <input type="checkbox" ng-model="toggle" ng-change="detectToggle(toggle)">
+         <div class="track set-toggle-track" >
+           <div class="handle set-toggle-handle"></div>
+         </div>
+       </label>
+      </li>
+    </ul>
+  </div>
+</div>
+</ion-header-bar>
+<ion-floating-menu id="my-float-inventory" menu-color="#33cd5f" menu-open-color="#84e19f">
+
+        <ion-floating-item is-centered="true" id="inv-summary" icon-color="white" icon="menu-icon ion-plus" text="Add Prep Item" button-color="#33cd5f" click="openForm()"></ion-floating-item>
+
+    </ion-floating-menu>
+<ion-content  style="top: 18%;overflow-y: scroll;height: 85vh;cursor: auto;" scroll="false">
+  <div class="text-center" ng-if="!displayItems.length" style="margin-top: 30%;"> <h3>No Prep items available.</h3></div>
+  <ion-list>
+        <div  ng-repeat="item in displayItems | filter:data.searchText" ng-if="displayItems.length" class="card">
+            <ion-item id="prep-list_{{item.prep_id}}" class="invoice-tacking-padding">
+                <div class="row" ng-click="gotoModDetail(item)">
+                    <div class="col col-33 item-text-wrap" style="text-align:left">
+                        <span class="invoice-data-first font-dark"> {{item.prep_name | titleCase}} </span>
+                        <!-- <span class="invoice-data">{{item.invoice_id}}</span> -->
+                    </div>
+                    <div class="col col-60" style="text-align:right">
+                        <span class="invoice-data-first invoice-data">Yields: {{item.yield_qty}}{{item.yield_unit}}  </span>
+                        <span class="invoice-data"><i class="icon larger ion-cash"></i> Total Cost: ${{item.total_cost | number : 4}}</span>
+                        <span class="invoice-data" ng-if="item.due_date != 0">Unit Cost: ${{item.unit_cost | number : 4}}</span>
+                    </div>
+                </div>
+                <div class="col col-5 error-reporting-center"
+                     ng-click="showReportPopover($event, item)" style="float: right;">
+                    <i class="icon larger ion-android-more-vertical"></i>
+                </div>
+                <ion-option-button class="button-balanced icon ion-ios-arrow-forward mediumsize"
+                                                   ng-click="decide(item)"> &nbspAdd Task
+                </ion-option-button>
+            </ion-item>
+        </div>
+  </ion-list>
+</ion-content>
+<!-- <ion-floating-menu id="my-float-inventory" menu-color="#33cd5f" menu-open-color="#84e19f">
+
+        <ion-floating-item is-centered="true" id="inv-summary" icon-color="white" icon="menu-icon ion-plus" text="Add Prep Item" button-color="#33cd5f" click="openForm()"></ion-floating-item>
+
+    </ion-floating-menu> -->
+<script id="add-prep-item-modal.html" type="text/ng-template">
+        <ion-modal-view  class="my-inv-modal">
+
+        <ion-header-bar style="background-color: #F5F5F5;">
+            <div class="col col-90"><h1 class="text-center add-inv-header-name">Add New Prep Item</h1></div>
+            <div class="col col-10" ng-click="closeModal()"><i class="icon ion-close"></i></div>
+        </ion-header-bar>
+        <hr style="border-top: 10px solid #f8f8f8;margin-top: 12%">
+        <ion-content style="overflow: auto;">
+          <form name="form.addPrepItem" ng-submit="addPrepItems()" novalidate style="padding: 10px;">
+                <div class="row add-inv-name-div">
+                    <input placeholder="Prep Item Name" name="prepName" class="add-inv-name" type="text" ng-model="prepItem.name" ng-maxlength="30" required/>
+                </div>
+
+                <p ng-show="form.addPrepItem.prepName.$error.required && form.addPrepItem.prepName.$touched" class="help-block error">Prep Item Name is required.</p>
+                <p ng-show="form.addPrepItem.prepName.$error.maxlength" class="help-block error">Prep Item Name is too long</p>
+
+
+                <div class="list add-inv-type-div">
+                  <label class="item item-input item-select add-inv-type-lbl">
+                    <div class="input-label" style="font-size:14px;">
+                      Yield Unit
+                    </div>
+                    <select ng-model="prepItem.yieldUnit" name="yieldUnit" required="">
+                      <option value="">Select</option>
+                      <option ng-repeat="yieldUnit in yieldUnitList track by $index">{{yieldUnit}}</option>
+                    </select>
+                  </label>
+                </div>
+                <p ng-show="form.addPrepItem.yieldUnit.$invalid &&form.addPrepItem.yieldUnit.$error.required && form.addPrepItem.yieldUnit.$touched" class="help-block error">Yield Unit is required.</p>
+
+                <div class=" item item-input add-inv-price-div">
+                        <!-- <i class="icon ion-social-usd placeholder-icon add-inv-price-icon"></i> -->
+                       <input type="number"
+                              class="add-inv-price num-no-dropdown"
+                              name="yieldQuantity"
+                              placeholder=" Yield Quantity"
+                              ng-model="prepItem.yieldQuantity"
+                              ng-model-options="{debounce: 500}"
+                              convert-to-decimal-dir
+                              required/>
+                </div>
+                <p ng-show="form.addPrepItem.yieldQuantity.$touched && form.addPrepItem.yieldQuantity.$invalid" class="help-block error">Please enter valid  Yield Quantity.</p>
+
+                <div class="popup-buttons">
+                    <button type="button" class="button button-default " ng-class="button-default" ng-click="closeModal()">Cancel</button>
+                    <button type="submit" class="button button-bal " ng-disabled="form.addPrepItem.$invalid" ><b>Add</b></button>
+                </div>
+            </form>
+        </ion-content>
+      </ion-modal-view>
+    </script>
+<!-- <button class="button button-icon icon ion-ios-search-strong" ng-if="!spinnerShow" ng-click="showFilterBar()"></button> -->
+<!-- <ion-header-bar style="height: unset;">
+<div class="row">
+  <div class="col-75 item-input-wrapper mod-search-wrapper" style="background: white;">
+    <span ng-click="closeSearch()">
+      <i class="icon ion-android-arrow-back back-inv-config-search" ></i>
+    </span>
+    <input type='text' ng-model='data.searchText' class="search-mod-config" placeholder="Search item name" />
+
+  </div>
+  <div class="col-25">
+  <ul class="list mod-ul">
+    <li class="item item-toggle">
+      <span>View prep items without recipes</span>
+      <label class="toggle toggle-balanced">
+         <input type="checkbox" ng-model="toggle" ng-change="detectToggle(toggle)">
+         <div class="track">
+           <div class="handle"></div>
+         </div>
+      </label>
+    </li>
+  </ul>
+  </div>
+</div>
+</ion-header-bar>
+<ion-content>
+  <ion-list>
+        <div class="item item-text-wrap text-center" ng-if="filteredInvoices.length==0 && msgShow">
+            No invoices Available
+        </div>
+        <div  ng-repeat="item in displayItems | filter:searchIngredient" ng-if="displayItems.length" class="card">
+            <ion-item class="white-back-ground invoice-tacking-padding">
+                <div class="row" ng-click="goToInvoiceDetail(item)">
+                    <div class="col col-33 item-text-wrap" style="text-align:left">
+                        <span class="invoice-data-first font-dark"> {{item.prep_name | titleCase}} </span>
+                    </div>
+                    <div class="col col-60" style="text-align:right">
+                        <span class="invoice-data-first invoice-data">Yields: {{item.yield_qty}}{{item.yield_unit}}  </span>
+                        <span class="invoice-data"><i class="icon larger ion-cash"></i> Total Cost: ${{item.total_cost | number : 2}}</span>
+                        <span class="invoice-data" ng-if="item.due_date != 0">Unit Cost: ${{item.unit_cost | number : 2}}</span>
+                    </div>
+                </div>
+
+            </ion-item>
+        </div>
+  </ion-list>
+</ion-content>
+
+ -->

@@ -1,0 +1,144 @@
+<ion-view title="Price/Recipe cost tracking">
+  <busyspinner spinnerhide="showLoader"></busyspinner> 
+  <button style="display:hidden;min-height:unset;" class="button upload-btn" id="my_biz" modal-select="" ng-model="mySelect" options="businessList" modal-title="Select Business" hide-reset='true' on-select="shoutLoud(newValue, oldValue)" modal-class="camera-set" has-search="true" on-close="closeModal()" on-reset="shoutReset()">
+    <div class="option">
+      <h2>{{option.businessName}}</h2>
+    </div>
+  </button>
+  <ion-content id="categoryData" scroll="false">
+    <div class="row">
+      <div class="col-50">
+        <div class="item item-input rcorners">
+          <input class="webInputSearch" type="text" placeholder="Search" ng-model="text.searchData" ng-change="change(text.searchData)" ng-blur="blur()" ng-trim="false"><i class="icon ion-search placeholder-icon"></i>
+        </div>
+      </div>
+      <div class="col-7"></div>
+      <div class="col-20" style="text-align: right;">
+        <button class="config-button week-price-change-btn" ng-click="">
+            <div class="item item-input-inset biz-list-input-div" ng-click="setBusiness(item,1,$index)">
+              <div class="item-input-wrapper biz-input-wrapper" style="background: {{items.bg}}">
+                <b> <input type="text" style="font-weight:500;" ng-model="current_selected.businessName" class="map-inv-drop-down" disabled></b>
+              </div>
+              <i class="ion-arrow-down-b week-price-change-arrow-ibtn"></i>
+            </div>
+          </button>
+      </div>
+      <div class="col-30" style="text-align: center;padding-top: 5px;">
+        <button type="button" style="background-color: #5bc0de;border-color:#5bc0de;width: 80px; " ng-click="saveChanges()" class="btn btn-sm btn-info float-right">Approve </button>
+      </div>
+    </div>
+    <div class="row" style="padding-top: 5px;">
+      <div class="col" style="border-width:2px;border-style:groove;overflow-y:scroll;height: 87vh; ">
+        <div class="row" style="border-width:1px;border-style:groove;text-align: center;">
+          <div class="col-7" style="font-size: 16px">
+            <b>bId</b>
+          </div>
+          <div class="col-5" style="font-size: 16px">
+            <b>storeId</b>
+          </div>
+          <div class="col-10" style="font-size: 16px">
+            <b>InventoryItemId</b>
+          </div>
+          <div class="col-10" style="font-size: 16px"><b>Category/location</b></div>
+          <div class="col-10" style="font-size: 16px"><b>InventoryUnit</b></div>
+          <div class="col-7" style="font-size: 16px"><b>InventoryPrice</b></div>
+          <div class="col-10" style="font-size: 16px"><b>InvoiceUnit</b></div>
+          <div class="col-7" style="font-size: 16px"><b>InvoicePrice</b></div>
+          <div class="col-7" style="font-size: 16px"><b>SupplierId</b></div>
+          <div class="col-10" style="font-size: 16px"><b>SupplierItemId</b></div>
+          <div class="col-7" style="font-size: 16px"><b>InvoiceId</b></div>
+          <div class="col-7" style="font-size: 16px"><b>Status</b></div>
+          <div class="col-7"></div>
+        </div>
+        <div style=""></div>
+        <!-- <busyspinner spinnerhide="showLoaderCol" style="padding-top: 400px;"></busyspinner> -->
+        <div class="container row-line-set" ng-repeat="item in pricerecipedata| filter:text.searchData" >
+          <div class="row" style="text-align: center;border:unset;" >
+            <div class="col-7 col-center" >
+              <span ng-class="{'ion-minus-circled' :item.isExpanded,'ion-plus-circled':!item.isExpanded ,'invtoolButtoncolor2' :item.buttonColor == false,'invtoolButtoncolor' : item.buttonColor}" ng-click="toggleGrp(item)" style="margin-top: 12%;font-size: 1.5em;"></span>
+              <span>{{item.bId}}
+              </span>
+            </div>
+          <div class="col-5 col-center" >
+            {{item.storeId}}
+          </div>
+          <div class="col-10 col-center" >
+            {{item.InventoryItemId}}
+          </div>
+          <div class="col-10 col-center" >{{item.Category}}</div>
+          <div class="col-10 col-center" >{{item.InventoryUnit}}</div>
+          <div class="col-7 col-center" >{{item.InventoryPrice}}</div>
+          <div class="col-10 col-center" >{{item.InvoiceUnit}}</div>
+          <div class="col-7 col-center" >{{item.InvoicePrice}}</div>
+          <div class="col-7 col-center" >{{item.SupplierId}}</div>
+          <div class="col-10 col-center" >{{item.SupplierItemId}}</div>
+          <div class="col-7 col-center" >{{item.InvoiceId}}</div>
+          <div class="col-7 col-center" >{{item.Status}}</div>
+            <div class="col-7 col-center" style="padding-right: 20px;text-align: left;">
+              <input type="checkbox" style="text-align: left;background-color: white;color: black;border-color: black;width: 50%;height: 18px;">
+            </div>
+        </div>
+        <div class="col-5"></div>
+          <div class="container row-line-set-expanded row" ng-if="item.isExpanded">
+            <div class="col-33 col-center" style="text-align: center;">Supplier Name-item #-Description
+
+            </div>
+            <div class="col-12 col-center" style="text-align: center;">Unit
+            </div>
+            <div class="col-12 col-center" style="text-align: center;">Unit Price
+            </div>
+            <div class="col-10 col-center" style="text-align: center;">Purchase Date
+            </div>
+            <div class="col-10 col-center" style="text-align: center;">Invoice Num
+            </div>
+            <div class="col-10 col-center" style="text-align: center;">Billing Units
+            </div>
+            <div class="col-7 col-center" style="text-align: center;">Billing Price
+            </div>
+            <div class="col-7 col-center" ></div>
+          </div>
+          <div class="container row-line-set-expanded row" ng-repeat="supplier in item.supList track by $index" ng-if="item.isExpanded">
+            
+            <div class="col-33 col-center" style="text-align: center;">
+              {{supplier.supp_name}} - {{supplier.item_num}} - {{supplier.desc}}
+            </div>
+            <div class="col-12 col-center" style="text-align: center;">{{supplier.unit}}
+              <!-- <select class="unit-select-box col" name="singleSelect" ng-model="supplier.unit" style="color: rgb(2, 166, 255);">
+                <option ng-repeat=" unit in supplierUnits track by $index">{{unit}}</option>
+              </select> -->
+            </div>
+            <div class="col-12 col-center" style="text-align: center;">
+              {{supplier.unit_price | currency}}
+            </div>
+            <div class="col-10 col-center" style="text-align: center;">
+              {{supplier.purchase_date}}
+            </div>
+            <div class="col-10 col-center" style="text-align: center;">
+              {{supplier.invoice_num}}
+            </div>
+            <div class="col-10 col-center" style="text-align: center;">
+              {{supplier.billing_units}}
+            </div>
+            <div class="col-7 col-center" style="text-align: center;">
+              {{supplier.billing_price | currency}}
+            </div>
+            <div class="col-7 col-center" style="font-size: 1.6em;margin-top: 1%;color: red;padding-bottom:10px;">
+              <i class="ion-minus-circled" ng-click="deleteSupplierItem(supplier)"></i>
+            </div>
+          </div>
+          <div class=" row-line-set-expanded row" ng-if="item.isExpanded">
+          <div class="item item-input-inset" ng-click="setIngredient(item,1,$index)" style="border:none;padding: 0px;cursor: auto;width: 300%;">
+               <div class="item-input-wrapper" style="background: {{items.bg}}">
+                 <i class="icon ion-ios-search" ></i>
+                <b> <input type="text" ng-model="supplier.supp_name" placeholder="Search" class="map-inv-drop-down"  disabled></b>
+                 <i class="icon ion-arrow-down-b" style="position: absolute;right: 10px;color: {{items.color}}"></i>
+               </div>
+           </div>
+         </div>
+      </div>
+        <div ng-if="pricerecipedata.length <=0" style=" text-align: center;padding-top: 100px;font-size: 20px">No Data Available</div>
+
+        
+    </div>
+  </ion-content>
+  </ion-view> 

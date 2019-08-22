@@ -1,0 +1,114 @@
+
+@media (min-width: 680px){
+  .modal{
+    border-radius: 8px !important;
+    overflow:hidden !important;
+    z-index: 10000;
+  }
+}
+
+.add-inv-div-web{margin-bottom:0px !important;padding-top: 1% !important;}
+
+.web-select {
+  padding: 0px 10px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  /* Some browsers will not display the caret when using calc, so we put the fallback first */ 
+  background: url("http://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/br_down.png") white no-repeat 98.5% !important; /* !important used for overriding all other customisations */
+  background: url("http://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/br_down.png") white no-repeat calc(100% - 10px) !important; /* Better placement regardless of input width */
+  border-radius: 8px;
+	height: 25px;
+	line-height: 25px;
+	border-top-style: inset;
+	border-top-width: 2px;
+	border-bottom-style: inset;
+	border-bottom-width: 2px;
+	border-left-style: inset;
+	border-left-width: 2px;
+	border-right-style: inset;
+	border-right-width: 2px;
+}
+input[type="text"].webInputSearch
+{
+  height: 25px;
+  font-size: 12px;
+  line-height:1.5;
+  border-radius: 8px;
+}
+input[type="number"].webInput
+{
+  height: 25px;
+  font-size: 12px;
+  line-height:1.5;
+  border-radius: 8px;
+  border-top-style: inset;
+  border-top-width: 2px;
+  border-bottom-style: inset;
+  border-bottom-width: 2px;
+  border-left-style: inset;
+  border-left-width: 2px;
+  border-right-style: inset;
+  border-right-width: 2px;
+}
+input[type="text"].webInput
+{
+  height: 25px;
+  font-size: 12px;
+  line-height:1.5;
+  border-radius: 8px;
+  border-top-style: inset;
+  border-top-width: 2px;
+  border-bottom-style: inset;
+  border-bottom-width: 2px;
+  border-left-style: inset;
+  border-left-width: 2px;
+  border-right-style: inset;
+  border-right-width: 2px;
+}
+.webColumn {
+  padding-right: 0px; 
+}
+
+.rcorners {
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    margin-bottom: 5px;
+    margin-right: 0px;    
+}
+.rcornersBlue {
+    border-radius: 8px;
+    border: 1px solid #76a8e1;
+    margin-bottom: 3px;
+    margin-right: 0px;    
+}
+.rcornersCol {
+    background-color:#ffe4e1;   
+}
+.table-container{
+    height:455px;
+    overflow-y:scroll;
+}
+.btn-circle {
+  width: 24px;
+  height: 24px;
+  text-align: center;
+  padding: 2px 0;
+  font-size: 12px;
+  line-height: 1.428571429;
+  border-radius: 12px;
+}
+
+.btn-circle-small {
+  width: 16px;
+  height: 16px;
+  text-align: center;
+  padding: 2px 0;
+  font-size: 8px;
+  line-height: 1.428571429;
+  border-radius: 8px;
+}
+
+.ng-hide.ng-hide-animate{
+  display: none !important;
+}

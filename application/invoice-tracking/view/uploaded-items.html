@@ -1,0 +1,58 @@
+
+<ion-list class="setList" ng-controller="InvoiceUploadsCtrl">
+  <ion-header-bar  style="width:100%;" ng-style="{'top': currentStateNew == 'app.uploads' ? '44px' : '0px'}"
+              class="bar bar-header app-theme-color-level2 app-theme-text-level2 has-header" id="page-head" has-header="true">
+  <div class="row col-90" ng-click="showMenus()">
+    <div style="font-size:16px;float:left; padding-left:10px">{{ selectedSupplierName | titleCase}}
+        <i class="icon" ng-class="menu_click? 'ion-arrow-up-b':'ion-arrow-down-b'"></i>
+    </div>
+  </div>
+</ion-header-bar>
+    <!-- For empty tasks list -->
+
+    <div class="card tracking-top-uploads">
+
+      <div  ng-if="filteredInvoices.length==0 && msgShow" class="item item-text-wrap text-center">
+          No Invoice Images Uploaded
+      </div>
+
+      <!-- //patch fix -->
+     <!-- <div class="item item-text-wrap text-center" ng-if="invoices.length==0" >
+         No Invoice Images Uploaded 1
+     </div> -->
+
+      <!--  <ion-item ng-repeat="item in (invoices | filter:byFilterName() | orderBy:getSortingClass())  as filteredInvoices" class="item-thumbnail-left" ng-if="item.image_url" ng-click="openModal(item)"> -->
+
+      <ion-item ng-repeat="item in (invoices | filter:byFilterName() | orderBy:getSortingClass())  as filteredInvoices" on-finish-render="ngRepeatFinished"  class="item-thumbnail-left" ng-class="{'item-last':$last}" ng-if="item.image_url" ng-click="openModal(item)">
+
+      <!-- <ion-item ng-repeat="item in (invoices | filter: {'visible': true} |orderBy:getSortingClass())  as filteredInvoices" class="item-thumbnail-left" ng-if="item.image_url" ng-click="openModal(item.image_url)"> -->
+
+        <img ng-if="item.status=='added'" ng-src="{{item.image_url}}" >
+        <img ng-if="item.status!='added'" ng-src="img/syncing.jpg" >
+        <div>
+          <div>
+              <span class="task-decision">Supplier Name :</span>
+              <span>{{item.supplier_alias_name}}  </span>
+          </div>
+          <div class="invoice-data">Date created : {{item.created_at  * 1000 | date:'MM-dd-yyyy'}}</div>
+          <!--<div class="invoice-data" ng-if="item.status!='added'">Status : <span class="task-decision">{{ item.status=='requestSent'? 'Pending Upload':  item.status | titleCase}}</span></div>-->
+          <!--<div class="invoice-data" ng-if="item.status=='added'">Status : <span class="task-decision">Synced to pepr</span></div>-->
+          <div class="invoice-data">Status : <span class="task-decision">{{ item.displayStatus }}</span></div>
+        </div>
+
+        <!-- <ion-option-button class="button-outline icon button-assertive ion-android-cancel" ng-click="invoiceImageUpdate($index,item)"></ion-option-button> -->
+      </ion-item>
+    </div>
+
+</ion-list>
+
+
+<!-- fullscreen image -->
+
+<script id="image-modal.html" type="text/ng-template">
+   <div class="modal img-modal" ng-click="closeModal()">
+   <ion-content>
+     <img ng-src="{{imgUrl}}" class="image-full"/>
+   </ion-content>
+   </div>
+</script>

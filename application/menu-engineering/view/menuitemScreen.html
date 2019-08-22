@@ -1,0 +1,22 @@
+<ion-view view-title="{{ item.menuItemName | titleCase }}" ng-controller="MenuEngineeringMenuItemScreenCtrl" ng-init="onMenuItemInit()">
+    <backbuttonbar navbartitle="navBarTitle"></backbuttonbar>
+    <!--<infobutton></infobutton>-->
+    <busyspinner spinnerhide="spinnerHide"></busyspinner>
+    <div ng-show="spinnerHide">
+        <ion-floating-menu id="my-float" menu-color="#33cd5f" menu-open-color="#84e19f" ng-if="!isEditMode">
+            <ion-floating-item is-centered="true" icon="ion-clipboard" click="goToTask()" button-color="#33cd5f" button-color="white" ng-if="!isEditMode"></ion-floating-item>
+        </ion-floating-menu>
+
+        <ion-content class="has-header">
+
+            <ion-list>
+                <menuengineeringmenuitem item="item" detaillink="false" ifeven="true" getdataoninit="false"
+                showdetails="true"></menuengineeringmenuitem>
+            </ion-list>
+
+
+
+            <menuengineeringingredientlist ingredients="ingredients" menuitemlist="getMenuItemList" itemparams="itemParams"></menuengineeringingredientlist>
+        </ion-content>
+    </div>
+</ion-view>

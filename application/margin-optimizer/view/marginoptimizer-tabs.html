@@ -1,0 +1,57 @@
+<ion-view view-title="{{pageTitle}}" ng-controller="MarginOptimizerTabsCtrl"
+          ng-init="onMarginOptimizerTabsInitHandler()">
+
+    <!--<tasksfloatbutton></tasksfloatbutton>-->
+    <ion-floating-menu id="my-float"  menu-color="#33cd5f" menu-open-color="#84e19f" has-footer="true">
+        <ion-floating-item is-centered="true" icon="ion-funnel" icon-color="#fff" button-color="#33cd5f" text="Group By"
+                           click="showGroupBy()"></ion-floating-item>
+        <ion-floating-item is-centered="true" icon="ion-clipboard" ui-sref="app.dashboard.tasks()" text="Go To Tasks"
+                           icon-color="#fff" button-color="#33cd5f"></ion-floating-item>
+    </ion-floating-menu>
+    <!-- <div style="margin-top: 4%;">***************************</div> -->
+    <!-- ************************************************************** -->
+    <div class="row menu_per_search" style="margin-top: 3%;">
+      <div class="col-75 item-input-wrapper mod-search-wrapper" style="background: white;">
+        <span ng-click="closeSearch()">
+          <i class="icon ion-android-arrow-back back-inv-config-search" ></i>
+        </span>
+        <input type='text' ng-model='data.searchmenuPerIng' class="search-mod-config" placeholder="Search item name" />
+        
+      </div>
+      <div class="col-25">
+      <ul class="list mod-ul">
+        <li class="item item-toggle"> 
+          <span>View items without recipes</span>
+          <label class="toggle toggle-balanced">
+             <input type="checkbox" ng-model="toggle" ng-change="detectToggle(toggle)">
+             <div class="track">
+               <div class="handle"></div>
+             </div>
+          </label>
+        </li>
+      </ul>
+      </div>
+    </div>
+    <!-- ************************************************************** -->
+
+    <menuselector></menuselector>
+
+    <ion-tabs class="tabs-icon-top tabs-color-active-balanced">
+        <!-- Food Tab -->
+        <div>
+            <ion-tab class="app-back-ground" title="Food" icon="ion-android-restaurant" ng-click="FoodtabClickHandler()"
+                     hidden="{{ hideFoodTab }}">
+                <ion-nav-view name="tab-Food2"></ion-nav-view>
+
+            </ion-tab>
+        </div>
+        <!-- Liquor Tab -->
+        <div>
+            <ion-tab class="app-back-ground" title="Liquor" icon="ion-android-bar" ng-click="LiquortabClickHandler()"
+                     hidden="{{ hideLiquorTab }}">
+                <ion-nav-view name="tab-Liquor2"></ion-nav-view>
+
+            </ion-tab>
+        </div>
+    </ion-tabs>
+</ion-view>

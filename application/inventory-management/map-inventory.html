@@ -1,0 +1,22 @@
+<ion-view title="Inventory Manager" align-title="center">
+  <ion-content style="top: 0px;">
+    <ion-tabs class="tabs-icon-top tabs-color-active-balanced inv-map-tabs" delegate-handle="myhandle">
+
+      <ion-tab title="To be Mapped" icon-on="ion-ios-circle-filled" icon-off="ion-ios-circle-outline" on-select="toBeMapClick()" href="#/inventoryManager/mapInventory/toBeMapped">
+        <ion-content>
+          <ion-nav-view name="to-be-mapped-tab" style="top:135px;">
+
+          </ion-nav-view>
+        </ion-content>
+      </ion-tab>
+      <!-- ************************************************** Mapped Tab *********************************************** -->
+      <ion-tab title="Mapped" icon-on="ion-ios-checkmark" icon-off="ion-ios-checkmark-outline" on-select="mappedClick()" href="#/inventoryManager/mapInventory/mapped">
+        <ion-content>
+          <ion-nav-view name="mapped-tab" style="top:135px;">
+
+          </ion-nav-view>
+        </ion-content>
+      </ion-tab>
+    </ion-tabs>
+  </ion-content>
+</ion-view>

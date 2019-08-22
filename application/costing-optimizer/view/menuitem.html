@@ -1,0 +1,164 @@
+<ion-view view-title="Margin Optimizer">
+
+    <button class="button button-bal icon ion-clipboard float-button button-fab-bottom-right" ui-sref="app.dashboard.tasks())" fab>
+            <!--<div style="font-size:xx-small;margin-top:-8px;">Dashboard</div>-->
+    </button>
+    <ion-content>
+        <!--<div class="button button-full app-theme-color app-theme-text">{{item.name}}</div>-->
+
+        <ion-list class="app-theme-color app-theme-text">
+            <ion-item class="item item-divider">
+                <div class="row">
+                    <div class="col col-50 item-text-wrap">{{item.name}}</div>
+                    <div class="col col-10">:</div>
+                    <div class="col">{{item.price | currency}}</div>
+                    <!--<div class="col"-->
+                    <!--ng-class="item.price-pricing.averageprice>0 ? 'redflag' : 'greenflag'">-->
+                        <!--(<i class="icon"-->
+                           <!--ng-class="item.price-pricing.averageprice>0 ? 'ion-plus redflag' : 'ion-minus'"></i>-->
+                        <!--{{item.price-pricing.averageprice | makePositive | currency}})-->
+                    <!--</div>-->
+                </div>
+                <ion-option-button class="button-balanced icon ion-ios-arrow-forward mediumsize" ng-click="decide('Change Price',item.name)">&nbspChange price
+                </ion-option-button>
+            </ion-item>
+        </ion-list>
+
+        <!--<div class="card">-->
+            <!--<div class="item item-divider app-theme-color app-theme-text">-->
+                <!--<div class="row ">Competitor Pricing</div>-->
+            <!--</div>-->
+            <!--<ion-list>-->
+
+                <!--<ion-item class="item-stable"-->
+                          <!--ng-click="toggleGroup(pricing)"-->
+                          <!--ng-class="{active: isGroupShown(pricing)}">-->
+                    <!--<div class="row">-->
+                        <!--<div class="col col-10">-->
+                            <!--<i class="icon" ng-class="isGroupShown(pricing) ? 'ion-minus' : 'ion-plus'"></i>-->
+                        <!--</div>-->
+                        <!--<div class="col col-40">Average Price</div>-->
+                        <!--<div class="col col-10">:</div>-->
+                        <!--<div class="col">{{pricing.averageprice | currency}}</div>-->
+                    <!--</div>-->
+                    <!--<ion-option-button class="button-balanced icon ion-ios-arrow-forward mediumsize " ng-click="decide('Change Price',item.name)">&nbspChange price-->
+                    <!--</ion-option-button>-->
+                <!--</ion-item>-->
+                <!--<ion-item class="item-accordion"-->
+                          <!--ng-repeat="competitior in pricing.competitors"-->
+                          <!--ng-show="isGroupShown(pricing)">-->
+                    <!--<div class="row smaller" >-->
+                        <!--<div class="col col-50 item-text-wrap">-->
+                            <!--<div > {{competitior.competitor}}-->
+                                <!--<div class="subscripttag" ng-show="competitior.name">-->
+                                <!--(-->
+                                <!--{{competitior.name}}-->
+                                <!--)-->
+                                <!--</div>-->
+                            <!--<br>-->
+
+                            <!--</div>-->
+                        <!--</div>-->
+                        <!--<div class="col col-10">:</div>-->
+                        <!--<div class="col">{{competitior.price | currency}}</div>-->
+                        <!--<div class="col">(-->
+                            <!--<i class="icon"-->
+                               <!--ng-class="competitior.price-pricing.averageprice>0 ? 'ion-plus' : 'ion-minus'"></i>-->
+                            <!--{{competitior.price-pricing.averageprice | makePositive | currency}}-->
+                        <!--)-->
+                        <!--</div>-->
+                    <!--</div>-->
+                    <!--<ion-option-button class="button-balanced icon ion-ios-arrow-forward mediumsize" ng-click="decide('Change Price',item.name)">&nbspChange price-->
+                        <!--to {{competitior.price | currency}}-->
+                    <!--</ion-option-button>-->
+
+                <!--</ion-item>-->
+
+            <!--</ion-list>-->
+        <!--</div>-->
+
+        <div class=" card">
+            <div class="item item-divider app-theme-color app-theme-text">
+                <div class="row">
+                    <div class="col col-30 item-text-wrap">Cost</div>
+                    <div class="col col-5"></div>
+                    <div class="col col-10">&nbsp:</div>
+                    <div class="col">{{receipe.totalcost | currency}}</div>
+                    <div class="col">
+                        <i class="icon"
+                           ng-class="receipe.change>0 ? 'ion-arrow-up-b redflag' : 'ion-arrow-down-b greenflag'"></i>
+                        {{receipe.change | makePositive | currency}}
+                    </div>
+                    <div class="col col-5"></div>
+                </div>
+            </div>
+
+
+            <ion-list class="list">
+                <ion-item class="item" ng-repeat="receipeitem in receipeitems">
+                    <div class="row smaller" >
+                         <!--ng-click="openModal('{{receipeitem.name}}')">-->
+                        <div class="col col-40 item-text-wrap">{{receipeitem.name}}
+                            <div ng-show="receipeitem.portion">({{receipeitem.portion}})</div>
+                        </div>
+                        <div class="col col-10">:</div>
+                        <div class="col col-20">{{receipeitem.cost | currency}}</div>
+                        <div class="col">
+                            <i class="icon"
+                               ng-class="receipeitem.change>0 ? 'ion-arrow-up-b redflag' : 'ion-arrow-down-b greenflag'"></i>
+                            {{receipeitem.change| makePositive | currency}}
+                        </div>
+                        <div class="col col-5"></div>
+                        <!--<div class="col col-25"></div>-->
+                    </div>
+                    <ion-option-button class="button-balanced icon ion-ios-people smallsize" ng-click="decide('Negotiate lower cost',receipeitem.name)"> &nbsp Negotiate lower cost
+                    </ion-option-button>
+                    <ion-option-button class="button-balanced icon ion-ios-personadd smallsize" ng-click="decide('Change Supplier',receipeitem.name)">&nbsp Change Supplier
+                    </ion-option-button>
+
+                </ion-item>
+
+            </ion-list>
+
+        </div>
+
+
+    </ion-content>
+    <script id="my-modal.html" type="text/ng-template">
+        <ion-modal-view style="width: 90%; height: 20%; top: 50%; left: 5%; right: 5%; bottom: 30%;">
+            <header class="bar app-theme-color">
+                <div class="title app-theme-text" style="text-align:center;">{{receipeitemoptions.name}} <span class="subscripttag larger"> ({{receipeitemoptions.uom}})</span></div>
+
+                <div class="button app-theme-color" ng-click="modal.hide()"><i class="icon ion-close app-theme-text"></i></div>
+            </header>
+            <ion-content>
+                <!--<div class="list list-inset has-subheader">-->
+
+                <!--<div class="item">-->
+
+                <!--</div>-->
+
+
+                <!--</div>-->
+                <div class="row has-subheader vert-spacer">
+
+                    <div class="button-bar">
+                        <div class="button"
+                             ng-class="supplier.current ? 'button-positive' : ''" ng-repeat="supplier in receipeitemoptions.suppliers">{{supplier.supplier}}
+                            <br>
+                            {{ supplier.price| currency}}
+                        </div>
+                        <!--<div class="button button-positive">Sysco-->
+                            <!--<br>-->
+                            <!--$4.90-->
+                        <!--</div>-->
+                        <!--<div class="button" style="border-width:0px 0px 0px 0px" >Grecian-->
+                            <!--<br>-->
+                            <!--$4.65-->
+                        <!--</div>-->
+                    </div>
+                </div>
+            </ion-content>
+        </ion-modal-view>
+    </script>
+</ion-view>

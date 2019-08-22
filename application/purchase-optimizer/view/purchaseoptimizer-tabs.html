@@ -1,0 +1,34 @@
+<ion-view view-title="{{pageHeading}}" ng-controller="PurchaseOptimizerCtrl"
+          ng-init="onPurchaseOptimizerInitHandler()">
+    <ion-tabs class="tabs-icon-top tabs-color-active-positive">
+
+        <!-- Food Tab -->
+        <div ng-controller="PurchaseOptimizerCtrl">
+            <ion-tab title="Food" icon="ion-android-restaurant" ng-click="FoodtabClickHandler()"
+                     class="{{CategoryExists('Food')}}">
+                <ion-nav-view name="tab-Food"></ion-nav-view>
+            </ion-tab>
+        </div>
+
+        <!-- Liquor Tab -->
+        <div ng-controller="PurchaseOptimizerCtrl">
+            <ion-tab title="Liquor" icon="ion-android-bar" ng-click="LiquortabClickHandler()"
+                     class="{{CategoryExists('Liquor')}}">
+
+                <ion-nav-view name="tab-Liquor"></ion-nav-view>
+
+            </ion-tab>
+        </div>
+
+        <ion-footer-bar style="padding-top: 0px;" ng-click="getOrder()" align-title="left" class="app-theme-color app-theme-text">
+
+        <div class="row" style="padding-top: 0px;">
+            <div style=" margin-left: auto; margin-right: auto; display: block;" class="col-100 app-theme-text">
+               Confirm Order
+            </div>
+        </div>
+
+    </ion-footer-bar>
+    </ion-tabs>
+
+</ion-view>

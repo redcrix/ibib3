@@ -1,0 +1,48 @@
+<div ng-show="newcategoryData.ingredients.length > 0 &&  newcategoryData.name">
+
+    <div style="width: 100%; padding: 16px 16px 16px 10px;display: flex; flex-flow: row; justify-content: flex-start;" class="item-divider" ng-click="toggleGroup(newcategoryData)">
+        <i class="icon  icon-left" ng-class="newcategoryData.isExpanded ? 'ion-ios-minus-outline' : 'ion-ios-plus-outline'"></i> &nbsp
+        <div>{{newcategoryData.name}}</div>
+        <div style="margin-left: auto;" ng-hide="!minorcat">{{(newcategoryData.totalValue||0) | currency}}</div>
+
+    </div>
+
+    <!-- <span ng-repeat="dataCardPair in optionsChunks"> -->
+      <!-- <div class="row no-vertical-padding">
+          <div class="col col-center no-vertical-padding">
+               <div class="card" style="margin: 10px 10px;">
+                  <div class="row no-vertical-padding no-horizontal-padding" ng-click="showItems(newcategoryData)">
+                    <div class="col col-center text-center" style="font-size: medium;">
+                        {{newcategoryData.name}}
+                    </div>
+                    <div class="item item-borderless">
+                      {{(newcategoryData.totalValue||0) | currency}}
+                    </div>
+                  </div>
+                </div>
+          </div>
+      </div> -->
+    <!-- </span>  -->
+
+    <ion-item ng-show="showItemsLoading"  style="height:65px;">
+        <div class="row">
+            <busyspinner spinnerhide="!showItemsLoading"></busyspinner>
+        </div>
+    </ion-item>
+    <ion-list class="sub-list paddingzero" ng-if="newcategoryData.isExpanded" >
+      <!-- <ion-scroll direction="y" class="theroot"> -->
+        <ion-item ng-repeat="item in newcategoryData.ingredients |filter :searchText| orderBy:'rank' track by $index" ng-if="!item.searchHidden" class="no-padding" on-finish-render="finishedCategoryItemsRender"  ng-style="{'margin-bottom': $last && lastName == newcategoryData.name ? '50%' : '0%'}" >
+            <!-- <product-item node-data="item" mode="mode" filter-view="filterView" ng-if="item.active || mode != 'edit'"></product-item> -->
+            <product-item node-data="item" mode="mode" filter-view="filterView" ng-if="item.ingredient_status=='active' || mode != 'edit'"></product-item>
+
+            <ion-option-button ng-if="mode === 'edit'" class="button-positive" ng-click="addQuantity(item)"> Add Quantity
+            </ion-option-button>
+            <!--    <ion-option-button class="button-balanced" ng-click = "changeUnit(item)"> Change Unit
+      </ion-option-button> -->
+            <ion-option-button ng-if="mode === 'edit'" class="button-energized" ng-click="editConfig(item)"> Edit Config
+            </ion-option-button>
+        </ion-item>
+      <!-- </ion-scroll> -->
+      <!-- <ion-infinite-scroll immediate-check="false" ng-if="hasMoreData && newcategoryData.isExpanded" on-infinite="getMore()" distance="1%"></ion-infinite-scroll> -->
+    </ion-list>
+</div>

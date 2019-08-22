@@ -1,0 +1,24 @@
+<ion-view view-title="Food Wastage detail" ng-init="initializeView();">
+    <ion-content>
+    <!--  <div class="card">
+           <isb-line-chart data="chartData" horizontal-axis-labels="chartDates"
+           legend-labels="seriesLabels" title="chartTitle"></isb-line-chart>
+       </div> -->
+
+       <div class="card">
+            <isb-line-chart data="wastageDetailData.chartData" horizontal-axis-labels="wastageDetailData.chartDates"
+            legend-labels="wastageDetailData.foodWastageSeriesLabels" title="wastageDetailData.foodWastageTitle"></isb-line-chart>
+        </div>
+
+      <!--  <div class="card">
+            <div class="item item-divider app-theme-color app-theme-text">
+            {{tableFoodTitle[number-1].name}} wastage
+            </div>
+            <div class="row" ng-repeat="item in chartItems">
+
+    		 <div class="col col-50"><b>{{ item.detail[number-1].time}}</b></div>
+    		  <div class="col col-50">{{ item.detail[number-1].amount}}</div>
+    		</div>
+      </div> -->
+  <ion-content>
+</ion-view>

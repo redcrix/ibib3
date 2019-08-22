@@ -1,0 +1,22 @@
+<ion-item ng-class="ifeven? 'app-back-ground': ''" ng-controller="PromotionOptimizerCtrl">
+    <div class="row row-center" ng-class="ifeven? 'app-back-ground': ''">
+        <div class="col col-50 item-text-wrap">
+            <div>{{ candidate.item_name | titleCase}}</div>
+            <div>{{ candidate.price | currency}}</div>
+        </div>
+        <div class="col">
+            <div>
+
+                <progress style="margin-top: 0px; margin-bottom: 0px;" class="thresholdmeter"
+                          ng-class="candidate.cost_percent>candidate.threshold_cost? 'redflag':'greenflag'"
+                          max="100"
+                          value={{candidate.cost_percent}}></progress>
+                <span class="xx-smaller">{{candidate.cost_percent | number:0}}%</span>
+                <div style="font-size:70%;">(cost percentage)</div>
+            </div>
+        </div>
+    </div>
+    <ion-option-button class="icon button-balanced ion-chevron-up"
+     ng-click="decide('Promotion Optimizer','Promote', candidate, candidate.item_name)"
+    >Promote</ion-option-button>
+</ion-item>

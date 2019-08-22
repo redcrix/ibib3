@@ -1,0 +1,211 @@
+
+<ion-view ng-init="initializeView()" title="Invoice Detail" hide-tabs="true">
+
+  <ion-floating-button ng-if="!summary" id="my-float-pnl" class="custom-save" ng-click="saveInvoice(inputData,invoicesData.supplier_invoice_items,invoicesData)" icon-color="white" icon="ion-android-checkmark-circle" button-color="#33cd5f">
+  </ion-floating-button>
+  <busyspinner spinnerhide="!spinnerShow" class="purchase-track-spinner"></busyspinner>
+      <!-- <button style="display:hidden" class="button upload-btn" id="PnLCatInv" modal-select="" ng-model="mySelect" options="minorCategories"  modal-title="Select Category" hide-reset='true' on-select="shoutLoud(newValue, oldValue)" modal-class="camera-set" has-search="true"  on-close on-reset="newShoutReset()" >
+         <div class="option">
+           <h2>{{option}}
+           </h2>
+         </div>
+       </button> -->
+  <ion-tabs class="tabs-icon-top tabs-color-active-balanced" delegate-handle="myhandle">
+    <ion-tab title="Details" icon-on="ion-ios-circle-filled" on-select="switchTab('Details')" icon-off="ion-ios-circle-outline">
+      <span ng-show="!spinnerShow">
+        <div class="row invoice-detail-top invoice-font-dark">
+          <div class="col" style="text-align:left"> {{invoicesData.supplier_name}} </div>
+          <div class="col" style="text-align:right">{{(invoicesData.total_value||0).toFixed(2) | currency}}
+          </div>
+        </div>
+        <div class="row invoice-detail-top">
+          <div class="col" style="text-align:left;color:gray;">{{invoicesData.invoice_id}} </div>
+          <div class="col" style="text-align:right;color:gray;"> Date : {{invoicesData.delivery_date  * 1000 | date:'MM-dd-yyyy'}} </div>
+        </div>
+        <div class="row">
+          <div class="col" style="text-align:right;color:gray;" ng-if="invoicesData.due_date != 0"> Due Date : {{invoicesData.due_date  * 1000 | date:'MM-dd-yyyy'}} </div>
+        </div>
+
+        <ion-content class="has-header has-subheader" style="margin-bottom: 20%;overflow:auto">
+          <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width height=device-height">
+           <form name="inputData" id="inputData" ng-submit="submit(inputData,invoicesData.supplier_invoice_items)">
+              <!-- ****************************************************************************************** -->
+            <div class="card" >
+             <div ng-hide="spinnerShow">
+                <div ng-repeat="item in invoicesData.supplier_invoice_items" class="card">
+                  <ion-item class="invoice-tacking-padding">
+                    <div class="row" ng-click="toggleGroup(item)">
+                      <div class="col col-75 item-text-wrap" style="text-align:left;padding-top:unset;">
+                        <span class="invoice-data-first font-dark"> {{ item.supplier_item_name}} 
+                          <ion-search-select title="Search" options="groupedList" option-selected="groupedList">
+                            <button  class="recButton " type="button" ng-click="setInvoiceCat(item);$event.stopPropagation();"style="height: 5%;color: black;padding-top: 0px;width:80%;"ng-model="item.selectedOption">{{item.selectedOption}}
+                              <i class="icon ion-arrow-down-b" style="padding-left:5px;text-align: right;color: {{item.color}}"></i>
+                            </button>
+                          </ion-search-select>
+                        </span>
+
+                                                <!-- <span>
+                                     <div class="item item-input-inset" style="border:none;padding: 0px;cursor: pointer;width: 100px;margin-top: 0px;" ng-click="setInventory(item,2,$index)">
+                                              <div class="item-input-wrapper"  style="background: {{item.bg}}">
+                                                <i class="icon ion-ios-search" ></i>
+                                                <input type="text" ng-model="item.selectedOption" placeholder="Search" class="map-inv-drop-down" disabled>
+                                                <i class="icon ion-arrow-down-b" style="position: absolute;right: 10px;color: {{item.color}}"></i>
+                                              </div>
+                                          </div>
+                                  </span> -->
+                        <span class="invoice-data">{{item.invoice_id}}
+                        </span>
+                      </div>
+                      <div class="col col-20" style="text-align:right;padding-top:unset;">
+                        <!-- <span class="invoice-data-first invoice-data">Total Cost: $ {{item.total_cost | number : 2}}  </span> -->
+                        <span class="invoice-data-first invoice-data invoice-total-cost text-left">$ {{item.supplier_item_extended_price | number : 2}}  </span>
+                        <!-- <span class="invoice-data">Date: {{item.date  * 1000 | date:'MM-dd-yyyy'}}</span>
+                        <span class="invoice-data" ng-if="item.due_date != 0">Due date: {{item.due_date  * 1000 | date:'MM-dd-yyyy'}}</span> -->
+                      </div>
+                      <div class="col col-5 " style="float: right;">
+                        <i class="icon  icon-left" ng-class="item.isExpanded ? 'ion-chevron-down' : 'ion-chevron-right'"></i> &nbsp
+                      </div>
+                    </div>
+                    <ion-list class="sub-list paddingzero" ng-if="item.isExpanded">
+                      <ion-item  class="no-vertical-padding no-horizontal-padding row">
+                        <span class="col-50" style="padding-left:10px;font-size: 14px;color: gray;">
+                          <span>Quantity
+                            <span style="margin-left: 5%;">:</span>
+                            <input type="number"  step="any" class="invoice-detail-input" ng-change="itemEdited(item)"   ng-model="item.supplier_item_qty" >
+                          </span>
+                          <span class="invoice-detail-block">Value
+                            <span style="margin-left: 17%;">:</span>
+                              <!-- <input type="number"  step="any" class="invoice-detail-input" ng-change="itemEdited(item)" ng-model="item" readonly transform-invoice-price> -->
+                            <span>{{item.convertedVal}}</span>
+                          </span>
+                          <span class="invoice-detail-block">IM Id
+                            <span style="margin-left: 18%;">:</span>
+                              <!-- <input type="text" class="invoice-detail-input" ng-change="itemEdited(item)" ng-model="item.item_billing_measurement_id" readonly> -->
+                            <span> {{item.item_billing_measurement_id}} 
+                            </span>
+                          </span>
+                          <span class="invoice-detail-block">Discount
+                            <span style="margin-left: 2%;">:</span>
+                            <input type="number" step="any" class="invoice-detail-input" ng-change="itemEdited(item)" ng-model="item.discount" >
+                          </span>
+                          <span class="invoice-detail-block">Deposit
+                            <span style="margin-left: 6%;">:</span>
+                            <input type="number" step="any" class="invoice-detail-input" ng-change="itemEdited(item)" ng-model="item.deposit" >
+                          </span>
+                        </span>
+                        <span class="col-50" style="padding-left:10px;font-size: 14px;color: gray;">
+                          <span class="">Tax
+                            <span style="margin-left: 8%;">:</span>
+                              <input type="number" step="any" class="invoice-detail-input" ng-change="itemEdited(item)" ng-model="item.tax" >
+                          </span>
+                          <span class="invoice-detail-block">NUP
+                            <span style="margin-left: 2%;">:</span>
+                            <input type="number" step="any" class="invoice-detail-input"  ng-change="itemEdited(item)" ng-model="item.net_unit_price" >
+                          </span>
+                          <span class="invoice-detail-block">BU
+                            <span style="margin-left: 8%;">:</span>
+                            <select class="unit-select-box" name="singleSelect" ng-change="itemEdited(item)" ng-model="item.billing_units" >
+                              <option ng-repeat="units in item.units_options.units">{{units.measurementId}}</option>
+                            </select>
+                          </span>
+                          <span class="invoice-detail-block">ILD
+                            <span style="margin-left: 7%;">:</span>
+                            <input type="number" step="any" class="invoice-detail-input" style="text-align:center;" ng-change="itemEdited(item)" ng-model="item.discount" >
+                          </span>
+                        </span>
+                      </ion-item>
+                    </ion-list>
+                    <ion-option-button class="button-outline icon" ng-class="item.paid_or_not ?'button-assertive ion-android-cancel' : 'button-balanced ion-checkmark-circled'" ng-click="toggleActionTaken(item)">
+                    </ion-option-button>
+                  </ion-item>
+                </div>
+              </div>
+            </div>
+            <!-- ************************************************************************************************** -->
+          <div class="row" style="padding-top: 50px"></div>
+          <h4 style ="text-align: center" ng-show = "invoicesData.supplier_invoice_items == undefined"> "Invoice Data Not Available"
+          </h4>
+        </form>
+      </ion-content>
+      <ion-footer-bar align-title="left" class="invoice-detail-footer">
+        <div class="row" style="padding-bottom:unset;">
+          <div class="col-52 col-center" style="text-align:left ;color:gray;" > Invoice Level Discount <span>:</span>  $</div>&nbsp;<div class="col-40 col-center" style="text-align: left;"><input type="number" step="any" style="text-align:left ;color:gray;"  ng-model="invoicesData.invoice_level_discount" ></div>
+          <div class="col-30" ng-show ="showIds" style="text-align: right;">
+            <button type="submit" ng-click="openBrowser('https://drive.google.com/open?id=1YSfFFdTkaLL38EsyM8pQ2oZ3gL5NfXQa')">Download!</button>
+          </div> 
+        </div>
+        <div class="row">
+          <div class="col-50" style="text-align:left; padding-top: 13px;color:gray;" >Total Discount <span>:</span> $&nbsp;{{(invoicesData.total_discount||0).toFixed(2)}}</div>
+          <div class="col-40 col-center" style="text-align:right;color:gray;"> Fuel Charge : $</div>&nbsp;
+          <div class="col-5 col-center"><input type="number" step="any" style="text-align:left ; padding-left: 1px;color:gray;" ng-model="invoicesData.fuel_charge" ></div>
+        </div>
+        <!-- <div class="row">
+          <div class="col-50" style="text-align:left;padding-top: 13px;color:gray;max-width:60%;"> Fuel Charge <span style="margin-left:42%;">:</span> </div>
+          <div class="col-33">$<input type="number" step="any" style="text-align:left ;padding-top: 11px; padding-left: 1px;color:gray;" ng-model="invoicesData.fuel_charge" ></div>
+        </div> -->
+        <div class="row">
+          <div class="col" style="text-align:left;color:gray;padding-left:unset;"> Total Tax <span>:</span>  $&nbsp;{{(invoicesData.total_tax||0).toFixed(2)}} </div>
+        </div>
+        <div class="row">
+          <div class="col" style="text-align:center;font-weight: 900;font-size: 1.3em;"> Total Value :  $&nbsp;{{(invoicesData.total_value||0).toFixed(2)}}</div>
+        </div>
+      </ion-footer-bar>
+    </span>
+  </ion-tab>
+  <ion-tab title="Summary" on-select="switchTab('Summary')" icon-on="ion-ios-checkmark" icon-off="ion-ios-checkmark-outline">
+  <ion-content >
+    <span ng-if="!spinnerShow">
+      <div class="text-center item app-theme-text-level2" ng-if="pnLGroupedList.length <= 0" style="margin-top: 25%;">
+            No Information Available
+      </div>
+      <div style="text-align: center;padding-top: 18px;font-size: 20px;" >
+        <b>P&L Category Summary</b>
+      </div>
+      <div class="card tbl-head app-theme-color pnl-summary-head">
+        <div class="row app-back-ground app-theme-color" style="color: white;">
+            <div  class="col col-67">Name
+            </div>
+            <div  class="col col-33 text-right"  style="padding-right:5%;">Price
+          </div>
+        </div>
+      </div>
+      <span>
+        <div class="card pnl-summary-body">
+          <ion-list>
+            <ion-item class="row item pnlsummary-item" ng-repeat="pnLData in pnLGroupedList" style="height:50px !important">
+              <div class="col col-67 col-center " style="text-align: left;font-size: 12px;{{pnLData.style}}">{{pnLData.name | titleCase}}</div>
+              <div class="col col-33 col-center text-center item-text-wrap labor-currancy" style="text-align: right;font-size: 12px;{{pnLData.style}}">$ {{pnLData.totalValue | number : 2 }}</div>
+            </ion-item>
+          </ion-list>
+        </div>
+      </span>
+
+
+
+        <div class="text-center item app-theme-text-level2" ng-if="minorGroupedList.length <= 0" style="margin-top: 25%;">
+            No Information Available
+        </div>
+        <div style="text-align: center;padding-top: 18px;font-size: 20px;" ><b>GL Coded Summary</b></div>
+        <div class="card tbl-head app-theme-color pnl-summary-head">
+              <div class="row app-back-ground app-theme-color" style="color: white;">
+                  <div  class="col col-67">Name
+                  </div>
+                  <div  class="col col-33 text-right" style="padding-right:5%;">Price
+                  </div>
+              </div>
+        </div>
+        <span>
+            <div class="card pnl-summary-body">
+                <ion-list>
+                  <ion-item class="row item pnlsummary-item" ng-repeat="minorData in minorGroupedList" ng-if="minorData.name"  style="height:50px !important">
+                      <div class="col col-67 col-center " style="text-align: left;font-size: 12px;{{minorData.style}}">{{minorData.name | titleCase}}</div>
+                      <div class="col col-33 col-center text-center item-text-wrap labor-currancy" style="text-align: right;font-size: 12px;{{minorData.style}}">$ {{minorData.totalValue | number : 2 }}</div>
+                </ion-item>
+              </ion-list>
+            </div>
+          </span>
+        </span>
+      </ion-content>
+    </ion-tab>
+  </ion-tabs>
+</ion-view>

@@ -1,0 +1,386 @@
+<ion-view title="{{ prepName | titleCase }}" ng-controller="menuItemScreenCtrl" ng-init="onMenuItemDetailInit()">
+  <ion-nav-buttons side="secondary">
+    <!-- <div class="tooltip"> -->
+      <button class="button button-icon " ng-click="refreshScreenPrep()" style="color: white;" ng-if="!isEditmode && dataRecieved"><i class=" refresh icon ion-refresh"></i>
+      </button>
+      <!-- <span class="tooltiptext">Refresh this page</span> -->
+  <!-- </div> -->
+  </ion-nav-buttons>
+  <backbuttonwindow navbartitle="navBarTitle" ng-click="goBack"></backbuttonwindow>
+<busyspinner spinnerhide="gotList" class="purchase-track-spinner"></busyspinner>
+<ion-floating-menu id="my-float-inventory" menu-color="#33cd5f" menu-open-color="#84e19f">
+    <ion-floating-item is-centered="true" icon-color="white" icon="icon ion-edit" text="Edit" button-color="#33cd5f"  click="editPrep()" ng-show = "dataRecieved"></ion-floating-item>
+  </ion-floating-menu>
+<ion-content  style="overflow-y: scroll;height: 85vh;cursor: auto;" scroll="false"  ng-show = "dataRecieved">
+  <ion-scroll delegate-handle="taskScroll" direction="y">
+
+  <ion-list>
+    <div class="card"  style="margin-top: 5%;">
+      <ion-item class="white-back-ground invoice-tacking-padding">
+        <div class="row">
+          <div class="col col-33 item-text-wrap" style="text-align:left">
+            <span class="invoice-data-first font-dark"> {{$root.prepItems.prepName | titleCase}}
+            </span>
+          </div>
+          <div class="col col-60" style="text-align:right">
+            <div class="row" ng-if="prepItemDisabled">
+              <!-- <span class="invoice-data-first invoice-data col-80" ng-if="prepItemDisabled">Yields: {{prepItems.yield_qty| number : 2}}</span> -->
+              <span class="invoice-data-first invoice-data col-40" style="margin-left: 10%;text-align:right;">Yields
+              </span>
+              <span class="invoice-data-first invoice-data col-10">:</span>
+              <span class="invoice-data-first invoice-data col-40" style="text-align:center;">{{$root.prepItems.yield_qty| number : 2}}</span>
+              <span class="invoice-data-first invoice-data col-10">{{$root.prepItems.yield_unit}} </span>
+            </div>
+            <div class="row" ng-if="!prepItemDisabled">
+              <span class="invoice-data-first invoice-data col-33" style="text-align:center;">Yields:</span>
+                <span class="invoice-data-first invoice-data col-25">
+                  <!-- <input type="number"
+                           ng-model="prepItems.yield_qty"
+                           style="width: 100%;text-align:center;border-radius: 11px;border: 1px solid lightgray;height: 1.7em;"
+                           ng-change="ingQtyUpdated(prepItems)"
+                           ng-model-options="{debounce: 800}"
+                           limit-to="4"> -->
+                  <input  type="number" class="prep-edit-input num-no-dropdown no-vertical-padding no-horizontal-padding" ng-model="$root.prepItems.yield_qty" ng-click="event = $event" ng-change="yieldquantityChange($root.prepItems,event)" ng-disabled="prepItemDisabled">
+                </span>
+                <span class="invoice-data-first invoice-data col-40" style="margin-left: 4%;">
+                  <select class="unit-select-box col" style="width: 5.5em;" id ="ingredient.ingredientUnit" name="singleSelect" ng-model="$root.prepItems.yield_unit" ng-change ="yieldqty($root.prepItems)" ng-disabled="prepItemDisabled">
+                    <option ng-hide="optionval">{{$root.prepItems.yield_unit}}</option>
+                    <option ng-repeat=" unit in yieldUnits track by $index">{{unit}}</option>
+                    </select>
+                </span>
+              </div>
+
+                <!-- <span class="invoice-data"><i class="icon larger ion-cash"></i> Total Cost: ${{prepItems.prepCost | number : 2}}</span> -->
+
+              <div class="row">
+                <span class="invoice-data-first invoice-data col-50"><i class="icon larger ion-cash"></i> Total Cost</span>
+                <span class="invoice-data-first invoice-data col-10" style="margin-left: 7%;text-align:left;">:</span>
+                <span class="invoice-data-first invoice-data col-40" style="text-align: right;margin-left: 3%;">{{$root.prepItems.prepCost | currency:"$":4}}</span>
+              </div>
+                <!-- <span class="invoice-data" ng-if="item.due_date != 0">Unit Cost: ${{prepItems.prepUnitCost | number : 2}}</span> -->
+              <div class="row" ng-if="item.due_date != 0">
+                <span class="invoice-data-first invoice-data col-50">Unit Cost</span>
+                <span class="invoice-data-first invoice-data col-10" style="margin-left: 7%;text-align:left;">:</span>
+                <span class="invoice-data-first invoice-data col-40" style="text-align: right;margin-left: 3%;">{{$root.prepItems.prepUnitCost | currency:"$":4}}</span>
+              </div>
+                  <!-- <span class="invoice-data"><i class="icon larger ion-cash"></i> Total Cost: ${{prepItems.prepCost | number : 2}}</span> -->
+            </div>
+          </div>
+        </ion-item>
+      </div>
+    </ion-list>
+    <!--************** <marginoptimizeringredientlist ingredients="ingredients"></marginoptimizeringredientlist> ************-->
+    <!-- <busyspinner spinnerhide="gotList" class="purchase-track-spinner"></busyspinner> -->
+    <div class="card" style="margin: 5px 10px;" ng-if="ingList">
+      <button ng-if="!showIds" style="display:hidden" class="button upload-btn" id="my_recipe_ing" modal-select="" ng-model="mySelect" options="ingredientList"  modal-title="Select Ingredient" hide-reset='true' on-select="shoutLoud(newValue, oldValue)" modal-class="camera-set" has-search="true"  on-close="closeModal()" on-reset="shoutReset()" >
+      <div class="option">
+        <h2 ng-style="option.ingredientName== 'Create New Ingredient' ? {'color':'blue'} : {'color':'black'}">{{option.ingredientName}}</h2>
+      </div>
+    </button>
+    <button ng-if="showIds"  style="display:hidden" class="button upload-btn" id="my_recipe_ing" modal-select="" ng-model="mySelect" options="ingredientList"  modal-title="Select Ingredient" hide-reset='true' on-select="shoutLoud(newValue, oldValue)" modal-class="camera-set" has-search="true"  on-close="closeModal()" on-reset="shoutReset()" >
+      <div class="option">
+        <h2  ng-style="option.ingredientName== 'Create New Ingredient' ? {'color':'blue'} : {'color':'black'}">{{option.ingredientName}} ({{option.supplierItemId}})</h2>
+      </div>
+  </button>
+      <span ng-if="isRecipeZero()">
+        <div style="padding-right: 10px" class="item item-balanced no-padding ">
+          <div class="row">
+            <div class="col col-10 item-icon-left">
+              <i style="color: red;" class="icon ion-alert-circled app-back-ground"></i>
+            </div>
+            <div class="col">Recipe information unavailable</div>
+          </div>
+        </div>
+      </span>
+      <span ng-if="!isRecipeZero()">
+        <busyspinner spinnerhide="gotList" class="purchase-track-spinner"></busyspinner>
+        <busyspinner spinnerhide="dataRecieved" class="purchase-track-spinner"></busyspinner>
+        <div style="padding-right: 10px" class="item item-divider item-balanced no-padding" ng-show = "dataRecieved">
+          <div class="row">
+            <div class="col col-40 item-text-wrap">Cost</div>
+            <div class="col col-30"></div>
+            <div style="padding-left: 9px" class="col col-20">{{ (totalingredientscost | currency:"$":4)}}</div>
+          </div>
+        </div>
+        <ion-list class="item paddingzero" ng-show = "dataRecieved">
+          <span ng-repeat="ingredient in ingList">
+                    <!--************ <marginoptimizeringredientitem ingredient="ingredient" ifeven="$even"></marginoptimizeringredientitem> *******-->
+            <div class="card" style="margin: 1px 1px;">
+              <ion-item  class="no-padding" ng-class="$even ? 'app-back-ground':'white-back-ground'" >
+                <div class="row" style="height: 60px;" >
+                  <div ng-class="$even? 'app-back-ground':'white-back-ground'" class="row smaller no-vertical-padding" >
+                    <i ng-class="!isGroupShown(ingredient) &&  ingredient.ingredientType =='PREP'? 'ion-plus' :  ingredient.ingredientType !='PREP' ? 'padding ' :'ion-minus padding'" class=" col-5 col-center" ng-click="getModdata(ingredient)" style="padding-right: 20px">&nbsp;&nbsp;</i>
+                    <div ng-if="!isEditmode" class="col col-34 col-center item-text-wrap no-horizontal-padding" ng-disabled="prepItemDisabled" ng-click="getModdata(ingredient)" style="padding-left: 20px;">
+                                  {{ingredient.ingredientName}}
+                    <span ng-if="showIds">({{ingredient.ingredientId}})</span>
+                    </div>
+                    <div class="col-center col-34" ng-if="isEditmode">
+                    <div ng-if="isEditmode &&!showIds" class=" col-center item-text-wrap no-horizontal-padding" ng-disabled="prepItemDisabled">
+                      <div class="item item-input-inset" ng-click="setIngredient(ingredient,1,$index)" style="border:none;padding: 0px;cursor: auto;width: 95%;" >
+                      <div class="item-input-wrapper" style="background: {{items.bg}}">
+                       <b> <input type="text" ng-model="ingredient.ingredientName"  class="map-inv-drop-down"  disabled ng-change ="changeName(ingredient.ingredientName,$index)"></b>
+                        <i class="icon ion-arrow-down-b" style="position: absolute;right: 10px;color: {{items.color}}"></i>
+                      </div>
+                  </div>
+                    </div>
+                    <div ng-if="isEditmode && showIds" class=" col-center item-text-wrap no-horizontal-padding" ng-disabled="prepItemDisabled">
+                      <div class="item item-input-inset" ng-click="setIngredient(ingredient,1,$index)" style="border:none;padding: 0px;cursor: auto;width: 95%;" >
+                      <div class="item-input-wrapper" style="background: {{items.bg}}">
+                       <b> <input type="text" ng-model="ingredient.ingredientName"  class="map-inv-drop-down"  disabled ng-change ="changeName(ingredient.ingredientName,$index)" style="width: 150%"></b>
+                        <i class="icon ion-arrow-down-b" style="position: absolute;right: 10px;color: {{items.color}}"></i>
+                      </div>
+                  </div>
+                    </div>
+                  </div>
+                    <div class="col col-20 col-center no-horizontal-padding" style="text-align: center;">
+                      <span ng-if="!isGroupShown(ingredient)">
+                          <div class ="col col-center" ng-if="!isEditmode" ng-click="getModdata(ingredient)">{{ingredient.ingredientQuantity |number:2}}
+                        </div>
+                        
+                        <div class="row no-vertical-padding no-horizontal-padding">
+                          <div class="col col-center no-vertical-padding no-horizontal-padding">
+                            <div ng-disabled="prepItemDisabled" ng-if="isEditmode">
+                              <input  type="number" class="prep-edit-input num-no-dropdown no-vertical-padding no-horizontal-padding" ng-model="ingredient.ingredientQuantity" ng-click="event = $event" ng-change="quantityChange(ingredient,event)" ng-disabled="prepItemDisabled">
+                              <div style="text-align: center;color: lightgray;font-size:12px;" ng-if ="newPortion && ingredient.isnewPortion">Portion</div>
+                            </div>
+                          </div>
+                        </div>
+                      </span>
+                    </div>
+                    <div class="col col-15 col-center no-horizontal-padding" style="text-align: center;"ng-if="!isGroupShown(ingredient)&&!isEditmode">
+                      <span ng-if="!isGroupShown(ingredient)">
+                        <div class="item-text-wrap col" ng-if="!isEditmode" style="font-size: x-small;width: 100%" ng-click="getModdata(ingredient)">{{ingredient.ingredientUnit}}</div>
+                      </span></div>
+                    <div class="col col-15 col-center " ng-click="getModdata(ingredient)"ng-if="isGroupShown(ingredient)">
+                      <!-- <div ng-if="!isGroupShown(ingredient.moddatagroup)">
+                                    <span ng-if="!isEditMode" style="font-size: x-small; opacity: 0.5;margin-right: 50%;" >{{ ingredient.ingredientUnit }}</span></div> -->
+                      
+                      <span ng-if="isGroupShown(ingredient)">
+                        <span style="text-indent:5px; font-weight: 600;">{{ ::ingredient.ingredientYieldQuantity }}
+                        </span>
+                        <span style="font-size: x-small; opacity: 0.5;">{{ ::ingredient.ingredientYieldQuantityMeasurementId }}</span>
+                        <div style="font-size: x-small; opacity: 0.5;">Yield Quantity</div>
+                      </span>
+                    </div>
+                    <div class="col col-20  col-center no-horizontal-padding" ng-if="editMode" ng-click="getModdata(ingredient)" ng-click="getModdata(ingredient)">
+                      <div class="row no-vertical-padding no-horizontal-padding">
+                        <div class="col col-center no-vertical-padding no-horizontal-padding">
+                                            <!-- <input type="number" placeholder="qty" ng-change="validateQuantity()"
+                                                   ng-class="ingredientEdit.validationPassedHighlight"
+                                                   ng-model="ingredientEdit.stageIngredientQuantity" ng-model-options="{debounce: 500}"
+                                                   class="recipe-edit-input no-vertical-padding no-horizontal-padding"/> -->
+                        <div class="col" >{{ ::(ingredient.stageIngredientQuantity) }}
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col col-25  col-center no-vertical-padding no-horizontal-padding" ng-if="editMode" on-tap="resetIngredientQuantity()">
+                      <i class="icon x-large ion-reply success"></i>
+                    </div>
+                  </div>
+                                    <!-- <div style="font-size: x-small; opacity: 0.5;">{{ ::ingredient.ingredientUnit }}</div> -->
+                <div class="col col-20 col-center no-horizontal-padding" style="text-align: center;" >
+                  <span ng-if="!isGroupShown(ingredient)" ng-click="getModdata(ingredient)">{{ (ingredient.ingredientCost | currency:"$":4) }}</span>
+                  <span ng-if = "!isGroupShown(ingredient)">
+                    <span class="unit-config2-num-field add-ing-select-box-span col" ng-if="isEditmode" style="border: 1px solid lightgray;border-radius: 12px;height:30px;background-color: lightgray;margin-top:unset;">
+                      <select class="unit-select-box add-ing-select col" name="singleSelect" ng-model="ingredient.ingredientUnit" ng-change="ingQtyUpdated(ingredient)">
+                        <option ng-hide="optionval">{{ingredient.ingredientUnit}}</option>
+                        <option ng-repeat=" unit in units track by $index">{{unit}}</option>
+                      </select>
+                    </span>
+                  </span>
+                  <div ng-if="isGroupShown(ingredient)" style="font-size: x-small; opacity: 0.5;height: 20px;width: 20px;text-align: center;padding-top: 0px;">
+                    <button class="" style="background-color:white;color: #33CD5F;border-color: black;font-weight: bold;height: 23px; "  ng-click="editItem(ingredient)">Edit </button>
+                                        <!-- <i class="icon ion-close-circled" style="background-color: red;"></i> -->
+                  </div>
+                                    <!-- <div ng-if="isGroupShown(ingredient.moddatagroup)" style="font-size: x-small; opacity: 0.5; font-weight: 500;">
+                                        Yield Cost
+                                    </div> -->
+                  <span ng-if="isGroupShown(ingredient)" style="font-weight: 600;">{{ (ingredient.moddatagroup.modDataTotal.ingredientCost | currency:"$":4) }}</span>
+                  <div ng-if="isGroupShown(ingredient)" style="font-size: x-small; opacity: 0.5; font-weight: 500;">
+                                        Yield Cost
+                  </div>
+
+                  </div>
+                  <div class="col-10 col-center" ng-if="!isGroupShown(ingredient) && ingredient.ingredientType !='PREP' && !isEditmode && showIds">
+                  <span ng-class="{'ion-android-arrow-dropup-circle' :ingredient.isExpanded,'ion-android-arrow-dropdown-circle':!ingredient.isExpanded ,'invtoolButtoncolor2' :category.buttonColor == false,'invtoolButtoncolor' : category.buttonColor}" ng-click="toggleGrp(ingredient)" style="margin-top: 12%;font-size: 1.5em;">
+                  </span>
+                </div>
+                  <div class="col-10" ng-if="!isGroupShown(ingredient)"  ng-disabled="prepItemDisabled" ng-click="getModdata(ingredient)">
+                    <button style="background-color:red;border-color: red;color: white;padding:0px;position: absolute;top: 50%;" class="prep-btn icon ion-close " ng-class ="icon" ng-click="deleteItem(ingredient, $index)" ng-hide="prepItemDisabled">
+                    </button>
+                 </div>
+                 
+                                <!-- <div class="col col-10 col-center" ng-click="showReportPopover($event)" style="padding-left: 15px;">
+                                    <i class="icon larger ion-android-more-vertical"></i>
+                                </div> -->
+                  <ion-option-button class="button-balanced icon ion-ios-arrow-forward mediumsize"
+                                                   ng-click="decide(ingredient)"> &nbspAdd Task
+                                </ion-option-button>
+                </div>
+              </div>
+              </ion-item>
+              <div class="list list-borderless" ng-if="ingredient.ingredientType =='PREP'" ng-class="isGroupShown(ingredient) ? 'item item-text-wrap' : ''">
+              <ion-item ng-if="isGroupShown(ingredient)" style="padding: 6px;" class="item item-accordion no-vertical-padding" ng-repeat="mod in ingredient.moddatagroup.modData | orderBy:'-ingredientCost'">
+                <div class="row smaller no-vertical-padding no-horizontal-padding" style="line-height: 1.5em;">
+                  <div class="col col-40  col-center item-text-wrap no-horizontal-padding">{{::(mod.ingredientName |
+                                        titleCase) }}
+                  </div>
+                  <div class="col col-30 col-center no-horizontal-padding" ng-if="mod.ingredientQuantity>0">
+                    <span style="text-indent:5px;">{{ mod.ingredientQuantity }}</span>
+                    <span style="font-size: x-small; opacity: 0.5;">{{ ::mod.ingredientUnit }}</span>
+                  </div>
+                  <div class="col col-20 col-center no-horizontal-padding" style="padding-left: 18px;">{{(mod.ingredientCost | currency) }}
+                  </div>
+                  <div class="col-10 col-center" ng-if="isGroupShown(ingredient) && !isEditmode && showIds && mod.ingredientType !='PREP'" >
+                    <span ng-class="{'ion-android-arrow-dropup-circle' :mod.isExpanded,'ion-android-arrow-dropdown-circle':!mod.isExpanded ,'invtoolButtoncolor2' :category.buttonColor == false,'invtoolButtoncolor' : category.buttonColor}" ng-click="toggleGrp(mod)" style="margin-top: 12%;font-size: 1.5em;">
+                    </span>
+                </div>
+                </div>
+                <div class="col-5"></div>
+              <div class="container row-line-set-expanded row" ng-if="mod.isExpanded">
+                <div class="col-33 col-center" style="text-align: center;">Supplier Name-item #-Description
+
+                </div>
+                <div class="col-12 col-center" style="text-align: center;">Unit
+                </div>
+                <div class="col-12 col-center" style="text-align: center;">Unit Price
+                </div>
+                <div class="col-10 col-center" style="text-align: center;">Purchase Date
+                </div>
+                <div class="col-10 col-center" style="text-align: center;">Invoice Num
+                </div>
+                <div class="col-10 col-center" style="text-align: center;">Billing Units
+                </div>
+                <div class="col-7 col-center" style="text-align: center;">Billing Price
+                </div>
+              </div>
+              <div class="container row-line-set-expanded row" ng-repeat="supplier in mod.supList track by $index" ng-if="mod.isExpanded">
+                <div class="col-33 col-center" style="text-align: center;">
+                {{supplier.supp_name}} - {{supplier.item_num}} - {{supplier.desc}}
+                </div>
+                <div class="col-12 col-center" style="text-align: center;">
+                  <select class="unit-select-box col" name="singleSelect" ng-model="supplier.unit" style="color: rgb(2, 166, 255);">
+                    <option ng-repeat=" unit in supplierUnits track by $index">{{unit}}</option>
+                  </select>
+                </div>
+                <div class="col-12 col-center" style="text-align: center;">
+                  {{supplier.unit_price | currency}}
+                </div>
+                <div class="col-10 col-center" style="text-align: center;">
+                  {{supplier.purchase_date}}
+                </div>
+                <div class="col-10 col-center" style="text-align: center;">
+                  {{supplier.invoice_num}}
+                </div>
+                <div class="col-10 col-center" style="text-align: center;">
+                  {{supplier.billing_units}}
+                </div>
+                <div class="col-7 col-center" style="text-align: center;">
+                  {{supplier.billing_price | currency}}
+                </div>
+              </div>
+              </ion-item>
+            </div>
+          </div>
+          <div class="col-5"></div>
+            <!-- <div class="col-8 col-center" style="font-size: 1.6em;margin-top: 1%;color: red;padding-left:20px ;padding-bottom:10px;">
+              <i class="ion-minus-circled"></i>
+            </div> -->
+            <!-- <div class="col-5"></div> -->
+          <div class="container row-line-set-expanded row" ng-if="ingredient.isExpanded">
+            <div class="col-33 col-center" style="text-align: center;">Supplier Name-item #-Description
+
+            </div>
+            <div class="col-12 col-center" style="text-align: center;">Unit
+            </div>
+            <div class="col-12 col-center" style="text-align: center;">Unit Price
+            </div>
+            <div class="col-10 col-center" style="text-align: center;">Purchase Date
+            </div>
+            <div class="col-10 col-center" style="text-align: center;">Invoice Num
+            </div>
+            <div class="col-10 col-center" style="text-align: center;">Billing Units
+            </div>
+            <div class="col-7 col-center" style="text-align: center;">Billing Price
+            </div>
+          </div>
+          <div class="container row-line-set-expanded row" ng-repeat="supplier in ingredient.supList track by $index" ng-if="ingredient.isExpanded">
+            <div class="col-33 col-center" style="text-align: center;">
+              {{supplier.supp_name}} - {{supplier.item_num}} - {{supplier.desc}}
+            </div>
+            <div class="col-12 col-center" style="text-align: center;">{{supplier.unit}}
+            </div>
+            <div class="col-12 col-center" style="text-align: center;">
+              {{supplier.unit_price | currency}}
+            </div>
+            <div class="col-10 col-center" style="text-align: center;">
+              {{supplier.purchase_date}}
+            </div>
+            <div class="col-10 col-center" style="text-align: center;">
+              {{supplier.invoice_num}}
+            </div>
+            <div class="col-10 col-center" style="text-align: center;">
+              {{supplier.billing_units}}
+            </div>
+            <div class="col-7 col-center" style="text-align: center;">
+              {{supplier.billing_price | currency}}
+            </div>
+          </div>
+        </div>
+        </span>
+      </ion-list>
+    </span>
+    </div>
+    <div style="padding-bottom: 60px;"></div>
+    <hr style="margin-bottom:unset">
+        <div class="row" ng-click="addNewIngredient()" ng-hide="prepItemDisabled" ng-disabled="prepItemSaveDisabled">
+          <div class="col-10 col-center add-ing-plus">
+            <i class="icon  icon-left" ng-class="expandAddIng ? 'ion-ios-minus-outline' : 'ion-ios-plus-outline'"></i>
+          </div>
+          <div class="col-80 col-center add-ing">
+            Add More Ingredient
+          </div>
+        </div>
+  </ion-scroll>
+</ion-content>
+
+  <div class="bar bar-subfooter " style="color:#33CD5F;padding-bottom: 50px;width: 77%" >
+    <div style="padding-top: 10px;text-align: right;" ng-if="isEditmode && showIds">
+        <button style="position: fixed;padding:0px;width: 15%;"
+                ng-class="{update_cost_color: !updateCostDisabled, update_cost_disabled_color: updateCostDisabled}"
+                ng-click="updateCost()"
+                ng-disabled="updateCostDisabled">Update cost
+        </button>
+    </div>
+  </div>
+<!-- <ion-footer-bar>
+    <button  class="full-width-button app-theme-text " ng-disabled="prepItemSaveDisabled" style="border: none;background: #33CD5F;text-align: center;color: white;font-size: 15px;position: fixed;" ng-click="confirmSave()" ng-hide="prepItemDisabled" ng-class="{app_theme_color: !prepItemSaveDisabled, app_theme_disabled_color: prepItemSaveDisabled}">
+        Save
+    </button >
+
+
+</ion-footer-bar> -->
+<div class="bar bar-footer no-vertical-padding" style="flex-flow: column; height: auto">
+  <div class="row" ng-hide="prepItemDisabled">
+    <div class="col-50">
+      <button ng-disabled="prepItemSaveDisabled" ng-class="{app_theme_color: !prepItemSaveDisabled, app_theme_disabled_color: prepItemSaveDisabled}" class="full-width-button col-90 app-theme-text" ng-click="confirmSave()" ng-hide="prepItemDisabled">
+        Save
+      </button>
+    </div>
+    <div class="col-50">
+      <button style="margin-left: 10%;" class="full-width-button button col-90" ng-click="discardPrepChanges()">
+        Discard
+      </button>
+    </div>
+  </div>
+</div>
+
+
+</ion-view>
+
+
+    <!-- <div class="bar bar-subfooter " style="color:#33CD5F;padding-bottom: 50px;width:300px" ><div style="padding-top: 10px;" >
+        <button style="position: fixed;background-color:white;border-color: #33CD5F;color: #33CD5F;padding:0px" class="prep-add-btn icon ion-plus " ng-class ="icon" ng-click="addNewIngredient()" ng-hide="prepItemDisabled">
+        </button>
+    </div><div style="padding-left: 40px;text-align: left;font-size: 16px;padding-top: 5px;" ng-disabled="prepItemDisabled" ng-hide="prepItemDisabled">Add More Ingredient</div>
+    </div> -->

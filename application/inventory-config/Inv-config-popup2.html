@@ -1,0 +1,66 @@
+<ion-modal-view class="unit-config-modal">
+  <!--style="width: 90%; height: 60%; top: 20%; left: 5%; right: 5%; bottom: 20%;  min-height: 50%;"-->
+    <ion-header-bar class="bar error-reporting-modal">
+      <h1 class="title" style="text-align: center;right: none;">INV Unit Configuration</h1>
+      <a class="button" ng-click="closeUnitPopup2Modal()">Cancel</a>
+    </ion-header-bar>
+    <ion-content style="overflow: auto;">
+          
+          <ion-slide-box>
+            <ion-slide>
+              <div class="box blue">
+                <h5 class="text-center">Your inventory unit is in {{current_selected.unit}}</h5>
+          
+                <form name="addUnit" ng-submit="" novalidate style="padding: 10px;">
+                       
+                          <div class="row" style="margin-left: 8%;">
+                              <div class="col col-33" style="text-align: right;">
+                                <span class="unit-config2-span">
+                                  How many 
+                                </span>
+                              </div>
+
+                              <div class="col col-33">
+                                
+                                <span class="unit-config2-num-field">
+                                <input type="number" name="">
+                                </span>
+                              </div>
+                              <div class="col col-33">
+                                <span class="unit-config2-span">
+                                  {{current_selected.unit}}
+                                </span>
+                              </div>
+                          </div>
+                          <div class="row" style="margin-left: 8%;">
+                              <div class="col col-22" style="text-align: right;">
+                                <span class="unit-config2-span">
+                                  is in one 
+                                </span>
+                              </div>
+
+                              <div class="col col-33">
+                                <select class="unit-select-box" name="singleSelect" ng-model="data.singleSelect">
+                                    <option value="option-1" ng-repeat="units in measurements_list">{{units.measurement_name}}</option>
+                                  </select>
+                              </div>
+                              <div class="col col-33">
+                                
+                              </div>
+                          </div>
+                          
+                </form> 
+                <div class="popup-buttons">
+                    <button type="button" class="button button-bal " ng-click="saveMappedData()">Save</button>
+                    <button type="submit" class="button button-bal " ><b>I don't know</b></button>
+                </div>
+              </div>
+            </ion-slide>
+            <ion-slide>
+              <div class="box red">
+                Slide 2!
+              </div>
+            </ion-slide>
+          </ion-slide-box>
+      </ion-content>
+</ion-modal-view>

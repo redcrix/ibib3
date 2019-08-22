@@ -1,0 +1,94 @@
+<!-- <ion-item ng-show="showItemsLoading"  style="height:65px;">
+      <div class="row">
+          <busyspinner spinnerhide="!showItemsLoading"></busyspinner>
+      </div>
+</ion-item> -->
+
+<ion-view title="{{inventoryName}}" align-title="center" >
+  <ion-nav-buttons side="secondary">
+    <button class="button button-icon icon ion-ios-search-strong" ng-click="showFilterBar()">
+    </button>
+  </ion-nav-buttons>
+  <ion-header-bar  class="bar bar-subheader app-theme-color-level2 no-vertical-padding no-horizontal-padding">
+
+
+        <div class="app-theme-color-level2">
+            <div class="row">
+                <div class="col col-center no-vertical-padding">
+                    <span ng-repeat="saveStatu in saveStatus track by $index" class="{{ saveStatu.level }}"> {{ saveStatu.text }}</span>
+                </div>
+            </div>
+
+
+
+            <div class="inventory-list-header">
+                <div style="flex-basis:{{ rowSize.name }}%; flex-shrink: 0; flex-grow: 1; white-space: normal;">Name</div>
+                <div style="flex-basis: {{ rowSize.price }}%; flex-shrink: 0; flex-grow: 1">Price</div>
+                <div style="flex-basis:{{ rowSize.qty }}%; flex-shrink: 0; flex-grow: 1">Qty</div>
+                <div style="flex-basis: {{ rowSize.units}}%; flex-shrink: 0; flex-grow: 1">Units</div>
+                <div style="flex-basis: 2%; flex-shrink: 0; flex-grow: 1">Par</div>
+                <div style="flex-basis: {{ rowSize.value }}%; flex-shrink: 0; flex-grow: 1; text-align: end">Value</div>
+            </div>
+        </div>
+
+    </ion-header-bar>
+<ion-content class="has-header has-subheader"  style="top:17.3%;">
+  <busyspinner spinnerhide="showItemsLoading"></busyspinner>
+  <ion-list class="sub-list paddingzero" ng-if="showItemsLoading">
+
+      <ion-item ng-repeat="item in newcategoryData.ingredients | orderBy:'rank' track by $index" ng-if="!item.searchHidden && item.ingredient_status=='active' && (newcategoryData.name == item.ingredient_category || checkName) " class="no-padding" on-finish-render="finishedCategoryItemsRender"  ng-style="{'margin-bottom': $last && lastName == newcategoryData.name ? '50%' : '0%'}">
+
+          <!-- <product-item node-data="item" mode="mode" filter-view="filterView" ng-if="item.ingredient_status=='active' || mode != 'edit'"></product-item> -->
+
+          <div ng-click="setFocusToInput(item)" class="white-back-ground {{ item.selectedBackGround }}" style="padding: 16px 16px 10px 10px; display: flex; flex-flow: row;align-items: center; justify-content: space-between;" ng-class="validationPassedHighlight">
+
+            <div style="flex-basis:{{ ::rowSize.name }}%; flex-shrink: 0; flex-grow: 1; white-space: normal;width: 20%;padding-right: 5%;" on-hold="" >{{ item.ingredient_alias_name | ignoreAccents}}
+                <div style= "opacity: 0.5; font-size:80%; text-transform: capitalize;">{{ item.supplier_name | titleCase}}</div>
+                <span ng-if="mode == 'edit'"> <button type="button" class="btn btn-info btn-circle icon " ng-class ="icon" ng-style="{'background-color' : buttonColor, 'color': iconColor}" style="background-color: #FFEB3B; color: black;width: 23px;height: 23px;" ng-click="showItemSummary(item)">i</button> </span>
+
+
+            </div>
+            <div  style="flex-basis: {{ ::rowSize.price }}%;margin-left: -1%; flex-shrink: 0; flex-grow: 1" on-hold="showEditConfigPrice({ makeServerRequest: true},item)">{{ (item.ingredient_price_display||0) | currency}}
+              <div style= "opacity: 0.5; font-size:80%;">{{ ::item.supplier_item_updated_at_items }}</div>
+            </div>
+
+            <div style="text-align: -webkit-center;margin-left: -1%; flex-basis:{{ rowSize.qty }}%; flex-shrink: 0; flex-grow: 1" ng-if="mode === 'edit' && filterView != 'PAR'"  class="inventory-input-wrapper">
+                       <input type="number"
+                              ng-focus="focusQty()"
+                              focus-next string-to-number
+                              placeholder="qty"
+                              style="border:thin solid #dddddd; margin-left: -1%;width: 80%; text-align: center;"
+                              ng-change="valueUpdated({ makeServerRequest: true},item)"
+                              ng-model="item.stageQuantity"
+                              ng-class="{'highlight-quantity': item.stageQuantity < item.par &&  item.stageQuantity && item.par && filterView == 'PRODUCT_CATEGORY'}"
+                              ng-model-options="{debounce: 500}"
+                              valid-number required/>
+                <div style= "opacity: 0.5; font-size:80%;">{{ :: item.last_inv_qty | number:2}}</div>
+            </div>
+
+            <div ng-if="mode === 'view' || filterView == 'PAR'"  ng-class="{'highlight-quantity': item.stageQuantity < item.par &&  item.stageQuantity && item.par && filterView == 'PRODUCT_CATEGORY'}"  style="flex-basis:{{ rowSize.qty }}%; margin-left: -1%; flex-shrink: 0; flex-grow: 1;width: 80%; text-align: center;">{{item.quantity | number:2}}
+            </div>
+            <div style= "font-size:80%;margin-left: -1%; flex-basis:{{ rowSize.units }}%" on-hold="showEditUnits({ makeServerRequest: true},item)" >{{item.quantity_units}}</div>
+
+            <div  style="flex-basis: 2%; flex-shrink: 0; flex-grow: 1;text-transform: lowercase;">{{  item.par  | number : 2}}</div>
+            <div class="item-text-wrap" style="flex-basis: {{ ::rowSize.value }}%; flex-shrink: 0; flex-grow: 1; flex-wrap: wrap; text-align: end">{{((item.ingredient_price||0) * (item.quantity||0)) | currency }}</div>
+            <!-- <div class="item-text-wrap" style="flex-basis: {{ ::rowSize.value }}%; flex-shrink: 0; flex-grow: 1; flex-wrap: wrap; text-align: end">{{(item.calculated_price) | currency }}</div> -->
+
+            <div class="col col-5 col-center"  style="flex-basis: 5%; flex-shrink: 0; flex-grow: 1; flex-wrap: wrap;  margin-left: -0.5%; text-align: end"  ng-click="showReportPopover($event,item)">
+                 <i class="icon larger ion-android-more-vertical"></i>
+            </div>
+          </div>
+
+
+
+
+
+          <ion-option-button ng-if="mode === 'edit'" class="button-positive" ng-click="addQuantity(item)"> Add Quantity
+          </ion-option-button>
+
+          <ion-option-button ng-if="mode === 'edit'" class="button-energized" ng-click="editConfig(item)"> Edit Config
+          </ion-option-button>
+      </ion-item>
+  </ion-list>
+</ion-content>
+</ion-view>

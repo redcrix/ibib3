@@ -1,0 +1,219 @@
+
+<ion-view view-title="Organizational Dashboard" ng-controller ="OrgDashboardManagerCtrl" ng-init= "initializeDashboardView()">
+  <ion-content scroll="false">
+    <!-- <ion-tabs class="tabs-icon-top tabs-color-active-balanced">
+      <ion-tab title="Period" icon="ion-clipboard" on-select="periodClickHandlerOverView()">
+        <ion-nav-view name="period"> -->
+    <!-- <div class="bar bar-subheader" ng-if="filterButtons.length">
+      <div class="button-bar ">
+        <a ng-repeat="filterbutton in filterButtons track by $index" style="text-overflow: inherit; max-width:{{ filterbutton.max_width }}" class="button button-bal no-horizontal-padding" ng-class="filterbutton.selected ? '' : 'button-out'" ng-click="filterbuttonclickOverView($index)">
+                <i ng-show="filterbutton.icon" class="icon icon-left {{ filterbutton.icon }}" style="vertical-align: sub;"></i>
+                <span style="vertical-align: sub; font-size: x-small; font-weight: 600;">{{ filterbutton.label }} : &nbsp;{{filterbutton.dateLabel}}</span></a>
+      </div>
+    </div> -->
+    <busyspinner spinnerhide="spinnerHideOverView"></busyspinner>
+    <span ng-if="spinnerHideOverView">
+      <div class="row padding" style="padding:0vh">
+        <div class="col col-20" style="padding:0vh"> 
+          <div>
+            <div class="button icon-right ion-arrow-down-b " ng-click="showYear()" 
+              style="width: 100%;border-radius: 3vh;margin-bottom: 1vh;height: 5vh;
+                min-height: 0;font-size: 2vh;">{{ yearDetailSelection() }}
+            </div>
+            <div class="button icon-right ion-arrow-down-b " ng-click="showPeriodOverView()" 
+              style="width: 100%;border-radius: 3vh;   margin-bottom: 1vh;height: 5vh;min-height: 0;
+                font-size: 2vh;">{{ periodDetailSelectionOverView() }}
+            </div>
+            <div class="button icon-right ion-arrow-down-b " ng-click="showWeek()"style="width: 100%;border-radius: 3vh;margin-bottom: 1vh;height: 5vh;min-height: 0;font-size: 2vh;">{{ weekSelection() }}
+            </div>
+          </div> 
+          <div>
+            <div>
+              <div class="row item item-text-wrap text-center item item-thumbnail-left "ng-class=" cuml_sales_bud_perc  < 0 ? 'border-red' : 'border-green'" style="margin-right: 5vh;margin-left: 0vh;margin-top:3vh;border-bottom: 0.5vh solid #47e461;border-radius: 2vh;height:14vh;min-height: 0;">   
+                  <div class=" col-40">
+                    <img src="img/sales_icon.png" 
+                    style="max-width: 8vh;">
+                    <div style="font-size:2vh"> TOTAL SALES</div>
+                  </div>
+                  <div class="col-60">      
+                    <h2 style="padding-top: 1vh;font-size: 2.5vh;
+                         ">{{cuml_sales | currency:'$':true}}</h2>
+                    <div style="font-size: 2vh">
+                      <div class="row">
+                        <div class="col-50" style="font-size: 2vh;top: 2vh; position: relative;">
+                         <span ng-class=" cuml_sales_bud_perc < 0 ? 'bg-red' : 'bg-green'"> {{(cuml_sales - cuml_sales_bud )| currency:'$':true }}</span></div>
+                         <div class="col-50" style="font-size: 2vh;top: 2vh; position: relative;">
+                         <span ng-class=" cuml_sales_bud_perc < 0 ? 'bg-red' : 'bg-green'" >{{cuml_sales_bud_perc | number : 2 }}%</span></div></div>
+                    </div>
+                  </div>
+                </div>    
+                <div class="row item item-text-wrap text-center item item-thumbnail-left " ng-class=" cuml_cogs_bud_perc  > 0 ? 'border-red' : 'border-green'"style="margin-right: 5vh;margin-left: 0vh;margin-top:3vh;border-bottom: 0.5vh solid #47e461;border-radius: 2vh;height:14vh;min-height: 0;"> 
+                  <div class=" col-40">
+                    <img src="img/cost_icon.jpg" style="max-width: 8vh;">
+                    <div style="font-size: 2vh">TOTAL COGS</div>
+                  </div>
+                  <div class="col-60"> 
+                    <div class="row"> 
+                      <div class="col-60" style="font-size: 2.5vh;"> {{cuml_cogs_sum | currency:'$':true}}</div>
+                      <div class="col-40" style="padding-top: -35;font-size: 2.2vh"><b>{{cuml_cogs | number : 2}}%</b>
+                      </div></div>
+                      <div class="row" ng-class=" cuml_cogs_bud_perc > 0 ? 'bg-red' : 'bg-green'" >
+                        <div class="col-50" style="font-size: 2vh;top:3.5vh;position: relative;"> {{(cuml_cogs_bud - cuml_cogs_sum) | currency:'$':true}}</div>
+                      <div class="col-50" ng-class=" cuml_cogs_bud_perc > 0 ? 'bg-red' : 'bg-green'" style=" position: relative;top:3.5vh;font-size: 2vh;">{{cuml_cogs_bud_perc | number: 2 }} %</div></div>
+                  </div>
+                </div>
+                <div class="row item item-text-wrap text-center item item-thumbnail-left " ng-class=" cuml_labor_bud_perc  > 0 ? 'border-red' : 'border-green'" style="margin-right: 5vh; margin-left: 0vh; margin-top:3vh; border-bottom: 0.5vh solid #47e461; border-radius: 2vh;height:14vh; min-height: 0;"> 
+                  <div class=" col-40">
+                    <img src="img/labor_icon.png" style="max-width: 8vh;">
+                    <div style="font-size: 2vh">COMBINED LABOUR</div>
+                  </div>
+                  <div class="col-60">
+                    <div class="row">
+                    <div class="col-60" style="font-size: 2.5vh;"> {{cuml_com_labour_sum | currency:'$':true}}</div>  
+                    <div class="col-40" style="padding-top: -35vh;font-size: 2.2vh" ><b> {{cuml_com_labour | number : 2}}%</b></div></div>
+                    <div >
+                      </div>
+                      <div class="row" ng-class=" cuml_labor_bud_perc > 0 ? 'bg-red' : 'bg-green'" style="font-size: 2vh;">
+                        <div class="col-50" style="font-size: 2vh;top: 1vh; position: relative;"> {{(cuml_labor_bud - cuml_com_labour_sum) | currency:'$':true}}</div>
+                      <div class="col-50" ng-class=" cuml_labor_bud_perc > 0 ? 'bg-red' : 'bg-green'" style="font-size: 2vh;top: 1vh; position: relative;">{{cuml_labor_bud_perc | number: 2 }} %</div></div>
+                  </div>
+                </div>   
+                <div class="row item item-text-wrap text-center item item-thumbnail-left " ng-class=" cuml_prime_bud_perc  < 0 ? 'border-red' : 'border-green'" style="margin-right: 5vh;margin-left: 0vh;margin-top:3vh;border-bottom: 0.5vh solid #47e461;border-radius: 2vh;height:14vh;min-height: 0;"> 
+                  <div class=" col-40">
+                    <img src="img/profit_icon.jpg" style="max-width: 8vh;">
+                    <div style="font-size: 1.5vh">PRIME PROFIT</div>
+                  </div>
+                  <div class="col-60"> 
+                  <div class="row">
+                    <div class="col-60" style="font-size: 2.5vh"> {{cuml_prime_profit_sum | currency:'$':true}}</div> 
+                    <div class="col-40" style="font-size: 2.2vh;padding-top: -35vh"><b>{{cuml_prime_profit | number : 2}}%</b></div></div>
+                    <div style="font-size: 1.5vh">
+                      <div class="row" ng-class=" cuml_prime_bud_perc < 0 ? 'bg-red' : 'bg-green'" style="font-size: 2vh;">
+                        <div class="col-50" style="font-size: 1.5vh;top: 1vh; position: relative;"> {{(cuml_prime_profit_sum - cuml_prime_bud) | currency:'$':true}}</div>
+                      <div class="col-50" ng-class=" cuml_prime_bud_perc < 0 ? 'bg-red' : 'bg-green'" style="font-size: 2vh;top: 1vh; position: relative;">{{cuml_prime_bud_perc | number: 2 }} %</div></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div> 
+          <div class="col col-75" style="padding:0vh"> 
+            <div class=" row no-vertical-padding" style="text-align:center;margin-bottom: 1vh;background-color: #f8f8f8;">
+              <div class="col" ng-click="sortBy('business_name')">UNIT
+                <i ng-if="sortDirections.business_name" class="icon" ng-class="sortDirections.business_name=='asc'?'ion-arrow-up-b':'ion-arrow-down-b'"></i>
+              </div>
+              <div class="col" ng-click="sortBy('sales')">SALES
+                <i ng-if="sortDirections.sales" class="icon" ng-class="sortDirections.sales=='asc'?'ion-arrow-up-b':'ion-arrow-down-b'"></i>
+              </div>
+              <div class="col" ng-click="sortBy('sortcogs')">COGS
+                <i ng-if="sortDirections.sortcogs" class="icon" ng-class="sortDirections.sortcogs=='asc'?'ion-arrow-up-b':'ion-arrow-down-b'"></i>
+              </div>
+              <div class="col" ng-click="sortBy('combinedLabor')">COMBINED LABOR
+                <i ng-if="sortDirections.combinedLabor" class="icon" ng-class="sortDirections.combinedLabor=='asc'?'ion-arrow-up-b':'ion-arrow-down-b'"></i>
+              </div>
+              <div class="col" ng-click="sortBy('primeProfit')">PRIME PROFIT
+                <i ng-if="sortDirections.primeProfit" class="icon" ng-class="sortDirections.primeProfit=='asc'?'ion-arrow-up-b':'ion-arrow-down-b'"></i>
+              </div>
+            </div>
+            <ion-content class="has-header has-subheader app-back-ground" scroll="false" style="position:inherit">
+            <div>
+              <span ng-repeat="business in businessList">
+                <div class="row" style ="height:6.5vh; text-align: center;padding: 1vh;">
+                  <div class=" col col-center no-vertical-padding" style="height:100%; margin-right: 1vh;">
+                    <div style="font-weight: bold;">
+                     {{business.pnl_stats.business_name}}
+                    </div>
+                  </div>
+                               <!-- SALES-->
+                  <div class="col col-center no-vertical-padding ">
+                    <div class="item item-text-wrap text-center" 
+                      ng-class=" getGradientColor((((business.pnl_stats.pnl_stats_details.total_sales.stat_value)-(business.pnl_stats.pnl_stats_details.total_sales.budget_value))/(business.pnl_stats.pnl_stats_details.total_sales.budget_value))*100,(((business.pnl_stats.pnl_stats_details.total_sales.stat_value)-(business.pnl_stats.pnl_stats_details.total_sales.budget_value))/(business.pnl_stats.pnl_stats_details.total_sales.budget_value))  < 0 ? 'red' : 'green','border')" style="height:6vh; margin-right: 1vh;border-bottom: 0.3vh solid;border-radius: 2vh;padding:0.5vh;">
+                      <div class="row" style="height: 6vh;padding: 0;">
+                        <div class="col col-50" style="padding:0vh;text-align: center">
+                          <div style="top: -0.5vh;position: relative;left:6vh">${{business.pnl_stats.pnl_stats_details.total_sales.stat_value| number : 0}}
+                          </div>
+                          <div ng-class=" getGradientColor((((business.pnl_stats.pnl_stats_details.total_sales.stat_value)-(business.pnl_stats.pnl_stats_details.total_sales.budget_value))/(business.pnl_stats.pnl_stats_details.total_sales.budget_value))*100,(((business.pnl_stats.pnl_stats_details.total_sales.stat_value)-(business.pnl_stats.pnl_stats_details.total_sales.budget_value))/(business.pnl_stats.pnl_stats_details.total_sales.budget_value))< 0 ? 'red' : 'green','bg')" style="top: -1.5vh;
+                              position: relative;font-size: 1.5vh;"> {{(business.pnl_stats.pnl_stats_details.total_sales.stat_value)-(business.pnl_stats.pnl_stats_details.total_sales.budget_value) | currency:'$':true }}
+                          </div>
+                        </div>
+                        <div class="col" style="padding:0; ">
+                          <div style="top: -0.5vh;position: relative;"> 
+                            <br/>
+                          </div>
+                          <div ng-class=" getGradientColor((((business.pnl_stats.pnl_stats_details.total_sales.stat_value)-(business.pnl_stats.pnl_stats_details.total_sales.budget_value))/(business.pnl_stats.pnl_stats_details.total_sales.budget_value))*100,(((business.pnl_stats.pnl_stats_details.total_sales.stat_value)-(business.pnl_stats.pnl_stats_details.total_sales.budget_value))/(business.pnl_stats.pnl_stats_details.total_sales.budget_value)) < 0 ? 'red' : 'green','bg')" style="top: -1.5vh; position: relative; font-size: 1.5vh;">  {{ (((business.pnl_stats.pnl_stats_details.total_sales.stat_value)-(business.pnl_stats.pnl_stats_details.total_sales.budget_value))/(business.pnl_stats.pnl_stats_details.total_sales.budget_value))*100 | number : 2 
+                            }}%
+                        </div>
+                      </div>
+                    </div> 
+                  </div> 
+                </div>
+                               <!-- COGS-->
+                <div class=" col col-center no-vertical-padding" >
+                  <div class="item item-text-wrap text-center" ng-class=" getGradientColor((((business.pnl_stats.pnl_stats_details.total_cogs.stat_value)/(business.pnl_stats_details.total_sales.stat_value))/((business.pnl_stats.pnl_stats_details.total_cogs.budget_value)/(business.pnl_stats_details.total_sales.budget_value)))*100,(((business.pnl_stats.pnl_stats_details.total_cogs.stat_value)/(business.pnl_stats_details.total_sales.stat_value))/((business.pnl_stats.pnl_stats_details.total_cogs.budget_value)/(business.pnl_stats_details.total_sales.budget_value))) > 0 ? 'red' : 'green','border')" style="height:6vh; margin-right: 1vh;border-bottom: 0.3vh solid;border-radius: 2vh; padding:0.5vh;">
+                    <div class="row" style="height: 6vh;padding: 0;">
+                      <div class="col col-50" style="padding:0vh;text-align: center">
+                        <div style="top: -0.5vh;position: relative;">${{business.pnl_stats.pnl_stats_details.total_cogs.stat_value| number : 0}}
+                        </div>
+                        <div ng-class=" getGradientColor((((business.pnl_stats.pnl_stats_details.total_cogs.stat_value)/(business.pnl_stats_details.total_sales.stat_value))/((business.pnl_stats.pnl_stats_details.total_cogs.budget_value)/(business.pnl_stats_details.total_sales.budget_value)))*100,(((business.pnl_stats.pnl_stats_details.total_cogs.stat_value)/(business.pnl_stats_details.total_sales.stat_value))/((business.pnl_stats.pnl_stats_details.total_cogs.budget_value)/(business.pnl_stats_details.total_sales.budget_value)))  > 0 ? 'red' : 'green','bg')" style="top: -1.5vh; position: relative;font-size: 1.5vh;">{{(business.pnl_stats.pnl_stats_details.total_cogs.stat_value)-(business.pnl_stats.pnl_stats_details.total_cogs.budget_value)|currency:'$':true}}
+                        </div>
+                      </div>
+                      <div class="col" style="padding:0; ">
+                          <i style="top: -0.5vh;position: relative;"> {{((business.pnl_stats.pnl_stats_details.total_cogs.stat_value)/(business.pnl_stats.pnl_stats_details.total_sales.stat_value))*100|number :2}}%</i>
+                        <div ng-class="getGradientColor((((business.pnl_stats.pnl_stats_details.total_cogs.stat_value)/(business.pnl_stats_details.total_sales.stat_value))/((business.pnl_stats.pnl_stats_details.total_cogs.budget_value)/(business.pnl_stats_details.total_sales.budget_value)))*100,(((business.pnl_stats.pnl_stats_details.total_cogs.stat_value)/(business.pnl_stats_details.total_sales.stat_value))/((business.pnl_stats.pnl_stats_details.total_cogs.budget_value)/(business.pnl_stats_details.total_sales.budget_value)))  > 0 ? 'red' : 'green','bg')" style="top: -1.5vh;position: relative;font-size: 1.5vh;">
+                          <i style="font-style:italic;"> {{ (((business.pnl_stats.pnl_stats_details.total_cogs.stat_value)/(business.pnl_stats_details.total_sales.stat_value))/((business.pnl_stats.pnl_stats_details.total_cogs.budget_value)/(business.pnl_stats_details.total_sales.budget_value)))*100| number : 2 }}%  </i>
+                        </div>
+                      </div>
+                    </div> 
+                  </div>
+                </div>
+                               <!-- COMBINED LABOR-->
+                <div class=" col col-center no-vertical-padding" >
+                  <div class="item item-text-wrap text-center"ng-class=" getGradientColor((((business.pnl_stats.pnl_stats_details.total_labor.stat_value)/(business.pnl_stats.pnl_stats_details.total_sales.stat_value))-((business.pnl_stats.pnl_stats_details.total_labor.budget_value)/(business.pnl_stats.pnl_stats_details.total_sales.budget_value)))*100,(((business.pnl_stats.pnl_stats_details.total_labor.stat_value)/(business.pnl_stats.pnl_stats_details.total_sales.stat_value))-((business.pnl_stats.pnl_stats_details.total_labor.budget_value)/(business.pnl_stats.pnl_stats_details.total_sales.budget_value)))  > 0 ? 'red' : 'green','border')" style="height:6vh; margin-right: 1vh;border-bottom: 0.3vh solid;border-radius: 2vh;padding:0.5vh;">
+                    <div class="row" style="height: 6vh;padding: 0;">
+                      <div class="col col-50" style="padding:0vh;text-align: center">
+                        <div style="top: -0.5vh;position: relative;">${{business.pnl_stats.pnl_stats_details.total_labor.stat_value| number : 0}}
+                        </div>
+                        <div ng-class=" getGradientColor((((business.pnl_stats.pnl_stats_details.total_labor.stat_value)/(business.pnl_stats.pnl_stats_details.total_sales.stat_value))-((business.pnl_stats.pnl_stats_details.total_labor.budget_value)/(business.pnl_stats.pnl_stats_details.total_sales.budget_value)))*100,(((business.pnl_stats.pnl_stats_details.total_labor.stat_value)/(business.pnl_stats.pnl_stats_details.total_sales.stat_value))-((business.pnl_stats.pnl_stats_details.total_labor.budget_value)/(business.pnl_stats.pnl_stats_details.total_sales.budget_value)))  > 0 ? 'red' : 'green','bg')" style="top: -1.5vh; position: relative;font-size: 1.5vh;">{{(business.pnl_stats.pnl_stats_details.total_labor.stat_value)-(business.pnl_stats.pnl_stats_details.total_labor.budget_value)|currency:'$':true}}
+                        </div>
+                      </div>
+                      <div class="col" style="padding:0; ">
+                        <i style="top: -0.5vh;position: relative;"> {{ ((business.pnl_stats.pnl_stats_details.total_labor.stat_value)/(business.pnl_stats.pnl_stats_details.total_sales.stat_value))*100| number : 2}}%</i>
+                        <div ng-class="getGradientColor((((business.pnl_stats.pnl_stats_details.total_labor.stat_value)/(business.pnl_stats.pnl_stats_details.total_sales.stat_value))-((business.pnl_stats.pnl_stats_details.total_labor.budget_value)/(business.pnl_stats.pnl_stats_details.total_sales.budget_value)))*100,(((business.pnl_stats.pnl_stats_details.total_labor.stat_value)/(business.pnl_stats.pnl_stats_details.total_sales.stat_value))-((business.pnl_stats.pnl_stats_details.total_labor.budget_value)/(business.pnl_stats.pnl_stats_details.total_sales.budget_value))) > 0 ? 'red' : 'green','bg')" style="top: -1.5vh;position: relative;font-size: 1.5vh;">
+                          <i style="font-style:italic;"> {{(((business.pnl_stats.pnl_stats_details.total_labor.stat_value)/(business.pnl_stats.pnl_stats_details.total_sales.stat_value))-((business.pnl_stats.pnl_stats_details.total_labor.budget_value)/(business.pnl_stats.pnl_stats_details.total_sales.budget_value)))*100| number : 2 }}% </i>
+                        </div>
+                      </div>
+                    </div> 
+                  </div>
+                </div>
+                               <!-- PROFIT AFTER PRIME-->
+                <div class=" col col-center no-vertical-padding" >
+                  <div class="item item-text-wrap text-center"ng-class="getGradientColor((((business.pnl_stats.pnl_stats_details.total_prime.stat_value)/(business.pnl_stats.pnl_stats_details.total_sales.stat_value))-((business.pnl_stats.pnl_stats_details.total_prime.budget_value)/(business.pnl_stats.pnl_stats_details.total_sales.budget_value)))*100,(((business.pnl_stats.pnl_stats_details.total_prime.stat_value)/(business.pnl_stats.pnl_stats_details.total_sales.stat_value))-((business.pnl_stats.pnl_stats_details.total_prime.budget_value)/(business.pnl_stats.pnl_stats_details.total_sales.budget_value))) > 0 ? 'green' : 'red','border')"style="height:6vh; margin-right: 1vh;border-bottom: 0.3vh solid #47e461;border-radius: 2vh; padding:0.5vh;">
+                  <div class="row" style="height: 6vh;padding: 0;">
+                    <div class="col col-50" style="padding:0vh;text-align: center">
+                      <div style="top: -0.5vh;position: relative;">${{business.pnl_stats.pnl_stats_details.total_prime.stat_value| number : 0}}
+                      </div>
+                      <div ng-class=" getGradientColor((((business.pnl_stats.pnl_stats_details.total_prime.stat_value)/(business.pnl_stats.pnl_stats_details.total_sales.stat_value))-((business.pnl_stats.pnl_stats_details.total_prime.budget_value)/(business.pnl_stats.pnl_stats_details.total_sales.budget_value)))*100,(((business.pnl_stats.pnl_stats_details.total_prime.stat_value)/(business.pnl_stats.pnl_stats_details.total_sales.stat_value))-((business.pnl_stats.pnl_stats_details.total_prime.budget_value)/(business.pnl_stats.pnl_stats_details.total_sales.budget_value)))  > 0 ? 'green' : 'red','bg')" style="top: -1.5vh; position: relative; font-size: 1.5vh;">{{(business.pnl_stats.pnl_stats_details.total_prime.stat_value)-(business.pnl_stats.pnl_stats_details.total_prime.budget_value)|currency:'$':true }}
+                      </div>
+                    </div>
+                    <div class="col" style="padding:0; ">
+                      <div style="top: -0.5vh;position: relative;">
+                       {{ ((business.pnl_stats.pnl_stats_details.total_prime.stat_value)/(business.pnl_stats.pnl_stats_details.total_sales.stat_value))* 100 | number : 2}}%</div>
+                      <div ng-class="getGradientColor((((business.pnl_stats.pnl_stats_details.total_prime.stat_value)/(business.pnl_stats.pnl_stats_details.total_sales.stat_value))-((business.pnl_stats.pnl_stats_details.total_prime.budget_value)/(business.pnl_stats.pnl_stats_details.total_sales.budget_value)))*100,(((business.pnl_stats.pnl_stats_details.total_prime.stat_value)/(business.pnl_stats.pnl_stats_details.total_sales.stat_value))-((business.pnl_stats.pnl_stats_details.total_prime.budget_value)/(business.pnl_stats.pnl_stats_details.total_sales.budget_value))) > 0 ? 'green' : 'red','bg')" style="top: -1.5vh;position: relative;font-size: 1.5vh;">
+                        <i style="font-style:italic;"> {{(((business.pnl_stats.pnl_stats_details.total_prime.stat_value)/(business.pnl_stats.pnl_stats_details.total_sales.stat_value))-((business.pnl_stats.pnl_stats_details.total_prime.budget_value)/(business.pnl_stats.pnl_stats_details.total_sales.budget_value)))*100 | number : 2  }}%</i>
+                      </div>
+                    </div>
+                  </div> 
+                </div>
+              </div>
+            </div>
+          </div> 
+        </ion-content>
+      </div>
+    </div>
+  </span>
+
+    <!-- </ion-nav-view>
+    </ion-tab>
+    </ion-tabs> -->
+  </ion-content>
+</ion-view>

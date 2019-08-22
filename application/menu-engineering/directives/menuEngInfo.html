@@ -1,0 +1,17 @@
+<ion-modal-view class="add-info-modal" align-title="center">
+        <ion-header-bar class="bar error-reporting-modal" >
+            <h1 class="title">{{label}} Info</h1>
+            <!-- <a class="button" ng-click="closeModalCtrl()">Cancel</a> -->
+        </ion-header-bar>
+        <!-- <busyspinner spinnerhide="dataReceived"></busyspinner> -->
+        <ion-content>
+        <div class="row" style="font-size: 18px;">{{label}}&nbsp;&nbsp;:</div>
+        <div class="row" style="font-size: 15px;">&nbsp;&nbsp;&nbsp;&nbsp;{{info}}</div>
+        </ion-content>
+        <ion-footer-bar align-title="center" style="background: #33CD5F;">
+      <button  class="button app-theme-text" style="border: none;background: #33CD5F;text-align: center;color: white;font-size: 15px" ng-click="closeModalCtrl()" >
+                Cancel
+            </button>
+    </ion-footer-bar>
+        
+</ion-modal-view>

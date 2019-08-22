@@ -1,0 +1,21 @@
+<ion-view  >
+    <ion-content>
+        <ion-tabs ng-class="{'tabs-item-hide': $root.hideTabs}" class="tabs-icon-top tabs-color-active-balanced">
+        <div ng-controller="InvoiceSummaryCtrl">
+            <ion-tab title="Summary" icon="ion-clipboard" ng-click="summaryClickHandler()">
+                <ion-nav-view name="tab-invoicesummary"></ion-nav-view>
+            </ion-tab>
+            </div>
+            <div ng-controller="InvoiceTrackingCtrl">
+                <ion-tab title="Invoices" icon="ion-folder" ng-click="invoicesClickHandler()">
+                    <ion-nav-view name="tab-tracking"></ion-nav-view>
+                </ion-tab>
+            </div>
+            <div ng-controller="InvoiceConfigCtrl">
+                <ion-tab title="Categorize" icon="ion-ios-copy" ng-click="configClickHandler()">
+                    <ion-nav-view name="tab-config"></ion-nav-view>
+                </ion-tab>
+            </div>
+        </ion-tabs>
+    </ion-content>
+</ion-view>

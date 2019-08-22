@@ -1,0 +1,39 @@
+<ion-modal-view style="top: 12%;min-height: 70%;width: 80%;margin-left: 10%;">
+
+  <ion-header-bar class="bar bar-header bar-stable">
+    <h1 class="title ng-binding">Select Category</h1>
+  </ion-header-bar>
+  <!-- <div class="bar bar-subheader item-input-inset bar-stable" >
+    <label class="item-input-wrapper">
+      <i class="icon ion-ios-search placeholder-icon"></i>
+      <input type="search" placeholder="Search" ng-model="data.searchValue">
+    </label>
+    <button type="button" class="button button-clear" ng-click="clearSearch()">
+      Clear
+    </button>
+  </div> -->
+
+<ion-content style="top: 12%;" scroll = "false">
+  <ion-scroll delegate-handle="taskScroll" direction="y">
+    <div class="list">
+      <div ng-if="searchSelect.keyProperty && searchSelect.valueProperty">
+        <ion-radio collection-repeat="option in options | filter: searchSelect.searchvalue" item-height="55px" item-width="100%" ng-value="option[searchSelect.keyProperty]" ng-click="saveOption()" ng-checked="option[searchSelect.selectedProperty]" ng-model="searchSelect.option">
+            {{ option[searchSelect.valueProperty] }}
+        </ion-radio>
+      </div>
+      <div ng-if="!searchSelect.keyProperty || !searchSelect.valueProperty">
+        <ion-radio collection-repeat="option in options | filter: searchSelect.searchvalue" item-height="55px" ng-value="option" item-width="100%" ng-click="saveOption(option)" ng-model="searchSelect.option">
+            {{ option }}
+        </ion-radio>
+      </div>
+    </div>
+  </ion-scroll>
+</ion-content>
+<!-- <ion-footer-bar  style="background: #33CD5F;" class="bar bar-footer bar-stable">
+    <button type="button"  class="button button-stable modal-select-close-button" ng-click="closeModal()">Cancel</button>
+</ion-footer-bar> -->
+
+<ion-footer-bar  align-title="left" style="background: #33CD5F;" ng-hide="ctrl.showLoader" ng-click="closeModal()">
+  <div style="width: 100%; text-align: center;font-size: 20px; padding-top: 1%; color: #FFF;">Cancel</div><br/>
+</ion-footer-bar>
+</ion-modal-view>

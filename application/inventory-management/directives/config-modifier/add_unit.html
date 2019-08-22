@@ -1,0 +1,73 @@
+<ion-modal-view class="add-config-modal-unit">
+  <ion-header-bar class="bar error-reporting-modal">
+    <h1 class="title" style="text-align: center;right: none;">Add Unit</h1>
+  </ion-header-bar>
+  <ion-content style="overflow: auto;">
+      <ion-slide>
+        <div class="box blue">
+          <form name="addUnit" ng-submit="" novalidate style="padding: 0px;">
+          	<div class="row" style="margin-left: 0px">
+              <div class="col col-33" style="text-align: right;">
+                <span class="unit-config2-span">
+                  One
+                </span>
+              </div>
+              <div class="col col-67">
+                <span class="unit-config2-num-field col"   style="background-color: #DDDDDD;">
+                  <select class="unit-select-box col" name="singleSelect" style="background-color: #DDDDDD;"  ng-model="current_selected.unit"> <option value="" ng-hide="selectUnit"> Select Unit</option>
+                    <option ng-repeat="newUnit in newUnitList">{{newUnit}}</option>
+                  </select>
+                  <!-- <i class="icon ion-arrow-down-b inv-config-arrow" style="color: black;"></i> -->
+                </span>
+                <br><br>
+                  <p ng-show="addUnit.singleSelectOne.$invalid && addUnit.singleSelectOne.$touched" class="help-block error">Unit is required.</p>
+              </div>
+              <!-- <div class="col col-33">
+              </div> -->
+            </div>
+            <div class="row" style="margin-left: 0px;">
+                <div class="col col-33" style="text-align: right;">
+                  <span class="unit-config2-span">
+                    How many
+                  </span>
+                </div>
+                <div class="col col-22">
+                  <span class="unit-config2-num-field"  style="background-color: whitesmoke;">
+                  <input ng-disabled="!current_selected.unit" type="number" ng-model="current_selected.conversionFactor" name="size" required>
+                  </span>
+                  <p ng-show="addUnit.size.$invalid && addUnit.size.$touched" class="help-block error">size is required.</p>
+                </div>
+                <!-- <div class="col col-44" style="text-align: left;">
+                  <span class="unit-config2-span">{{current_selected.unit}}&nbsp&nbspin
+                  </span>
+                </div> -->
+            </div>
+            <div class="row" style="margin-left: 0px;">
+                <div class="col col-33" style="text-align: right;">
+                  <span class="unit-config2-span">
+                    New Unit
+                  </span>
+                </div>
+                <div class="col col-67">
+                	<span class="unit-config2-num-field col" style="background-color: #DDDDDD;">
+                    <select ng-disabled="!current_selected.unit" style="background-color: #DDDDDD;" class="unit-select-box col" name="singleSelect" ng-model="current_selected.baseUnit" required>
+                      <option value="" ng-hide="selectUnit"> Select Unit</option>
+                      <option ng-repeat="unit in baseUnitsToShow">{{unit.base_unit}}</option>
+                    </select>
+                    <!-- <i class="icon ion-arrow-down-b inv-config-arrow" style="color: black;"></i> -->
+                  </span>
+                  <br><br>
+                  <p ng-show="addUnit.singleSelectOne.$invalid && addUnit.singleSelectOne.$touched" class="help-block error">Unit is required.</p>
+                </div>
+                <!-- <div class="col col-33">
+                </div> -->
+            </div>
+          </form>
+          <div class="popup-buttons">
+              <button type="button" class="button button-bal " ng-disabled="addUnit.$invalid" ng-click="saveUnitData(current_selected)">Save</button>
+              <button type="button" class="button button-bal " ng-click="closeAddUnitModal()"><b>Cancel</b></button>
+          </div>
+        </div>
+      </ion-slide>
+  </ion-content>
+</ion-modal-view>

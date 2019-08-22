@@ -1,0 +1,97 @@
+<!--  class="inventory-add-height" -->
+<ion-modal-view>
+    <!--style="width: 90%; height: 60%; top: 20%; left: 5%; right: 5%; bottom: 20%;  min-height: 50%;"-->
+
+    <form name="addQuantity">
+        <ion-header-bar class="bar error-reporting-modal">
+            <h1 class="title">Add Quantity</h1>
+            <a class="button" ng-click="closeModalCtrl()">Cancel</a>
+        </ion-header-bar>
+        <ion-content scroll="true" ng-class="{'has-footer': !keyboardOpen}" class="padding scroll-content ionic-scroll has-header" id="modal-custom">
+            <busyspinner spinnerhide="dataReceived"></busyspinner>
+            <div ng-if="dataReceived">
+                <div class="row">
+                    <div class="col col-33-new col-center">
+                        Ingredient:
+                    </div>
+                    <div class="col col-67-new col-center">
+                        <!-- {{ configModifierItem.supplierItemAliasNameStage | titleCase }} -->
+                        {{ ingName | titleCase }}
+
+                    </div>
+                </div>
+
+
+                <div class="row" ng-if="isItemMapped">
+                    <div class="col col-33-new col-center">Select Units: </div>
+                    <div class="col col-67 col-center">
+                    <div class="row">
+                        <div class="col col-90-new col-center">
+                        <span ng-repeat="unitOptionChunk in unitOptionsChunks">
+                     <div class="button-bar no-vertical-padding" style="width:125%; margin-left:-12px;">
+                            <a ng-repeat="unitOption in unitOptionChunk track by $index"
+                               class="button button-small {{ selectedOrDummy(unitOption) }}"
+                               ng-click="unitOptionClick(unitOption)">
+                               <!-- <a ng-repeat="unitOption in unitOptionChunk track by $index"
+                                  class="button button-small {{ selectedOrDummy(unitOption) }}"> -->
+
+                                <div class="row no-vertical-padding no-horizontal-padding">
+                                    <div style="margin-left: -2px;" class="col col-center no-vertical-padding no-horizontal-padding">
+                                        {{ unitOption.label }}
+                                    </div>
+                                </div>
+                                <div class="row no-vertical-padding no-horizontal-padding">
+                                    <div style="margin-left: -21px;" class="col col-center no-vertical-padding no-horizontal-padding inventory-config-subscript">
+                                        {{ unitOption.unitConversionText }}
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        </span>
+                    </div>
+
+
+                    <div class="col col-10 col-center" ng-if="showPlus">
+                      <button type="button" class="btn btn-info btn-circle icon ion-plus add_unit_btn" ng-class ="icon" ng-style="{'background-color' : buttonColor, 'color': iconColor}"
+                      ng-click="addUnit()"></button>
+                    </div>
+                </div>
+                </div>
+                </div>
+                <div class="row">
+                    <div class="col col-33-new col-center">Add Quantity: </div>
+                    <div class="col col-67-new col-center">
+                        <input sync-focus-with="additionalQuantityFocus" class="inventory-config-input" style="width:100%;"
+                               type="number" string-to-number convert-to-decimal ng-model="quantities.addedQuantity" ng-model-options="{ debounce: 100 }"
+                                ng-change="quantityChangeFn(quantities.addedQuantity)">
+                    </div>
+                </div>
+                <div class="row" style="padding-bottom: 50px;" ng-if="isItemMapped">
+                    <div class="col col-33-new col-center">Conv. Quantity: </div>
+                    <div class="col col-67-new col-center">
+                        {{ quantities.convertedAddedQuantity }} {{ ::actualUnit.measurementName }}
+
+                    </div>
+                </div>
+                <div class="row" style="padding-bottom: 50px;color: red;" ng-if="!isItemMapped">
+                    <div class="col col-center">Supplier is not mapped for this Inventory item, please contact support@peprapp.com </div>
+
+                </div>
+
+            </div>
+        </ion-content>
+
+
+        <!-- <div class="bar buttonbar-footer-larger no-vertical-padding">
+            <button class="full-width-button app-theme-text" ng-click="confirmAdd()" ng-class="addButtonColor">
+                {{ addButtonText }}
+            </button>
+        </div> -->
+        <ion-footer-bar align-title="left" style="background: #33CD5F;">
+            <button  class="full-width-button app-theme-text" style="border: none;" ng-click="confirmAdd()" ng-class="addButtonColor">
+                {{ addButtonText }}
+            </button>
+        </ion-footer-bar>
+    </form>
+
+</ion-modal-view>

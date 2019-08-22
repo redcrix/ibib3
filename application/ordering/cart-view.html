@@ -1,0 +1,78 @@
+<ion-view title="Order Cart" align-title="center" >
+    <!-- <ion-nav-buttons side="secondary">
+        <backbuttonbar navbartitle="navBarTitle"></backbuttonbar>
+        <button class="button button-icon icon ion-ios-search-strong" ng-click="showFilterBar()">
+        </button>
+    </ion-nav-buttons> -->
+
+    <busyspinner spinnerhide="!showLoader"></busyspinner>
+    <span ng-if="!showLoader">
+        <ion-header-bar  id="headerbar"  class="bar bar-subheader app-theme-color-level2 no-vertical-padding no-horizontal-padding" style="top: 5%;" ng-style="$root.qtyRecommended && {'top':'5%'}">
+            <div class="app-theme-color-level2">
+              <div class="row" ng-if="$root.qtyRecommended">
+                <div class="col col-center no-vertical-padding">
+                    <span ng-repeat="saveStatus in saveStatus track by $index" class="{{ saveStatus.level }}"> {{ saveStatus.text }}</span>
+                </div>
+              </div>
+                <div ng-if="isLocationAvailable" class="row">
+                    <div class="col no-vertical-padding no-horizontal-padding" ng-click="selectGrouping()">
+                        <div class="row no-vertical-padding no-horizontal-padding">
+                            <div class="col  col-offset-25 col-10 col-center no-vertical-padding no-horizontal-padding">
+                                <i class="icon large ion-funnel"></i>
+                            </div>
+                            <div class="col col-67 col-center no-vertical-padding no-horizontal-padding">
+                                <span>{{categoryText[currentView]}}&nbsp</span>
+                                <i class="icon ion-arrow-down-b"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="width: 100%; background: #E3E3E3; color: rgb(139, 69, 19); font-weight:bold; position: absolute; height: 40px; display: flex; justify-content: space-between;align-items: center;padding: 16px 16px 10px 10px;">
+                    
+                    <div style="flex-basis: {{ rowSize.last }}%; flex-shrink: 0; flex-grow: 1">LO</div>
+                    <div style="flex-basis: {{ rowSize.value }}%; flex-shrink: 0; flex-grow: 1; ">Unit Price</div>
+                    <!-- <div style="flex-basis:{{ rowSize.par }}%; flex-shrink: 0; flex-grow: 1">PAR</div> -->
+                    <div style="flex-basis:{{ rowSize.par }}%; flex-shrink: 0; flex-grow: 1">Unit</div>
+                    <div style="flex-basis:{{ rowSize.qih }}%; flex-shrink: 0; flex-grow: 1;text-align:right;">QIH</div>
+                    <div style="flex-basis: {{ rowSize.order}}%; flex-shrink: 0; flex-grow: 1;text-align: end">Order</div>
+                </div>
+            </div>
+        </ion-header-bar>
+        <!-- <ion-floating-menu id="my-float-inventory" menu-color="#33cd5f" menu-open-color="#84e19f">
+            <ion-floating-item
+                is-centered="true"
+                icon-color="white"
+                icon="ion-funnel"
+                text="Group By"
+                button-color="#33cd5f"
+                click="selectGrouping()">
+           </ion-floating-item>
+        </ion-floating-menu> -->
+
+    <ion-content class="has-header has-subheader has-one-footer" style="margin-top: 3%; margin-bottom: 20px !important;" ng-style="!$root.qtyRecommended && {'margin-top':'unset','top':'12%'}">
+        <div class="text-center item app-theme-text-level2" ng-if="showEmpty && !showLoader">
+            No Items Available
+        </div>
+        <ion-list>
+            <ion-item ng-repeat="item in cartItems" style="border: 0; padding: 0;" ng-if="item.ingredients" >
+                <ordering-product-category category-data="item" mode="'edit'" type="'cart'"></ordering-product-category>
+            </ion-item>
+        </ion-list>
+    </ion-content>
+
+    <ion-footer-bar align-title="left" style="flex-flow: column; height: auto">
+        <div class="row item-divider" style="padding: 12px;">
+            <div style=" width: 100%; display: flex;justify-content: space-around; align-items: center; flex-flow: row" class="col-100">
+                <div>Total value of Order: </div>
+                <div>${{(totalValue || 0).toFixed(2)}}</div>
+            </div>
+        </div>
+        <div class="row" ng-class="{'enable_submit':(totalValue == 0)}"  style="padding: 16px;background-color: #33cd5f;"  ng-click="submitOrdering()" ng-if="cart">
+            <div style=" margin-left: auto; margin-right: auto; display: block;" class="col-100 app-theme-text">
+                Submit
+            </div>
+        </div>
+    </ion-footer-bar>
+    </span>
+</ion-view>

@@ -1,0 +1,7 @@
+<div ng-show="section.ingredients.length>0" class="list" ng-controller="PurchaseOptimizerCtrl">
+    <ion-list class="item paddingzero">
+        <span ng-repeat="ingredient in section.ingredients">
+            <purchaseitem item="ingredient" ifeven="$even" detaillink="true"></purchaseitem>
+        </span>
+    </ion-list>
+</div>

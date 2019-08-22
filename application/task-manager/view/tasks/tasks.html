@@ -1,0 +1,37 @@
+
+<ion-view  ng-init=onTasksInit()>
+
+    <ion-nav-title>
+      {{pageTitle}}
+    </ion-nav-title>
+    <!-- <ion-header-bar style="width:100%"
+                    > -->
+        <div class="bar bar-subheader bar-stable  app-theme-color-level2 app-theme-text task-dashboard">
+            <div class="buttons" ng-show="taskcount>0">
+                <button class="button button-icon icon ion-ios-minus-outline" ng-click="headerBarButtons.ShowDelete = !headerBarButtons.ShowDelete;"></button>
+            </div>
+            <h3 class="title">Tasks</h3>
+            <filterbuttonbar id="task-filterbar" filterbuttons="taskFilterButtons"></filterbuttonbar>
+        </div>
+    <!-- </ion-header-bar> -->
+
+    <ion-content class="has-header has-subheader has-tabs-bottom" style="top: 138px;">
+
+        <!-- to refresh data user's need to pull their task screen -->
+
+        <!--<ion-refresher pulling-text="Pull to refresh..." on-refresh="fetchTasks(taskName)">-->
+
+        <!-- </ion-refresher> -->
+        
+        <tasksitemlist headerbarbuttons="headerBarButtons" tasks="tasks" filterbuttons="taskFilterButtons"></tasksitemlist>
+
+    </ion-content>
+    <!--<button class="button button-bal icon ion-funnel  float-button button-fab-bottom-right" ng-click="showSortingActionsheet()" fab>-->
+    </button>
+    <ion-floating-menu id="my-float" menu-color="#33cd5f" menu-open-color="#11c1f3" has-footer="true">
+        <!--<ion-floating-item icon="ion-edit" click="toggleEditMode({'prompt_confirmation': false})" button-color="white" ng-if="!isEditMode"></ion-floating-item>-->
+        <!-- <tasksfloatbutton></tasksfloatbutton> -->
+        <ion-floating-item text="Go back" click="myGoBack()"  icon-color="white" button-color="#33cd5f"  icon="ion-arrow-left-c"></ion-floating-item>
+        <ion-floating-item icon="ion-funnel " click="showSortingActionsheet()" button-color="#33cd5f" button-color="white" text="Sort by"></ion-floating-item>
+    </ion-floating-menu>
+</ion-view>

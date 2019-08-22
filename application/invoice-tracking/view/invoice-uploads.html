@@ -1,0 +1,80 @@
+<ion-view title="Uploads" ng-init="initializeUploadView()">
+
+   
+    <busyspinner spinnerhide="!spinnerShow" class="purchase-track-spinner"></busyspinner>
+    <!-- <div class="spinner" ng-show="spinnerShow">
+        <ion-spinner icon="lines" class="spinner-calm"></ion-spinner>
+    </div> -->
+
+    <div class="spinner" ng-show="uploadSpinnerShow">
+        <ion-spinner  icon="lines" class="spinner-calm"></ion-spinner><p  style="color:#0091bd">Uploading ...</p>
+    </div>
+
+
+
+    <invoiceselector ng-hide="true"></invoiceselector> 
+
+    <!-- <ion-floating-menu id="my-float" menu-color="#33cd5f" menu-open-color="#11c1f3">
+      <ion-floating-item icon="ion-funnel" click="showSortingActionsheet()" button-color="white"></ion-floating-item>
+      <ion-floating-item icon="ion-camera" click="showAddingInvoiceActionsheet()" button-color="white"></ion-floating-item>
+   </ion-floating-menu> -->
+
+
+   <!-- <ion-floating-menu id="my-float" menu-color="#33cd5f" menu-open-color="#11c1f3">
+     <ion-floating-item icon="ion-funnel" click="showSortingActionsheet()" button-color="white"></ion-floating-item>
+     <ion-floating-item icon="ion-camera" click="showCamera('myCamera')" button-color="white"></ion-floating-item>
+     <ion-floating-item icon="ion-images" click="showCamera('myGallery')" button-color="white"></ion-floating-item>
+  </ion-floating-menu> -->
+
+
+  <ion-floating-button click="showSortingActionsheet()" id="my-float-upload" has-footer="false" icon="ion-funnel" button-color="#11c1f3" icon-color="white">
+  </ion-floating-button>
+
+    <ion-content ng-hide="spinnerShow || uploadSpinnerShow">
+
+        <button class="upload-btn button"  style="display:hidden"  id="myCamera" modal-select ng-model="supplier"  options="data.suppliers" modal-title="Select a supplier"  on-close has-search="false" hide-reset='true' modal-class="camera-set"   on-select="takePhoto(inventorySheetType,supplier)">
+            <!-- Camera -->
+            <div class="option">
+                {{option.supplier_name}}
+            </div>
+        </button>
+
+        <button class="upload-btn button"  style="display:hidden"  id="myGallery" modal-select ng-model="supplier" options="data.suppliers" modal-title="Select a supplier"  on-close has-search="false" hide-reset='true' modal-class="gallery-set"   on-select="choosePhoto(inventorySheetType,supplier)">
+          <!-- Gallery -->
+          <div class="option">
+              {{option.supplier_name}}
+          </div>
+        </button>
+
+        <button class="upload-btn button" style="display:hidden" id="myPromptCamera" modal-select ng-model="someModel" options="data.suppliers" modal-title="Select a supplier" on-close  has-search="false" hide-reset='true'  modal-class="camera-set-prompt" on-select="updatedItem(newValue, oldValue)">
+             <div class="option">
+                {{option.supplier_name}}
+            </div>
+       </button>
+
+
+       <button class="upload-btn button" style="display:hidden" id="myPromptGallery" modal-select ng-model="someModel" options="data.suppliers" modal-title="Select a supplier" on-close  has-search="false"  hide-reset='true'  modal-class="gallery-set-prompt" on-select="updatedItem(newValue, oldValue)">
+            <div class="option">
+               {{option.supplier_name}}
+           </div>
+      </button>
+         <ion-refresher on-refresh="doRefresh()" style="margin-top:50px;">
+
+          </ion-refresher>
+        <uploadeditems invoices="data.invoicesList" ></uploadeditems>
+    </ion-content>
+
+    <ion-footer-bar class="bar button-bar-footer " style="height: auto;padding:0px">
+
+       
+
+      <div class="button-bar app-theme-color-level2">
+          <a ng-repeat="filterbutton in invoiceButtons track by $index"
+             style="text-overflow: inherit;background-color: #33CD5F;color: white;"
+             class="button no-horizontal-padding"
+             ng-click="showCamera(filterbutton.name)">
+             <i ng-show="filterbutton.icon" style="vertical-align: middle;" class="icon icon-left {{filterbutton.icon}}"></i>
+             <span style="margin-left:5px">{{ filterbutton.label }}</span></a>
+      </div>
+    </ion-footer-bar>
+</ion-view>

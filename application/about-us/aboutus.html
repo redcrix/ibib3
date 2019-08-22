@@ -1,0 +1,14 @@
+<ion-view title="About us" ng-init="ctrl.init()">
+   <backbuttonbar navbartitle="navBarTitle"></backbuttonbar>
+    <div class="spinner" ng-show="ctrl.showLoader" style="z-index: 10">
+        <ion-spinner icon="lines" class="spinner-calm spinner spinner-lines"></ion-spinner>
+    </div>
+    <ion-content>
+      <ion-list>
+        <ion-item>
+          Version
+          <p style="position:absolute;top:30%;right:5%;">{{ctrl.versionNumber}}</p>
+        </ion-item>
+      </ion-list>
+    </ion-content>
+</ion-view>

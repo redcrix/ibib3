@@ -1,0 +1,22 @@
+<ion-view view-title="Labor Cost" ng-controller="LaborSummaryTabsCtrl" ng-init="onLaborSummaryTabsInitHandler()">
+
+    <ion-tabs class="tabs-icon-top tabs-color-active-positive">
+
+        <ion-tab class="app-back-ground" title="Summary" icon="ion-ios-paper" ng-click="tabClickHandler('summary')">
+            <ion-nav-view name="labor-optimizer-summary"></ion-nav-view>
+
+        </ion-tab>
+
+        <ion-tab class="app-back-ground" title="Role" icon="ion-ios-briefcase"  ng-click="tabClickHandler('role')">
+            <ion-nav-view name="labor-optimizer-role"></ion-nav-view>
+
+        </ion-tab>
+
+        <ion-tab class="app-back-ground" title="Employee" icon="ion-ios-people"  ng-click="tabClickHandler('employee')">
+            <ion-nav-view name="labor-optimizer-employee"></ion-nav-view>
+
+        </ion-tab>
+
+    </ion-tabs>
+
+</ion-view>

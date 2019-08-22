@@ -1,0 +1,52 @@
+<ion-item ng-show="!isGroupShown(moddatagroup)" ng-click="getModdata()" ng-class="ifeven? 'app-back-ground':'white-back-ground'" class="no-vertical-padding">
+    <div class="row smaller no-vertical-padding">
+        <div class="col col-center text-center no-vertical-padding">
+            <i class="ion-arrow-down-b">&nbsp</i> &nbspDetailed Price & Cost Info&nbsp
+            <i class="ion-arrow-down-b">&nbsp</i>
+        </div>
+    </div>
+</ion-item>
+<span ng-if="moddatagroup.modsAvailable">
+<ion-item ng-show="isGroupShown(moddatagroup)" ng-click="toggleGroup(moddatagroup)" class="item item-divider item-accordion app-back-ground no-vertical-padding">
+    <div class="row smaller no-vertical-padding">
+        <div class="col col-75 item-text-wrap no-vertical-padding">Dish</div>
+        <div class="col no-vertical-padding">Sales</div>
+        <!--<div class="col no-vertical-padding">Price</div>-->
+        <!--<div class="col no-vertical-padding">Cost</div>-->
+    </div>
+</ion-item>
+
+<ion-item ng-show="isGroupShown(moddatagroup)" class="item-accordion no-vertical-padding" ng-repeat="mod in moddatagroup.modData | orderBy:'-globalModPriceContribution'">
+    <div class="row smaller no-vertical-padding">
+        <div class="col col-75 item-text-wrap no-vertical-padding">
+            <div> {{::(mod.globalModName | titleCase) }}</div>
+        </div>
+        <div class="col no-vertical-padding">{{::(mod.globalModQuantity)}}</div>
+        <!--<div class="col no-vertical-padding">{{::(mod.globalModPriceContribution | currency)}}</div>-->
+        <!--<div class="col no-vertical-padding">{{::(mod.globalModCostContribution | currency)}}</div>-->
+    </div>
+</ion-item>
+<ion-item ng-show="isGroupShown(moddatagroup)" class="item item-divider item-accordion app-back-ground no-vertical-padding">
+    <div class="row smaller no-vertical-padding">
+        <div class="col col-75 item-text-wrap no-vertical-padding">
+            <div> {{ ::(moddatagroup.modDataTotal.name | titleCase) }}</div>
+        </div>
+        <div class="col no-vertical-padding">{{ ::moddatagroup.modDataTotal.globalModQuantity }}</div>
+        <!--<div class="col no-vertical-padding">{{ ::(moddatagroup.modDataTotal.globalModPriceContribution | currency) }}</div>-->
+        <!--<div class="col no-vertical-padding">{{ ::(moddatagroup.modDataTotal.globalModCostContribution | currency) }}</div>-->
+    </div>
+</ion-item>
+</span>
+<span ng-if="!moddatagroup.modsAvailable">
+    <ion-item ng-show="isGroupShown(moddatagroup)" ng-click="toggleGroup(moddatagroup)" class="item item-divider item-accordion app-back-ground no-vertical-padding">
+    <div class="row smaller no-vertical-padding">
+
+
+                <div class="col col-10 item-icon-left">
+                    <i class="icon ion-information-circled app-back-ground"></i>
+                </div>
+                <div class="col">No Add-on dishes</div>
+
+    </div>
+</ion-item>
+</span>

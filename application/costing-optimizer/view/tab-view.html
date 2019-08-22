@@ -1,0 +1,16 @@
+<div ng-show="spinnerhide" ng-controller="MarginOptimizerCtrl">
+    <ion-content class="bar bar-subheader bar-balanced has-header">
+        <div class="row bar bar-balanced" ng-click="showMenus()">
+            <div class="col col-60" style="font-size:large;">{{menu_name | titleCase }}
+                <i class="icon" ng-class="menu_click? 'ion-arrow-up-b':'ion-arrow-down-b'"></i>
+            </div>
+            <!--<div class="col">{{tabname}} Cost : {{category_cost_percent | number:0}}%</div>-->
+            <div class="col">{{tabname}} Cost : {{menu_cost_percent | number:0}}%</div>
+        </div>
+    </ion-content>
+    <ion-content class="has-header has-subheader">
+        <div class="card" ng-repeat="section in sections  | orderBy:'section_priority'">
+            <marginoptimizeritemlist section="section" hidemore="false"></marginoptimizeritemlist>
+        </div>
+    </ion-content>
+</div>

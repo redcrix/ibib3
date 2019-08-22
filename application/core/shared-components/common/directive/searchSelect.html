@@ -1,0 +1,80 @@
+  <ion-modal-view>
+    <!-- <ion-header-bar>
+      <button class="button button-icon ion-close" ng-click="closeModal();"></button>
+      <h1 class="title" style="right: 0 !important;" ng-if="searchSelect.enableSearch">
+        <label class="item item-icon-left" style="height: 100%;top: -6px;padding: 0px 0px 0px 32px !important;">
+          <i class="icon ion-android-search" style="font-size: 20px; left: 0 !important;top: 7px;"></i>
+          <input type="text" placeholder="{{searchSelect.title}}" ng-model="searchSelect.searchvalue" style="width: 90%;height: 100%;margin-top: 7px;" />
+        </label>
+        <i ng-if="searchSelect.searchvalue.length > 0" on-tap="clearSearch()" class="icon ion-close" style="top:0px;right: 0px;position:absolute;cursor:pointer;z-index: 2;"></i>
+      </h1>
+      <h1 class="title" ng-if="!searchSelect.enableSearch">{{ searchSelect.title }}</h1>
+    </ion-header-bar> -->
+    <ion-header-bar class="bar bar-header bar-stable">
+      <div class="row">
+        <div class="col col-center" style="text-align: left; font-size: large;">
+          <b>Select Category</b>
+        </div>
+        <div class="col-10 col-center" style="font-size: 1.6em;margin-top: 1%;color: red;padding-left:20px ;padding-bottom:10px;text-align: right;">
+          <i class="icon ion-close-circled" style="color: red" ng-click="closeModal()"></i>
+        </div>
+      </div>
+    </ion-header-bar>
+    <div class="bar bar-subheader item-input-inset bar-stable" >
+      <label class="item-input-wrapper">
+        <i class="icon ion-ios-search placeholder-icon"></i>
+        <input type="search" placeholder="Search" ng-model="data.searchValue">
+      </label>
+      <button type="button" class="button button-clear" ng-click="clearSearch()">
+        Clear
+      </button>
+    </div>
+
+  <ion-content style="top: 12%;" style="overflow-y: scroll;">
+    <!-- <ion-scroll delegate-handle="taskScroll" direction="y"> -->
+      <div class="list">
+        <!-- <div ng-if="searchSelect.keyProperty && searchSelect.valueProperty">
+          <ion-radio collection-repeat="option in options | filter: searchSelect.searchvalue" item-height="55px" item-width="100%" ng-value="option[searchSelect.keyProperty]" ng-click="saveOption()" ng-checked="option[searchSelect.selectedProperty]" ng-model="searchSelect.option">
+              {{ option[searchSelect.valueProperty] }}
+          </ion-radio>
+        </div>
+        <div ng-if="!searchSelect.keyProperty || !searchSelect.valueProperty">
+          <ion-radio collection-repeat="option in options | filter: searchSelect.searchvalue" item-height="55px" ng-value="option" item-width="100%" ng-click="saveOption()" ng-model="searchSelect.option">
+              {{ option }}
+          </ion-radio>
+        </div> -->
+
+        <div ng-repeat="option in options |filter : searchCat" item-height="55px" item-width="100%" ng-value="option[searchSelect.keyProperty]" ng-checked="option[searchSelect.selectedProperty]" ng-model="searchSelect.option">
+            <div style="width: 100%; padding: 16px 16px 16px 10px;display: flex; flex-flow: row; justify-content: flex-start;overflow-y: scroll;" class="item-divider" ng-click="toggleGroup(option)">
+                <i class="icon  icon-left" ng-class="option.isExpanded ? 'ion-ios-minus-outline' : 'ion-ios-plus-outline'"></i> &nbsp
+                <div style="font-size: 15px" ng-if="option.name != ''">{{option.name}}</div>
+            </div>
+            <ion-list class="sub-list paddingzero" ng-if="option.isExpanded">
+                <ion-item ng-repeat="inv in option.optionList |filter : searchCat" class="invoice-detail-items" on-finish-render="finishedInvoiceRender" item-height="100" item-width="100%">
+                    <div class="row"  ng-click="saveOption(inv)">
+                      {{inv}}
+                        <!-- <div class="col col-33 item-text-wrap" style="text-align:left">
+                            <span class="invoice-data-first font-dark"> {{ inv.supplier_name}} </span>
+                            <span class="invoice-data">{{inv.invoice_id}}</span>
+                        </div>
+                        <div class="col col-60" style="text-align:right">
+                            <span class="invoice-data-first invoice-data">Total Cost: $ {{inv.total_cost | number : 2}}  </span>
+                            <span class="invoice-data">Date: {{inv.date  * 1000 | date:'MM-dd-yyyy'}}</span>
+                            <span class="invoice-data" ng-if="inv.due_date != 0">Due date: {{inv.due_date  * 1000 | date:'MM-dd-yyyy'}}</span>
+                        </div> -->
+                    </div>
+
+                </ion-item>
+            </ion-list>
+          </div>
+      </div>
+    <!-- </ion-scroll> -->
+  </ion-content>
+  <!-- <ion-footer-bar  style="background: #33CD5F;" class="bar bar-footer bar-stable">
+      <button type="button"  class="button button-stable modal-select-close-button" ng-click="closeModal()">Cancel</button>
+  </ion-footer-bar> -->
+
+  <!-- <ion-footer-bar  align-title="left" style="background: #33CD5F;" ng-hide="ctrl.showLoader" ng-click="closeModal()">
+    <div style="width: 100%; text-align: center;font-size: 20px; padding-top: 1%; color: #FFF;">Cancel</div><br/>
+</ion-footer-bar> -->
+</ion-modal-view>

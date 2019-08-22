@@ -1,0 +1,41 @@
+<ion-view view-title="Health Tracker" ng-controller="healthTrackerTabCtrl">
+    <ion-floating-button id="my-float" click="myGoBack()" has-footer="true" icon-color="#fff" button-color="#33cd5f"  icon="ion-arrow-left-c" text="">
+    </ion-floating-button>
+    <ion-tabs class="tabs-icon-top tabs-color-active-balanced">
+        <!-- Alerts Tab -->
+        <!--<div ng-controller="alertsCtrl">-->
+            <!--<ion-tab title="Alerts" icon="ion-alert" badge="items.length" ng-click="alertsClickHandler()">-->
+            <!--<ion-nav-view name="tab-alerts"></ion-nav-view>-->
+            <!--</ion-tab>-->
+        <!--</div>-->
+
+
+        <!-- Sales Tab -->
+        <div ng-controller="HealthTrackerCtrl">
+            <ion-tab title="Sales" icon="ion-clipboard" ng-click="salesClickHandler()">
+                <ion-nav-view name="tab-Sales"></ion-nav-view>
+            </ion-tab>
+        </div>
+
+        <!-- Labour Tab -->
+        <!-- <div ng-controller="HealthTrackerCtrl">
+            <ion-tab title="Labour" icon="ion-clipboard" ng-click="labourClickHandler()">
+                <ion-nav-view name="tab-Labour"></ion-nav-view>
+            </ion-tab>
+        </div> -->
+
+        <!-- Cost Tab -->
+        <div ng-controller="HealthTrackerCtrl">
+            <ion-tab title="Cogs" icon="ion-clipboard" badge="taskcount" ng-click="cogsClickHandler()">
+                <ion-nav-view name="tab-Cogs"></ion-nav-view>
+            </ion-tab>
+        </div>
+        <!-- Tracker Tab -->
+        <!--<div ng-controller="trackerCtrl">-->
+            <!--<ion-tab title="Tracking" icon="ion-speedometer" badge="items.length" ng-click="trackersClickHandler()">-->
+                <!--<ion-nav-view name="tab-trackers"></ion-nav-view>-->
+            <!--</ion-tab>-->
+        <!--</div>-->
+
+    </ion-tabs>
+</ion-view>

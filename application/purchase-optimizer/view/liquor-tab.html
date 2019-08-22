@@ -1,0 +1,12 @@
+<ion-view title="{{pageTitle}}" ng-init="onOrderPageInit()">
+    <busyspinner spinnerhide="spinnerhide"></busyspinner>
+    <div ng-show="spinnerhide">
+        <ion-content class="has-header">
+            <span ng-repeat="section in categories.Liquor.sections | orderBy:'section_priority'">
+                <purchaseitemlist section="section" hidemore="false" itemdisplaylimit="3"
+                                         filterperformanceclass="filterPerformanceClass"
+                                         userperformanceclass="userPerformanceClass"></purchaseitemlist>
+            </span>
+        </ion-content>
+    </div>
+</ion-view>

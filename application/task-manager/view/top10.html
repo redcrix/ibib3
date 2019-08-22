@@ -1,0 +1,120 @@
+<ion-view  ng-init="initializeView();">
+    <ion-nav-title>
+      {{pageTitle}}
+    </ion-nav-title>
+    <ion-header-bar style="width:100%"
+                    class="bar bar-subheader bar-stable app-theme-color-level2 app-theme-text-level2 has-header"
+                    has-header="true" >
+        <div class="row no-vertical-padding">
+            <div class="col col-25 col-center no-vertical-padding">
+                <button class="button button-clear icon-right ion-arrow-down-b app-theme-text2 period-btn" ng-click= "showPeriod()" style="font-weight:bold; float: left;"> {{ selectedTimePeriod('label') }}</button>
+            </div>
+            <div class="col  col-50 col-center no-vertical-padding">
+                <div ng-if="menuData.length>0">{{latestDate }}</div>
+            </div>
+            <div class="col col-25 col-center no-vertical-padding">
+                <button class="button button-clear icon-right ion-ios-calendar-outline app-theme-text2"
+                        ng-click="openDatePicker()" style="float: right;"></button>
+            </div>
+        </div>
+        <filterbuttonbar filterbuttons="filterButtons"></filterbuttonbar>
+    </ion-header-bar>
+
+    <ion-content class="has-subheader" style="top: 128px;">
+        <busyspinner spinnerhide="spinnerHide"></busyspinner>
+        <span ng-if="spinnerHide">
+
+            <div class="text-center item app-theme-text-level2" ng-if="menuData.length==0">
+                            No Information Available
+            </div>
+
+            <div ng-if="menuData.length>0">
+
+                  <div class="card list top10card">
+
+
+
+                     
+                     <span ng-repeat="item in (menuData | orderBy:userSortingClass()) | limitTo:5">
+
+                        <ion-item class="item no-vertical-padding top5-set">
+                           <div class = "row top10row">
+                              <div class="col col-50 no-right-padding">
+                                <div class="row no-right-padding item-text-wrap justbolder">{{ ::item.item_name | titleCase }}</div>
+                                 <div class="row">
+                                    <div class="col">
+                                       <div class="row no-horizontal-padding no-vertical-padding">
+                                             <div style="opacity: 0.6;"
+                                                  class="col no-horizontal-padding no-vertical-padding">
+                                                <i class="icon medium ion-pricetag"></i>
+                                             </div>
+                                             <div style="margin-left:0px;"
+                                                  class="col no-horizontal-padding no-vertical-padding">
+                                                <div class="row no-horizontal-padding no-vertical-padding justbolder">{{ ::item.base_price | currency }}</div>
+                                                <div class="row no-horizontal-padding no-vertical-padding"
+                                                     style="font-size: x-small; opacity: 0.5;">PRICE</div>
+                                             </div>
+                                       </div>
+                                    </div>
+                                    <div class="col">
+                                       <div class="row no-horizontal-padding no-vertical-padding">
+                                          <div style="opacity: 0.6;"
+                                               class="col no-horizontal-padding no-vertical-padding">
+                                             <i class="icon {{ 'medium' }} {{ 'ion-android-cart' }}"></i>
+                                          </div>
+                                          <div style="margin-left:0px;"
+                                               class="col no-horizontal-padding no-vertical-padding">
+                                             <div class="row no-horizontal-padding no-vertical-padding justbolder">{{ ::item.sales_quantity | number:0 }}</div>
+                                             <div class="row no-horizontal-padding no-vertical-padding"
+                                                  style="font-size: x-small; opacity: 0.5;">QUANTITY</div>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                              <div class="col col-50">
+                                 <div class="row">
+                                    <div class="col col-20"><i class="icon larger ion-connection-bars"></i></div>
+                                    <div class="col col-50">
+                                        <progress style="margin-left:6px; margin-top: 0px; margin-bottom: 0px;"
+                                                  class="thresholdmeter"
+                                                  max="{{::item.item_max_sales}}" value={{::item.item_sales}}></progress>
+                                    </div>
+                                    <div class="col col-25">{{ ::item.item_sales | currency:'$':0 }}</div>
+                                    <div class="col col-5 col-center" ng-click="showReportPopover($event, item.item_name)"
+                                         style="float: right;padding-right: 1em;">
+                                   <i class="icon larger ion-android-more-vertical" style="float: right;margin-right: -0.5em;"></i>
+                                   </div>
+                                 </div>
+                                 <div ng-show="item.menu_cost_percent != 0 " class="row">
+                                    <div class="col col-20"><i class="icon larger ion-cash"></i></div>
+                                    <div class="col col-50">
+                                        <progress style="margin-left:6px; margin-top: 0px; margin-bottom: 0px;"
+                                                  class="thresholdmeter"
+                                                  ng-class="(item.menu_cost_percent)>item.threshold_cost_percent? 'redflag':'greenflag'"
+                                                  max="100" value="{{ ::item.menu_cost_percent }}"></progress>
+                                    </div>
+                                    
+                                    <div class="col">{{::item.menu_cost_percent| number:0}}%</div>
+                                 </div>
+                                 <div ng-if="item.menu_cost_percent<=0" class="row small-info">
+                                    <div class="col">Cost information unavailable
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+
+                        </ion-item>
+                     </span>
+                  </div>
+
+            </div>
+
+         </span>
+    </ion-content>
+</ion-view>
+<script id="image-modal.html" type="text/ng-template">
+    <ion-popover-view style="height: auto !important; width: auto !important; margin-top:0px;">
+        <button class="button button-stable" ng-click="errorReporting()">Report</button>
+    </ion-popover-view>
+</script>

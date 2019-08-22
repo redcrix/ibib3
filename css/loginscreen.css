@@ -1,0 +1,49 @@
+.app-icon{
+	background-color: #fff;
+    background: url('../img/crown.jpg') center;
+    background-size: cover;
+    margin: 0 auto;
+    border-radius: 0%;
+    height: 60px;
+    width: 200px;
+}
+
+.login-icon{
+	background-color: #fff;
+	background: url('../img/login.png');
+    /*background-size: 60% 40%; */
+	  /*  background-position: 50% 100%;
+    transition: all .5s ease-in-out; */
+		/*background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 50% 90%; */
+		background-size: cover;
+    margin: 0 auto;
+    border-radius: 0%;
+    height: 200px;
+    width: 210px;
+}
+
+h1 {
+    text-align: center;
+}
+
+h4 {
+    text-align: center;
+		/*text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;*/
+}
+
+.login-button-spacing {
+    padding-left: 10px;
+    padding-right: 10px;
+
+}
+
+.login-button-properties {
+    background-color: #66A74A;
+    color: white;
+}
+
+.appicon-position {
+    margin-top: 30px;
+}

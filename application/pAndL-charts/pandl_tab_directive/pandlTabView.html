@@ -1,0 +1,55 @@
+<ion-view>
+    <busyspinner spinnerhide="spinnerHide"></busyspinner>
+    <span ng-if="spinnerHide">
+        <div class="bar bar-subheader bar-stable app-theme-color-level2 app-theme-text-level2 no-vertical-padding no-horizontal-padding">
+            <div class="row no-vertical-padding">
+                <div class="col col-30 col-center">
+                    <button class="button button-clear icon-right ion-arrow-down-b" ng-click="showPeriod()"
+                            style="font-weight:600; float: left; color: #000000;"> {{dateRange('display')}}
+                    </button>
+                </div>
+                <div class="col col-60 col-center" style="font-weight:600; float: left; color: #000000; text-align: left">{{ textDisplay() }}</div>
+                <div class="col col-10 col-center">
+                    <button class="button button-clear icon-right ion-ios-calendar-outline app-theme-text2"
+                            ng-click="openDatePicker()" style="float: right;"></button>
+                </div>
+            </div>
+
+
+
+
+
+        </div>
+
+        <ion-content class="has-header has-subheader has-tabs-bottom">
+                <busyspinner spinnerhide="spinPeriod"></busyspinner>
+                <span ng-show="spinPeriod" ng-repeat="chartDef in chartDefinitions">
+                    
+                    <!-- <div id="chartContainer_0" style="height: 300px; width: 100%;"> -->
+                    <div class='container' >
+                        <canvas id='chartContainer_{{pAndLType}}{{$index}}'></canvas>
+                    </div>
+                    <!-- <div class="card" ng-if="chartDef.dataReceived"> -->
+
+
+                      <!-- <isb-line-chart data="chartDef.chartData" horizontal-axis-labels="chartDef.chartDates" show-legend="false"
+                                      title="chartDef.chartTitle" ng-if="chartDef.chartDates.length>0"
+                                      scalesuffix="chartDef.yAxisSuffix" scaleprefix="chartDef.yAxisPrefix"></isb-line-chart> -->
+
+
+                        <!-- <canvas id="line" class="chart chart-line" chart-data="data" chart-labels="labels" chart-series="series" chart-options="options" chart-dataset-override="datasetOverride" chart-click="onClick"></canvas> -->
+
+
+                        <!-- <div class="row" ng-if="chartDef.chartDates.length==0">
+                            <div class="col">
+                                {{ "No data found for "+ chartDef.chartTitle }}
+                            </div>
+                        </div>
+
+                    </div> -->
+                </span>
+
+        </ion-content>
+
+        </span>
+</ion-view>

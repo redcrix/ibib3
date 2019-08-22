@@ -1,0 +1,29 @@
+<ion-header-bar ng-show="spinnerhide" style="width:100%" class="bar bar-subheader bar-balanced has-header"
+                has-header="true">
+    <div class="row" ng-click="showMenus()">
+        <div class="col col-60" style="font-size:large;">{{menu_name | titleCase }}
+            <i class="icon" ng-class="menu_click? 'ion-arrow-up-b':'ion-arrow-down-b'"></i>
+        </div>
+        <!--<div class="col">Liquor Cost : {{categories.Liquor.category_cost_percent | number:0}}%</div>-->
+        <!--<div class="col">Liquor Cost : {{menu_cost_percent | number:0}}%</div>-->
+    </div>
+</ion-header-bar>
+
+<ion-view title="Menu Performance Optimizer">
+    <busyspinner spinnerhide="spinnerhide"></busyspinner>
+    <div ng-show="spinnerhide">
+        <ion-content class="has-subheader has-header vertical-spacer">
+            <div style="margin-top:5px;" class="button-bar"><a ng-repeat="filterbutton in filterbuttons track by $index"
+                                                               style="font-size: small;"
+                                                               class="button {{filterbutton.style}}"
+                                                               ng-class="filterbutton.clicked ? '' : 'button-outline'"
+                                                               ng-click="filterbuttonclick($index)">{{
+                filterbutton.label }}</a></div>
+            <span ng-repeat="section in categories.Liquor.sections | orderBy:'section_priority'">
+                <menuperformanceitemlist section="section" hidemore="false" itemdisplaylimit="3"
+                                         filterperformanceclass="filterPerformanceClass"
+                                         userperformanceclass="userPerformanceClass"></menuperformanceitemlist>
+            </span>
+        </ion-content>
+    </div>
+</ion-view>

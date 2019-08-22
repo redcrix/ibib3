@@ -1,0 +1,951 @@
+<ion-view view-title="Invoice Entry" align-title="center" class="invoice-entry">
+  <!-- HEADER PART -->
+  <!-- <backbuttonbar navbartitle="navBarTitle"></backbuttonbar> -->
+  <ion-nav-buttons side="left">
+    <button class="button button-clear" ng-click="myGoBack()">
+      <i class="icon ion-ios-arrow-back" style="color:white;"></i>
+    </button>
+  </ion-nav-buttons>
+  <!-- <ion-header-bar>
+
+    </ion-header-bar> -->
+
+      <!-- hidden button to display business drop-down -->
+      <button style="display:hidden;min-height:unset;" class="button upload-btn" id="my_biz"
+        modal-select="current_selected.bussNameSelected" ng-model="mySelect" options="businessList"
+        modal-title="Select Business" hide-reset='true' on-select="shoutLoud(newValue, oldValue)"
+        modal-class="camera-set" has-search="true" on-close="closeModal()" on-reset="shoutReset()">
+        <div class="option">
+          <h2>{{option.businessName}}</h2>
+        </div>
+      </button>
+
+      <button style="display:hidden;min-height:unset;" class="button upload-btn" id="my_supp"
+        modal-select="current_selected.supplierNameSelected" ng-model="mySelect" options="supplierList"
+        modal-title="Select Suppliers" hide-reset='true' on-select="shoutLoud2(newValue, oldValue)"
+        modal-class="camera-set" has-search="true" on-close="closeModal()" on-reset="shoutReset()">
+        <div class="option">
+          <h2>{{option.supplier_name}}</h2>
+        </div>
+      </button>
+
+
+      <script id="my-modal.html" type="text/ng-template">
+       
+        <ion-modal-view class="cf_modal">
+
+          
+        
+              
+            <h1 class="title__" >Conversion Factor</h1>
+          
+            <button class="close_" ng-click="closeModalNEW()">
+                <i class="icon ion-close-round"></i>
+                </button>
+
+        
+             <div class="pop-up">
+              <div class="container_modal"> 
+
+                  <div class="invoice1">
+                <p class="supp_p1"><b>Supplier Item : </b></p>
+                
+                        <p class="supp_t1"> SYSCO-0983949 Capsicum(Green)</p>
+
+                </div>
+        
+                    <div class="invoice2">
+                        <!-- <h3 class="supp_h"> <b>Invoice Price : </b><span class="spanT">$</span><h3> -->
+                            <p class="supp_p2" style="    font-family: sans-serif;">Invoice Price :</p>
+
+                    <div class="inv_2">
+                            <p class="supp_t2">
+                            <span class="spanT">$</span><input type="invoice" class="cf_inp" placeholder="1">
+                    
+                     <i class="cf_i"> /</i>
+                      <select class="case pr-my-case">
+                          <option value="1">case</option>
+                          <option value="2">case</option>
+                          <option value="3">case</option>
+                          <option value="4">case</option>
+                        </select><span class="text_free_billing"><i class="cf_i_billing">(Billing Unit)</i></span></p>
+
+                      </p>
+
+                    </div>
+
+                      </div>
+
+                
+                      <div class="invoice3">
+                          <p class="supp_p1"><b>Invoice Id : </b></p>
+                          
+                                  <p class="supp_t1">
+                            
+                                      123456
+          
+                                    </p>
+          
+                          </div>
+
+                          <div class="invoice4">
+                              <p class="supp_p1"><b>Date : </b></p>
+                              
+                                      <p class="supp_t1">
+                                
+                                          12-august-2019
+              
+                                        </p>
+              
+                              </div>
+
+
+        
+              
+                    <div class="pack">
+                      <h3 class="pck_h"> Pack size Conversion Factor</h3>
+                      <div class="pr-show-786">
+                        <h1 class="pr-my-h">Pack size Conversion Factors</h1>
+                        <p class="pr-my-p"> <span class="pr-my-p"> 31.72 / kg = 1 Case </span> <span class="pr-my-p"> 15.86 / gal = 1 Box </span></p>
+                        <p class="pr-my-p"> <span class="pr-my-p"> 31.72 / bx = 1 kg </span> <span class="pr-my-p"> 15.86 / qrt = 1 gal </span></p>
+                      </div>
+                      <!-- //new -->
+                     
+                      <div class="invoice5">
+                          <!-- <h3 class="supp_h"> <b>Invoice Price : </b><span class="spanT">$</span><h3> -->
+                              <p class="supp_p2 aug">31.72/kg - Case</p>
+  
+                      <div class="inv_2">
+                              <p class="supp_t2">
+                              <span class="spanT"></span><input type="invoice" id="inv" placeholder="1">
+                       
+  
+          
+                        
+                        <select class="case">
+                            <option value="1">cs - case</option>
+                            <option value="2">case</option>
+                            <option value="3">case</option>
+                            <option value="4">case</option>
+                          </select><span class="text_free_billing"><i class="cf_i">=</i></span>
+                        
+                          <input type="invoice" placeholder="1" class="cf_inp">
+
+                          <select class="case">
+                              
+                              <option value="1">kg-kilogram</p></option>
+                            
+                              <option value="2">kg</option>
+                              <option value="3">kg</option>
+                              <option value="4">kg</option>
+                          </select>
+
+                        </p>
+  
+                        </p>
+  
+                      </div>
+  
+                        </div>
+
+                    
+
+                        <div class="invoice6">
+                            <!-- <h3 class="supp_h"> <b>Invoice Price : </b><span class="spanT">$</span><h3> -->
+                                <p class="supp_p2 aug">79.30/bx - Kilograms</p>
+    
+                        <div class="inv_2">
+                                <p class="supp_t2">
+                                <span class="spanT"></span><input type="invoice" id="inv" placeholder="1">
+                         
+    
+            
+                          
+                          <select class="case">
+                              <option value="1">kg - Kilograms</option>
+                              <option value="2">case</option>
+                              <option value="3">case</option>
+                              <option value="4">case</option>
+                            </select><span class="text_free_billing"><i class="cf_i">=</i></span>
+                          
+                            <input type="invoice"  placeholder="1" class="cf_inp">
+  
+                            <select class="case">
+                                <option value="1">bx - Box</option>
+                                <option value="2">kg</option>
+                                <option value="3">kg</option>
+                                <option value="4">kg</option>
+                            </select>
+  
+                          </p>
+    
+                          </p>
+    
+                        </div>
+    
+                          </div>
+
+                          <div class="invoice7">
+                              <!-- <h3 class="supp_h"> <b>Invoice Price : </b><span class="spanT">$</span><h3> -->
+                                  <p class="supp_p2 aug">15.86/gal - Box</p>
+      
+                          <div class="inv_2">
+                                  <p class="supp_t2">
+                                  <span class="spanT"></span><input type="invoice" id="inv" placeholder="1">
+                           
+      
+              
+                            
+                            <select class="case">
+                                <option value="1">bx - Box</option>
+                                <option value="2">case</option>
+                                <option value="3">case</option>
+                                <option value="4">case</option>
+                              </select><span class="text_free_billing"><i class="cf_i">=</i></span>
+                            
+                              <input type="invoice" placeholder="1" class="cf_inp">
+    
+                              <select class="case">
+                                  <option value="1">gal - Gallon</option>
+                                  <option value="2">kg</option>
+                                  <option value="3">kg</option>
+                                  <option value="4">kg</option>
+                              </select>
+    
+                            </p>
+      
+                            </p>
+      
+                          </div>
+      
+                            </div>
+
+                            <div class="invoice8">
+                                <!-- <h3 class="supp_h"> <b>Invoice Price : </b><span class="spanT">$</span><h3> -->
+                                    <p class="supp_p2 aug">15.86/quart - Gallon</p>
+        
+                            <div class="inv_2">
+                                    <p class="supp_t2">
+                                    <span class="spanT"></span><input type="invoice" id="inv" placeholder="1">
+                             
+        
+                
+                              
+                              <select class="case">
+                                  <option value="1">gal - Gallon</option>
+                                  <option value="2">case</option>
+                                  <option value="3">case</option>
+                                  <option value="4">case</option>
+                                </select><span class="text_free_billing"><i class="cf_i">=</i></span>
+                              
+                                <input type="invoice" placeholder="1" class="cf_inp">
+      
+                                <select class="case">
+                                    <option value="1">qrt-Quarts</option>
+                                    <option value="2">kg</option>
+                                    <option value="3">kg</option>
+                                    <option value="4">kg</option>
+                                </select>
+      
+                              </p>
+        
+                              </p>
+        
+                            </div>
+        
+                              </div>
+
+
+                        <!-- old below -->
+
+                    <!-- <div class="frm-1">
+                <div class="invoice">
+                      <p class="supp_p">31.72/kg-Case</p><input type="invoice" id="inv" placeholder="1">
+                        
+                        <select class="case">
+                            <option value="1">cs - Case</option>
+                            <option value="2">case</option>
+                            <option value="3">case</option>
+                            <option value="4">case</option>
+                          </select>
+                          <span style='font-size:27px;'>&#9552;</span>
+                          <input type="invoice" id="inv" placeholder="">
+                          <select class="case">
+                              <option value="1">kg - kilograms</option>
+                              <option value="2">kg</option>
+                              <option value="3">kg</option>
+                              <option value="4">kg</option>
+                            </select>
+
+                      </div>
+                      <div class="invoice">
+                        <p  class="supp_p">79.30/bx - Kilograms</p><input type="invoice" id="inv" placeholder="1">
+                          
+                          <select class="case">
+                              <option value="1">kg - Kilograms</option>
+                              <option value="2">case</option>
+                              <option value="3">case</option>
+                              <option value="4">case</option>
+                            </select>
+                            <span style='font-size:27px;'></span>
+                            <input type="invoice" id="inv" placeholder="">
+                            <select class="case">
+                                <option value="1">bx - Box</option>
+                                <option value="2">kg</option>
+                                <option value="3">kg</option>
+                                <option value="4">kg</option>
+                              </select>
+  
+                     </div>
+                    
+                        <div class="invoice">
+                          <p  class="supp_p">15.86/gal Box</p><input type="invoice" id="inv" placeholder="1">
+                            
+                            <select class="case">
+                                <option value="1">bx - Box
+                                </option>
+                                <option value="2">case</option>
+                                <option value="3">case</option>
+                                <option value="4">case</option>
+                              </select>
+                              <span style='font-size:27px;'></span>
+                              <input type="invoice" id="inv" placeholder="">
+                              <select class="case">
+                                  <option value="1">gal - Gallon</option>
+                                  <option value="2">kg</option>
+                                  <option value="3">kg</option>
+                                  <option value="4">kg</option>
+                                </select>
+    
+                          </div>
+                    
+                          <div class="invoice">
+                            <p  class="supp_p">15.86/quart - Gallon</p> <input type="invoice" id="inv" placeholder="1">
+                              
+                              <select class="case">
+                                  <option value="1">gal - Gallon</option>
+                                  <option value="2">case</option>
+                                  <option value="3">case</option>
+                                  <option value="4">case</option>
+                                </select>
+                                <span style='font-size:27px;'></span>
+                                <input type="invoice" id="inv" placeholder="">
+                                <select class="case">
+                                    <option value="1">qrt-Quarts</option>
+                                    <option value="2">kg</option>
+                                    <option value="3">kg</option>
+                                    <option value="4">kg</option>
+                                  </select>
+      
+                            </div>
+                    
+                          </div> -->
+
+
+
+                  
+                  <div class="row">
+
+                      <!-- <button id='b00' class='press-on'>Press me, please!</button> -->
+
+                      
+                    <button class="submitBtn" value="SAVE" ng-click="closeModalNEW()">
+                      SAVE
+                    </button>
+                  </div>
+             
+                </div>                         
+              
+              </div>
+         
+        </ion-modal-view>
+      </script>
+
+
+
+
+      <div class="row Header" style="background-image: linear-gradient(0deg, #FFFFFFFF, #FFFFFFFF 50%, #FFFFFFFF 50%);">
+        <div class="col-100" style="    background: #f8f8f8;">
+
+            <!-- moblie view start -->
+            <span class="pr-show-moblie" style="display: none;">
+              <div class="row content-data" style="padding-bottom:unset;background-image: linear-gradient(0deg, #b2b2b20d, #b2b2b205 50%, transparent 50%);">
+                  <div class="col-50 Inv">
+                      <div class="inoice-entry-label">Business:</div>
+                      <div style="width:90%;">
+                        <button class="invoice-select-button" ng-click="">
+                          <div class="item item-input-inset invoice-list-input-div" ng-click="setBusiness(item,1,$index)">
+                            <div class="item-input-wrapper invoice-input-wrapper" style="background: {{items.bg}} ;  padding-top: 5px;">
+                              <!-- <i class="icon ion-ios-search"></i> -->
+                              <b> <input type="text" style="font-weight:500;" ng-model="current_selected.bussNameSelected"
+                                  placeholder="Select" class="map-inv-drop-down" disabled></b>
+                            </div>
+                            <i class="ion-arrow-down-b week-price-change-arrow-ibtn"></i>
+                          </div>
+                        </button>
+                      </div>
+                    </div>
+                    <div class="col-50 Inv">
+                      <div style="" class="inoice-entry-label">Supplier:</div>
+                      <div style="width:90%;">
+                        <button class="invoice-select-button" ng-click="">
+                          <div class="item item-input-inset invoice-list-input-div" ng-click="setSupplier(item,1,$index)">
+                            <div class="item-input-wrapper invoice-input-wrapper" style="background: {{items.bg}};    padding-top: 5px;">
+                              <!-- <i class="icon ion-ios-arrow-dropdown"></i> -->
+                              <b> <input type="text" style="font-weight:500;" ng-model="current_selected.supplierNameSelected"
+                                  placeholder="Select" class="map-inv-drop-down" disabled></b>
+                            </div>
+                            <i class="ion-arrow-down-b week-price-change-arrow-ibtn"></i>
+                          </div>
+                        </button>
+                      </div>
+                    </div>
+              </div>
+
+              <div class="row content-data" style="padding-bottom:unset;background-image: linear-gradient(0deg, #b2b2b20d, #b2b2b205 50%, transparent 50%); padding: 0 10px; margin-top: 8px;">
+                  <div class="col-50 Inv">
+                      <div style="" class="inoice-entry-label">Invoice No:</div>
+                      <div style="width:90%;">
+                        <div class="invoice-entry-inv-no">
+                          <input type="text" ng-model="current_selected_form.invoiceNo" class="invoice-text" alt="invoice-no"
+                            placeholder="" style="padding-bottom: 0px;">
+        
+                        </div>
+                        <!-- <i class="ion-arrow-down-b week-price-change-arrow-ibtn custom"></i> -->
+                      </div>
+                    </div>
+                    <div class="col-50 Inv">
+                      <div style="" class="inoice-entry-label">Total <span class="pr-hide-text" >Invoice</span> Amount:</div>
+                      <div style="width:90%;">
+                        <div class="invoice-entry-inv-no">
+                          <input type="number" ng-model="current_selected_form.totalinvoiceNo" class="invoice-text"
+                            alt="invoice-no" placeholder="">
+                        </div>
+                      </div>
+                    </div> 
+              </div>
+            </span>
+            <!-- moblie view end here -->
+
+          <div class="row content-data pr-hide-display" style="padding-bottom:unset;background-image: linear-gradient(0deg, #b2b2b20d, #b2b2b205 50%, transparent 50%);">
+            <div class="col-25 Inv">
+              <div class="inoice-entry-label">Business:</div>
+              <div style="width:90%;">
+                <button class="invoice-select-button" ng-click="">
+                  <div class="item item-input-inset invoice-list-input-div" ng-click="setBusiness(item,1,$index)">
+                    <div class="item-input-wrapper invoice-input-wrapper" style="background: {{items.bg}} ;  padding-top: 5px;">
+                      <!-- <i class="icon ion-ios-search"></i> -->
+                      <b> <input type="text" style="font-weight:500;" ng-model="current_selected.bussNameSelected"
+                          placeholder="Select" class="map-inv-drop-down" disabled></b>
+                    </div>
+                    <i class="ion-arrow-down-b week-price-change-arrow-ibtn"></i>
+                  </div>
+                </button>
+              </div>
+            </div>
+            <div class="col-25 Inv">
+              <div style="" class="inoice-entry-label">Supplier:</div>
+              <div style="width:90%;">
+                <button class="invoice-select-button" ng-click="">
+                  <div class="item item-input-inset invoice-list-input-div" ng-click="setSupplier(item,1,$index)">
+                    <div class="item-input-wrapper invoice-input-wrapper" style="background: {{items.bg}};    padding-top: 5px;">
+                      <!-- <i class="icon ion-ios-arrow-dropdown"></i> -->
+                      <b> <input type="text" style="font-weight:500;" ng-model="current_selected.supplierNameSelected"
+                          placeholder="Select" class="map-inv-drop-down" disabled></b>
+                    </div>
+                    <i class="ion-arrow-down-b week-price-change-arrow-ibtn"></i>
+                  </div>
+                </button>
+              </div>
+            </div>
+            <div class="col-25 Inv">
+              <div style="" class="inoice-entry-label">Invoice No:</div>
+              <div style="width:90%;">
+                <div class="invoice-entry-inv-no">
+                  <input type="text" ng-model="current_selected_form.invoiceNo" class="invoice-text" alt="invoice-no"
+                    placeholder="" style="padding-bottom: 0px;">
+
+                </div>
+                <!-- <i class="ion-arrow-down-b week-price-change-arrow-ibtn custom"></i> -->
+              </div>
+            </div>
+            <div class="col-25 Inv">
+              <div style="" class="inoice-entry-label">Total <span class="pr-hide-text" >Invoice</span> Amount:</div>
+              <div style="width:90%;">
+                <div class="invoice-entry-inv-no">
+                  <input type="number" ng-model="current_selected_form.totalinvoiceNo" class="invoice-text"
+                    alt="invoice-no" placeholder="">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- moblie view start -->
+          <span class="pr-show-moblie" style="display: none;">
+            <div class="row content-data" style="margin-top:1%;padding-bottom:unset;background-image: linear-gradient(0deg, #b2b2b20d, #b2b2b205 50%, transparent 50%); padding: 0 10px; margin-top: 8px;">
+              <div class="col-50 Inv">
+                <div class="inoice-entry-label">Order Date:</div>
+                <div style="width:90%;">
+                  <div class="invoice-entry-inv-no">
+                    <datepicker date-format="dd/MM/yyyy" class="in-calender">
+                      <input class="calender-input" ng-model="current_selected_form.orderDate" type="text"
+                        placeholder="Select" />
+                    </datepicker>
+                  </div>
+                </div>
+              </div>
+              <div class="col-50 Inv">
+                <div style="" class="inoice-entry-label">Delivery Date::</div>
+                <div style="width:90%;">
+                  <div class="invoice-entry-inv-no">
+                    <datepicker date-format="dd/MM/yyyy" class="in-calender">
+                      <input class="calender-input" ng-model="current_selected_form.deliveryDate" type="text"
+                        placeholder="Select" />
+                    </datepicker>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row content-data" style="margin-top:1%;padding-bottom:unset;background-image: linear-gradient(0deg, #b2b2b20d, #b2b2b205 50%, transparent 50%); padding: 0 10px;">
+                <div class="col-50 Inv">
+                  <div style="" class="inoice-entry-label">Due Date:</div>
+                  <div style="width:90%;">
+                    <div class="invoice-entry-inv-no">
+                      <datepicker date-format="dd/MM/yyyy" class="in-calender">
+                        <input class="calender-input" ng-model="current_selected_form.dueDate" type="text"
+                          placeholder="Select" />
+                      </datepicker>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-50 Inv">
+                    <button class="config-invoice-entry" style="margin-top:1.4em;" ng-click="loadData()">Enter
+                      Item Level Details</button>
+                </div>
+            </div>
+          </span>
+          <!-- moblie view end here -->
+          
+          <div class="row content-data pr-hide-display" style="margin-top:1%;padding-bottom:unset;background-image: linear-gradient(0deg, #b2b2b20d, #b2b2b205 50%, transparent 50%);">
+            <div class="col-25 Inv">
+              <div class="inoice-entry-label">Order Date:</div>
+              <div style="width:90%;">
+                <div class="invoice-entry-inv-no">
+                  <datepicker date-format="dd/MM/yyyy" class="in-calender">
+                    <input class="calender-input" ng-model="current_selected_form.orderDate" type="text"
+                      placeholder="Select" />
+                  </datepicker>
+                </div>
+              </div>
+            </div>
+            <div class="col-25 Inv">
+              <div style="" class="inoice-entry-label">Delivery Date::</div>
+              <div style="width:90%;">
+                <div class="invoice-entry-inv-no">
+                  <datepicker date-format="dd/MM/yyyy" class="in-calender">
+                    <input class="calender-input" ng-model="current_selected_form.deliveryDate" type="text"
+                      placeholder="Select" />
+                  </datepicker>
+                </div>
+              </div>
+            </div>
+            <div class="col-25 Inv">
+              <div style="" class="inoice-entry-label">Due Date:</div>
+              <div style="width:90%;">
+                <div class="invoice-entry-inv-no">
+                  <datepicker date-format="dd/MM/yyyy" class="in-calender">
+                    <input class="calender-input" ng-model="current_selected_form.dueDate" type="text"
+                      placeholder="Select" />
+                  </datepicker>
+                </div>
+              </div>
+            </div>
+            <div class="col-25 Inv">
+                <button class="config-invoice-entry" style="margin-top:1.4em;" ng-click="loadData()">Enter
+                  Item Level Details</button>
+              </div>
+
+
+              <!-- <div col="20">
+            
+              </div> -->
+        
+          </div>
+
+          <!-- mobile view start here -->
+          <span class="pr-show-moblie" style="display: none;">
+            <div class="row">
+              <div class="col-50">
+                <div class="Modal-button" ng-click="openModal()">
+                  <span class="Modal-fix">
+                    <button class="button button-balanced f" style="width: 80%; margin-top: 14px;">
+                      <ion-icon name="calculator"></ion-icon> Conversion Factor
+                    </button>
+                  </span>
+                </div>               
+              </div>
+              <div class="col-50">
+                <div class="Modal-button">
+                  <span class="Modal-fix">
+                    <button class="button button-balanced f" style="width: 80%; background-color:red; margin-top: 14px;" ng-click="ResetFields()">
+                      <ion-icon name="refresh"></ion-icon> ResetFields
+                    </button> 
+                  </span>
+                </div>                
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-50">
+                  <div class="Modal-button">
+                      <span class="Modal-fix">
+                        <button class="button button-balanced f" style="width: 80%;  margin-top: 14px;" ng-click="saveDraft()">
+                            <ion-icon name="bookmark"></ion-icon> Save Draft
+                        </button>
+                      </span>
+                  </div>               
+              </div>
+              <div class="col-50">
+                <div class="Modal-button">
+                  <span class="Modal-fix">
+                    <button class="button button-balanced f" style="width: 80%; margin-top: 14px;">
+                      <ion-icon name="save"></ion-icon> Submit
+                    </button>
+                  </span>
+                </div>                
+              </div>
+            </div>
+          </span>
+          <!-- moblie view end here -->
+
+          <div class="row  pr-hide-display">
+            <div class="col-25">
+              <div class="Modal-button" ng-click="openModal()">
+                <span class="Modal-fix">
+                  <button class="button button-balanced f" style="width: 80%; margin-top: 14px; min-width: 156px;">
+                      <ion-icon name="calculator"></ion-icon> Conversion Factor
+                  </button>
+                </span>
+              </div>
+            </div>
+
+            <div class="col-25">
+              <div class="Modal-button">
+                <span class="Modal-fix">
+                  <button class="button button-balanced f" style="width: 80%; background-color:red; margin-top: 14px;" ng-click="ResetFields()">
+                      <ion-icon name="refresh"></ion-icon> ResetFields
+                  </button> 
+                </span>
+              </div>
+            </div>
+
+            <div class="col-25">
+              <div class="Modal-button">
+                <span class="Modal-fix">
+                  <button class="button button-balanced f" style="width: 80%;  margin-top: 14px;" ng-click="saveDraft()">
+                      <ion-icon name="bookmark"></ion-icon> Save Draft
+                  </button>
+                </span>
+              </div>
+            </div>
+
+            <div class="col-25">
+              <div class="Modal-button">
+                <span class="Modal-fix">
+                  <button class="button button-balanced f" style="width: 80%; margin-top: 14px;">
+                      <ion-icon name="save"></ion-icon> Submit
+                  </button>
+                </span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      
+      <!-- <div class="" style="height:10px;background-image: linear-gradient(0deg, #b2b2b20d, #b2b2b205 50%, transparent 50%);">
+      </div> -->
+
+
+
+
+
+  <!-- <busyspinner spinnerhide="spinnerHide"></busyspinner> -->
+  <ion-content class="content row no-scroll" style="overflow: hidden;">
+
+ 
+    <!-- <span ng-if="spinnerHide"> -->
+      <div class="row">
+        <div class="card support-tool-header" ng-if="!tblDatas.length" style="margin-top: 10%;">No Data available</div>
+      </div>
+
+
+
+<div class="outer_box"  style="overflow-x:auto;" >
+      <table class="invoice-tbl">
+          <thead fix-head>
+              <tr>
+                           <th class="invoice-tb">Item Number</th>
+                           <th class="invoice-tb">Item Quantity</th>
+                           <th class="invoice-tb">Item Description</th>
+                           <th class="invoice-tb">Item Units</th>
+                           <th class="invoice-tb">Billing Units</th>
+                           <th class="invoice-tb">Unit Price</th>
+                           <th class="invoice-tb">Discount</th>
+                           <th class="invoice-tb">Deposit</th>
+                           <th class="invoice-tb">Tax1</th>
+                           <th class="invoice-tb">Tax2</th>
+                           <th class="invoice-tb">NetUnitPrice</th>
+                           <th class="invoice-tb">ExtendedPrice</th>
+                           
+                         </tr>
+         
+          
+                 </thead>
+   
+       
+        <tbody>
+          <tr  ng-repeat='input in inputs' ng-init="input.param1 = input.param2 = input.param3 = input.param4 = input.param5 =  input.param6 = ''" >
+          
+            <td class="tbl-col">      
+           
+              <input type="text" ng-model="input.InvoiceNumber" class="invoice-create-input"
+                alt="invoice-create-input" placeholder="1">
+<!-- ==debug= 
+
+=again =  -->
+<!-- {{Summed_discount()}} -->
+<!-- ==bebug={{ sumUnitPrice(inputs) * 2}}  -->
+                <!-- =={{sumExtenPrice(inputs)}} -->
+                <!-- ==2==={{extenPrice}} -->
+              <p class="displayNne">  
+                <!-- {{Summed_discount()}} -->
+                {{onChange(input)}}
+                {{onChangeNE(input)}}
+                {{sumTotalDiscount(inputs)}}
+                {{sumTotalEXC_PRICE(inputs)}}
+                {{sumTotalDeposit(inputs)}}
+                {{sumTotalTax(inputs)}} 
+               
+              
+                
+              </p>
+  
+          </td>
+
+
+          <td class="tbl-col">      
+           
+              <input type="number" ng-model="input.param6" class="invoice-create-input"
+                alt="invoice-create-input" placeholder="Item Quantity" style="width: 118px;">
+  
+          </td>
+          <td class="tbl-col">      
+                   
+            <input type="text" ng-model="input.itemDescription" class="invoice-create-input"
+              alt="invoice-create-input" placeholder="" style="width: 100px;">
+
+        </td>
+
+       
+        
+          <td class="tbl-col">      
+           
+              <select ng-model="input.ItemUnit" placeholder="Item Unit">
+                  <option ng-repeat="ing in MeasurementList"> {{ing.measurement_id}}</option>
+    
+                </select>
+
+          </td>
+
+          <td class="tbl-col">      
+           
+              <select ng-model="input.billingUnit" placeholder="Billing Unit">
+                  <option ng-repeat="ing in MeasurementList"> {{ing.measurement_id}}</option>
+    
+                </select>
+
+          </td>
+
+       
+
+          <td class="tbl-col">      
+           
+              <input type="number" ng-model="input.param1" class="invoice-create-input"
+                alt="invoice-create-input" placeholder="unitPrice">
+  
+          </td>
+<!-- - -->
+          <td class="tbl-col">      
+           
+              <input type="number" ng-model="input.param2" class="invoice-create-input"
+                alt="invoice-create-input" placeholder="discounts">
+  
+          </td>
+<!-- + -->
+          <td class="tbl-col">        
+           
+              <input type="number" ng-model="input.param3" class="invoice-create-input"
+                alt="invoice-create-input" placeholder="deposit">
+  
+          </td>
+
+          <td class="tbl-col">        
+           
+              <input type="number" ng-model="input.param4" class="invoice-create-input"
+                alt="invoice-create-input" placeholder="tax1">
+  
+          </td>
+
+          <td class="tbl-col">         
+           
+              <input type="number" ng-model="input.param5" class="invoice-create-input"
+                alt="invoice-create-input" placeholder="tax2">
+  
+          </td>
+
+          <td class="tbl-col">      
+           
+              <input type="number" ng-model="input.exPrice" class="invoice-create-input"
+              ng-readonly="true" alt="invoice-create-input" placeholder="NetUnit">
+              <!-- ??{{input.param1 - input.param1 + input.param1}} -->
+
+         <!-- {{input.param1 - input.param2 + input.param3 + input.param4 + input.param5}} -->
+         <!-- {{ ((+input.param2) - (+input.param3) + (+input.param3)) + (+input.param5)) + (+input.param5)) }} -->
+
+       
+          </td>
+
+          <td class="tbl-col">      
+           
+              <input type="number" ng-model="input.exPricesN"  class="invoice-create-input"
+              ng-readonly="true" alt="invoice-create-input" placeholder="ex. Price">
+
+              <!-- {{ (+input.param6) * ((+input.param2) - (+input.param3) + (+input.param4)) + (+input.param5))}} -->
+
+           <!-- correct =    {{(input.param1 - input.param2 + input.param3 + input.param4 + input.param5) * input.param6  }}  -->
+              <!-- check___ 2 =  {{sendandCatch(input.param1 - input.param2 + input.param3 + input.param4 + input.param5) * input.param6}} -->
+              <!-- {{input.param6 * unitPrice}} -->
+     
+          </td>
+
+      
+
+       
+          </tr>
+
+        </tbody>
+
+
+           
+         
+     
+        </table>
+      </div>
+      <button id="fab-profile" ng-click="addfield()" class="button button-fab button-fab-bottom-right fab-fixed button-assertive pane" nav-view="active" style="opacity: 1; transform: translate3d(0%, 0px, 0px);">
+        <i class="icon ion-plus"></i>
+      </button>
+     
+
+    <div class="last contentFooter" >
+      <div class="row">
+        <div class="col-offset-10 col-40">
+          <div class="card tblHead col-90"  style="margin-top: unset;">
+
+              <div class="row item smaller heading" style="padding-top: 10px;padding-bottom: 10px;height: 55px;"
+              >
+                <div class="col-25 text-center " style="font-weight: bold;"></div>
+                <div class="col-25 text-center heading" style="font-weight: 500;">
+                   Invoice Level
+                  
+                  </div>
+                <div class="col-25 text-center heading" style="font-weight: 500;">  Item Level</div>
+                <div class="col-25 text-center heading" style="font-weight: 500;"> Total</div>
+              </div>
+
+
+              <div class="row item smaller" style="padding-top: 10px;padding-bottom: 10px;height: 55px;"
+              >
+                <div class="col-25 text-center" style="font-weight: bold;">Discount</div>
+                <div class="col-25 text-center" style="font-weight: 500;">
+                    <input type="number" ng-model="invoiceLevel_dis" ng-change='Summed_discount(invoiceLevel_dis)'  class="invoice-create-input"
+                    alt="invoice-create-input" placeholder="0">
+                  
+                  </div>
+                <div class="col-25 text-center" style="font-weight: 500;">{{Total_desc}}</div>
+                <div class="col-25 text-center" style="font-weight: 500;">{{summed_desc}}</div>
+              </div>
+
+              <div class="row item smaller" style="padding-top: 10px;padding-bottom: 10px;height: 55px;"
+              >
+                <div class="col-25 text-center" style="font-weight: bold;">Taxes</div>
+                <div class="col-25 text-center" style="font-weight: 500;">
+                    <input type="number" ng-model="invoiceLevel_taxes" ng-change='Summed_TAXES(invoiceLevel_taxes)' class="invoice-create-input"
+                    alt="invoice-create-input" placeholder="0">
+                  
+                  </div>
+                <div class="col-25 text-center" style="font-weight: 500;">{{Total_Tax}}</div>
+                <div class="col-25 text-center" style="font-weight: 500;">{{summed_TAX}}</div>
+              </div>
+
+              <div class="row item smaller" style="padding-top: 10px;padding-bottom: 10px;height: 55px;"
+              >
+                <div class="col-25 text-center" style="font-weight: bold;">Deposits</div>
+                <div class="col-25 text-center" style="font-weight: 500;">
+                
+                    <input type="number" ng-model="invoiceLevel_deposit" ng-change='Summed_DEPOSITS(invoiceLevel_deposit)' class="invoice-create-input"
+                    alt="invoice-create-input" placeholder="0">
+                  
+                  </div>
+                <div class="col-25 text-center" style="font-weight: 500;">{{Total_deposit}}</div>
+                <div class="col-25 text-center" style="font-weight: 500;">{{summed_DEPOSIT}}</div>
+              </div>
+
+              <div class="row item smaller" style="padding-top: 10px;padding-bottom: 10px;height: 55px;"
+              >
+                <div class="col-25 text-center" style="font-weight: bold;">Fuel Charge</div>
+                <div class="col-25 text-center" style="font-weight: 500;">
+                
+                    <input type="number"  ng-model="invoiceLevel_FUEL"  class="invoice-create-input"
+                    alt="invoice-create-input" placeholder="0">
+                  
+                  </div>
+                <div class="col-25 text-center" style="font-weight: 500;"></div>
+                <div class="col-25 text-center" style="font-weight: 500;">{{invoiceLevel_FUEL}}</div>
+              </div>
+            </div>
+
+
+        </div>
+        <div class="row">
+          <div class="col-50" >
+            <!-- <div class="col-50"> -->
+            <div class="col-90 last">
+              <div style="" class="inoice-entry-label">Invoice Doc Page Nos:</div>
+              <div style="width:90%;">
+                <div class="invoice-entry-inv-no">LOREMIPSUM</div>
+              </div>
+            </div> 
+            <div class="col-90 last">
+              <div style="" class="inoice-entry-label">Invoice Picture Link:</div>
+              <div style="width:90%;">
+                <div class="invoice-entry-inv-no">
+                    <input type="text" ng-model="current_selected_form.pictureLink" class="invoice-text" alt="invoice-no" placeholder="Picture Link" style="    padding-top: 12px;">
+      
+
+                </div>
+              </div>
+            </div>
+            <!-- </div> -->
+          </div>
+        
+        </div>
+      </div>
+    </div>
+
+
+  
+
+  </ion-content>
+
+ </ion-view>

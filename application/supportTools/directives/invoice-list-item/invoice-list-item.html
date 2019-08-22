@@ -1,0 +1,23 @@
+<div class="row">
+    <div class="col col-67">
+        <div class="item-text-wrap" >{{item.supplier_name}}</div>
+        <div class="item-text-wrap" >{{item.supplierId}}</div>
+        <div style="font-size: 60%; text-transform: uppercase; font-style: italic;margin-top: 5px; min-width: 150px">
+            {{item.date }}
+        </div>
+    </div>
+    <div class="col col-33">
+        <div>{{item.totalAmount | currency}}</div>
+        <!-- <div style="font-size: 60%; text-transform: uppercase; font-style: italic; min-width: 150px">Total Value</div> -->
+        <div style="font-size: 60%; text-transform: uppercase; font-style: italic;margin-top: 5px; min-width: 150px">
+            {{item.totalItems }}
+        </div>
+        <div class="row no-horizontal-padding no-vertical-padding" ng-if="item.loading" style="height:15px;">
+            <div class="col col-center col-50 small no-horizontal-padding no-vertical-padding">Loading...</div>
+            <div class="col col-center col-50 no-horizontal-padding no-vertical-padding">
+                <ion-spinner style="height:28px;" icon="lines" class="spinner-calm"></ion-spinner>
+            </div>
+            <!-- <busyspinner spinnerhide="!item.loading"></busyspinner> -->
+        </div>
+    </div>
+</div>

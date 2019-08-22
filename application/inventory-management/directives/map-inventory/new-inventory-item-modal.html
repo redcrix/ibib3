@@ -1,0 +1,113 @@
+        <ion-modal-view  class="my-inv-modal">
+
+        <ion-header-bar style="background-color: #F5F5F5;">
+            <div class="col col-90"><h1 class="text-center add-inv-header-name">Add New Inventory Item </h1></div>
+            <div class="col col-10" ng-click="closeModal(addInvItem)"><i class="icon ion-close"></i></div>
+        </ion-header-bar>
+        <hr style="border-top: 10px solid #f8f8f8;margin-top: 12%">
+        <ion-content style="overflow: auto;">
+          <form name="addInvItem" ng-submit="addInventoryItem(addInvItem)" novalidate style="padding: 10px;">
+                <div class="row add-inv-name-div">
+                    <input placeholder="Inventory Item Name" name="invName" class="add-inv-name" type="text" ng-model="invItem.name" ng-maxlength="30" required/>
+                </div>
+
+                <p ng-show="addInvItem.invName.$error.required && addInvItem.invName.$touched" class="help-block error">Inventory Item Name is required.</p>
+                <p ng-show="addInvItem.invName.$error.maxlength" class="help-block error">Inventory Item Name is too long</p>
+
+
+                <div class="list add-inv-type-div">
+
+                  <label class="item item-input item-select add-inv-type-lbl">
+                    <div class="input-label" style="font-size:14px;">
+                      Category
+                    </div>
+                    <select ng-model="invItem.category" name="invCategory" required="">
+                      <option value="">Select</option>
+                      <option ng-repeat="category in categories_list track by $index">{{category}}</option>
+                    </select>
+                  </label>
+                </div>
+                <p ng-show="addInvItem.invCategory.$invalid && addInvItem.invCategory.$touched" class="help-block error">Category is required.</p>
+
+                <div class="list add-inv-type-div">
+                  <label class="item item-input item-select add-inv-type-lbl">
+                    <div class="input-label" style="font-size:14px;">
+                      Minor category
+                    </div>
+                    <select ng-model="invItem.minorCategory" name="minorCategory" required="">
+                      <option value="">Select</option>
+                      <option ng-repeat="minorCat in minor_categories_list track by $index">{{minorCat}}</option>
+                    </select>
+                  </label>
+                </div>
+                <p ng-show="addInvItem.minorCategory.$invalid && addInvItem.minorCategory.$touched" class="help-block error">Minor category is required.</p>
+
+                <div class="list add-inv-type-div">
+                  <label class="item item-input item-select add-inv-type-lbl">
+                    <div class="input-label" style="font-size:14px;">
+                      PnL category
+                    </div>
+                    <select ng-model="invItem.pnlCategory" name="pnlCategory" required="">
+                      <option value="">Select</option>
+                      <option ng-repeat="pnlCat in pnl_categories_list track by $index">{{pnlCat}}</option>
+                    </select>
+                  </label>
+                </div>
+                <p ng-show="addInvItem.pnlCategory.$invalid && addInvItem.pnlCategory.$touched" class="help-block error">PnL category is required.</p>
+
+                <div class="list add-inv-unit-div" style="">
+                  <label class="item item-input item-select add-inv-unit-lbl">
+                    <div class="input-label" style="font-size:14px;">
+                      Unit
+                    </div>
+                    <select ng-model="invItem.measurement" name="invUnit" required="">
+                      <option value="">Select</option>
+                      <option ng-repeat="measurement in measurements_list">{{measurement.measurement_id}}</option>
+                    </select>
+                  </label>
+                </div>
+                <p ng-show="addInvItem.invUnit.$invalid && addInvItem.invUnit.$touched" class="help-block error">Unit is required.</p>
+
+                <div class=" item item-input add-inv-price-div">
+                    <!-- <input placeholder="Price" id="price-add-qa" name="invPrice" type="text"  ng-model="invItem.price" caret="{{invItem.price.length}}" style="padding-left:5px;width: 100%;border: 1px solid #e0dddd;border-radius: 3px;" required ng-blur="checkVal(invItem.price)" /> -->
+                    <!-- <label class="item item-input"> -->
+                        <i class="icon ion-social-usd placeholder-icon add-inv-price-icon"></i>
+                        <!-- <input placeholder="Price" class="add-inv-price" name="invPrice" type="number"  ng-model="invItem.price" required ng-blur="checkVal(invItem.price)" ng-change="toTwoDigit(invItem.price)" string-to-number/> -->
+                        <!-- <input type="text" class="add-inv-price" name="invPrice"  placeholder="Price"  ng-model="invItem.price" ng-model-options="{debounce: 500}" convert-to-decimal-dir required/> -->
+                        <input type="number"
+                              class="add-inv-price"
+                              name="invPrice"
+                              placeholder="Price"
+                              ng-model="invItem.price"
+                              ng-model-options="{debounce: 500}"
+                              convert-to-decimal-dir
+                              required/>
+                    <!-- </label> -->
+                </div>
+
+                <!-- <p ng-show="addInvItem.invPrice.$invalid && addInvItem.invPrice.$touched" class="help-block error">Price is required.</p> -->
+                <!-- <p ng-show="PriceError" class="help-block error">Please enter number only.</p> -->
+                <p ng-show="addInvItem.invPrice.$touched && addInvItem.invPrice.$invalid" class="help-block error">Please enter valid Price.</p>
+
+                <div class="row add-inv-par-div">
+                    <!-- <input placeholder="Par Value" type="text" class="add-inv-par" name="invPAr" ng-model="invItem.par" convert-to-decimal-dir/> -->
+                    <input placeholder="Par Value"
+                           type="number"
+                           class="add-inv-par"
+                           name="invPAr"
+                           ng-model="invItem.par"
+                           ng-model-options="{debounce: 500}"
+                           convert-par-to-decimal />
+                </div>
+                <!-- <p ng-show="addInvItem.invPAr.$invalid && addInvItem.invPAr.$touched && addInvItem.invPAr.$error.number" class="help-block error">Please enter number only.</p> -->
+                <p ng-show="addInvItem.invPAr.$invalid && addInvItem.invPAr.$touched " class="help-block error">Please enter valid value.</p>
+                <div class="popup-buttons">
+                <!-- <ion-footer-bar class="row">    -->
+                    <button type="button" class="button button-default " ng-class="button-default" ng-click="closeModal(addInvItem)">Cancel</button>
+                    <button type="submit" class="button button-bal " ng-disabled="addInvItem.$invalid" ><b>Add</b></button>
+                    <!-- <button type="submit" class="button-balanced" ng-disabled="form.addInvItem.$invalid"><b>Add</b></button> -->
+                </div>
+                <!-- </ion-footer-bar> -->
+            </form>
+        </ion-content>
+      </ion-modal-view>

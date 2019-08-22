@@ -1,0 +1,44 @@
+<ion-view cache-view="false" view-title="P & L Trends" ng-controller="PAndLChartsTabsCtrl" ng-init="onPAndLChartsTabsInitHandler">
+    <ion-floating-button id="my-float"click="myGoBack()" has-footer="true" icon-color="#fff" button-color="#33cd5f"  icon="ion-arrow-left-c">
+    </ion-floating-button>
+    <ion-tabs class="tabs-icon-top tabs-color-active-balanced">
+
+
+        <!-- Sales Tab -->
+
+            <ion-tab title="Sales" icon="ion-ios-cart" ng-click="tabClickHandler('SALES')">
+                <ion-nav-view name="pAndL-charts-sales"></ion-nav-view>
+            </ion-tab>
+
+
+        <!-- cost Tab -->
+
+            <ion-tab title="Labor Cost" icon="ion-android-contacts" ng-click="tabClickHandler('LABOR_COST')">
+                <ion-nav-view name="pAndL-charts-cost"></ion-nav-view>
+            </ion-tab>
+
+
+        <!-- cogs Tab -->
+
+            <ion-tab title="COGS" icon="ion-ios-pricetags" ng-click="tabClickHandler('COGS')">
+                <ion-nav-view name="pAndL-charts-cogs"></ion-nav-view>
+            </ion-tab>
+
+
+        <!-- PRIME_COST  Tab -->
+
+            <ion-tab title="Prime Cost" icon="ion-pie-graph" ng-click="tabClickHandler('PRIME_COST')">
+                <ion-nav-view name="pAndL-charts-primecost"></ion-nav-view>
+            </ion-tab>
+
+
+        <!--&lt;!&ndash; PROFIT_AFTER_PRIME Tab &ndash;&gt;-->
+
+            <!--<ion-tab title="Profit after prime" icon="ion-pizza" ng-click="tabClickHandler('PROFIT_AFTER_PRIME')">-->
+                <!--<ion-nav-view name="pAndL-charts-profitafterprime"></ion-nav-view>-->
+            <!--</ion-tab>-->
+
+
+
+    </ion-tabs>
+</ion-view>

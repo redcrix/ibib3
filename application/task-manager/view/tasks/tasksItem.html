@@ -1,0 +1,59 @@
+<ion-item ng-class="ifeven? ' app-back-ground':'white-back-ground'" class="item">
+    <div ng-class="ifeven? ' app-back-ground':'white-back-ground'" class="row row-center">
+
+        <div class="row item-text-wrap">
+
+            <!-- <div class="rating col" ng-click="toggleStarred()">
+                <span ng-class="task.starred?'ion-ios-star':'ion-ios-star-outline'" class="rating-star"></span>
+            </div> -->
+
+            <!-- Star -->
+            <ion-item menu-close class="item-icon-left star-effect">
+                <!-- ng-class="!task.starred?'rating-nonstar':''" -->
+                <div class="col rating">
+                    <span ng-class="task.starred?'ion-ios-star full-star':'ion-ios-star-outline'" class="rating-star" ng-click="toggleStarred()"></span>
+                </div>
+            </ion-item>
+
+            <!-- content -->
+            <div class="col task-items">
+                <div>
+                    <span class="task-decision">{{task.decision}} :</span>
+                    <span> {{task.item_name | titleCase }} </span>
+                </div>
+
+
+                <div class="small-text" style="color:#000000;opacity:0.54; ">From : {{task.source_name}}</div>
+                <div class="small-text" style="color:#000000;opacity:0.54; ">Date created : {{task.date}}</div>
+                <div class="small-text" style="color:#000000;opacity:0.54; ">Comments:  {{task.comments}}</div>
+                <!-- <div class="small-text" style="width:25px"> -->
+
+                <!-- <div class="item-text-wrap"> -->
+
+                <!-- </div> -->
+            </div>
+
+            <ion-item menu-close class="item-icon-right star-effect task-icons-center">
+                <!-- ng-class="!task.starred?'rating-nonstar':''" -->
+                <div class="col rating root-item" >
+                    <span class="icon child-item" ng-class="task.action_taken ? 'ion-android-done greenflag' : 'ion-android-cancel redflag'" style="font-size: medium;"></span>
+                </div>
+             </ion-item>
+
+
+            <!-- <ion-item menu-close class="item-icon-right star-effect" >
+                <div class="col">
+                    <span class="task-info ion-information-circled"></span>
+                </div>
+            </ion-item> -->
+
+        </div>
+
+    </div>
+
+    <ion-delete-button class="ion-minus-circled" ng-click="DeleteTask()"></ion-delete-button>
+    <ion-option-button class="button-outline icon" ng-class="task.action_taken ? 'button-assertive ion-android-cancel' : 'button-balanced ion-checkmark-circled'" ng-click="toggleActionTaken()"></ion-option-button>
+
+</ion-item>
+
+<!--<taskitemdetailview task="task" ifeven="ifeven"></taskitemdetailview>-->

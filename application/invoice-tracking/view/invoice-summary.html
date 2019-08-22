@@ -1,0 +1,159 @@
+<ion-view title="Invoice Summary"  ng-init="initializeSummary()">
+
+    <!-- <div class="spinner" ng-show="spinnerShow">
+        <ion-spinner icon="lines" class="spinner-calm"></ion-spinner>
+    </div> -->
+  <busyspinner spinnerhide="!spinnerShow" class="purchase-track-spinner"></busyspinner>
+  <invoiceselector></invoiceselector>
+  <ion-content style="padding-top: 80px">
+    <!-- <div class="card"> -->
+      <ion-tabs class="tabs-top invoice-summary-tab" ng-if="showTabs">
+          <ion-tab title="Summary Chart">
+            <ion-nav-view name="Chart">
+              <ion-content ng-hide="spinnerShow" style="overflow-y: scroll;">
+                <div style="text-align: center;padding-top: 40px;font-size: 20px;"><b>GL Coded Summary</b></div>
+                <div style="width: 50%;margin: 0 auto;height: 300px;width: 300px;">
+                  <div class="container" style="position: relative">
+                    <busyspinner spinnerhide="!spinnerShow" class="purchase-track-spinner"></busyspinner>
+                    <div class="row" ng-show="graphDataMinor" style="padding-top: 0px">
+                      <canvas id="pieChartMinor"  height='600'></canvas>
+                    </div>
+
+                  </div>
+                  <div class="noDataMinor" ng-show="!graphDataMinor" >
+                    <b>No data available</b>
+                  </div>
+
+                  <div ng-style="graphData?{} :{'padding-top':'5px'}" >
+                  <button ng-disabled="dataNotReceived || !graphData" class="config-button invoice-summary-btn" ng-click="configTab()" >Items to map</button>
+                </div>
+
+                </div>
+                <div class="invoice-summary" style="padding-top: 350px;"><b>Suppliers</b></div>
+                <div style="width: 50%;margin: 0 auto;height:300px;width: 300px;">
+                  <div class="container" style="position: relative">
+                    <busyspinner spinnerhide="!spinnerShow" class="purchase-track-spinner"></busyspinner>
+                    <div class="row" ng-show="graphDataSup">
+                      <canvas id="pieChartSup" height="700"></canvas>
+                    </div>
+                  </div>
+                  <div class="noData" ng-show="!graphDataSup">
+                    <b>No data available</b>
+                  </div>
+                </div>
+
+                <div class="invoice-summary" style="padding-top: 400px;"><b> P&L Category Summary</b></div>
+                <div style="width: 50%;margin: 0 auto;width: 300px;">
+                  <div class="container" style="position: relative;">
+                    <busyspinner spinnerhide="!spinnerShow" class="purchase-track-spinner"></busyspinner>
+                    <div class="row" ng-show="graphData">
+                      <canvas id="pieChart" series="series"></canvas>
+                    </div>
+                  </div>
+                  <div class="noData" ng-if="!graphData">
+                    <b>No data available</b>
+                  </div>
+                </div>
+              </ion-content>
+            </ion-nav-view>
+          </ion-tab>
+          <ion-tab title="Table">
+            <ion-nav-view name="tab-tab2">
+              <ion-content ng-hide="spinnerShow" style="position: center;overflow-y: scroll;">
+                <div style="text-align: center;padding-top: 10Px;font-size: 20px;" ><b>GL Coded Summary</b>
+                </div>
+                <span ng-show="graphDataMinor">
+                  <div style="margin-top:20px; margin-bottom:0px; margin-left: 5px; margin-right: 5px;" class="card tbl-head app-theme-color ">
+                    <div class="row app-back-ground app-theme-color" style="color: white;" ng-show="graphDataMinor">
+                      <div  class="col col-67">GL Code Name
+                      </div>
+                      <div  class="col col-33 text-right">GL Code Total
+                      </div>
+                    </div>
+                  </div>
+                  <span>
+                    <div class="card" style="margin-top:0px; margin-bottom:0px; margin-left: 5px; margin-right: 5px;">
+                      <ion-list>
+                        <ion-item class="row item" ng-class="row.selected? 'ingredient-price-selected-row': ''"
+                            ng-repeat="row in minorTableData" ng-click="change_chart(row)" style="padding-top: 3%;padding-bottom: 3%;">
+                            <div class="col col-67 col-center " ng-style="row.statName == 'Total' ? {'font-weight':'bold'} : {'font-weight':'none'}"
+                            ng-class ="row.statName == 'UNMAPPED' ? 'unMappedColor' : 'mappedColor'" ng-click ="row.statName == 'UNMAPPED' && configTab()">{{ ::row.statName | titleCase}}</div>
+                            <div class="col col-33 col-center text-center item-text-wrap labor-currancy" ng-style="row.statName == 'Total' ? {'font-weight':'bold'} : {'font-weight':'none'}" ng-class ="row.statName == 'UNMAPPED' ? 'unMappedColor' : 'mappedColor'">{{ ::row.value | currency}}</div>
+                        </ion-item>
+                      </ion-list>
+                    </div>
+                  </span>
+                </span>
+                <div class="noData" ng-show="!graphDataMinor">
+                  <b>No data available</b>
+                </div>
+                <div style="text-align: center;padding-top: 18px;font-size: 20px;" ><b>Suppliers</b></div>
+                <span ng-show="graphDataSup">
+                  <div style="margin-top:20px; margin-bottom:0px; margin-left: 5px; margin-right: 5px;" class="card tbl-head app-theme-color">
+                    <div class="row app-back-ground app-theme-color" style="color: white;"ng-show="graphDataSup">
+                      <div  class="col col-67">Supplier Name
+                      </div>
+                      <div  class="col col-33 text-right">Supplier Total
+                      </div>
+                    </div>
+                  </div>
+                  <span>
+                    <div class="card" style="margin-top:0px; margin-bottom:0px; margin-left: 5px; margin-right: 5px;">
+                      <ion-list>
+                        <ion-item class="row item" ng-class="row.selected? 'ingredient-price-selected-row': ''" ng-repeat="row in supTableData" ng-click="change_chart(row)" style="padding-top: 3%;padding-bottom: 3%;">
+                          <div class="col col-67 col-center " ng-style="row.statName == 'Total' ? {'font-weight':'bold'} : {'font-weight':'none'}" ng-class ="row.statName == 'UNMAPPED' ? 'unMappedColor' : 'mappedColor'" ng-click ="row.statName == 'UNMAPPED' && configTab()">{{ ::row.statName | titleCase}}</div>
+                          <div class="col col-33 col-center text-center item-text-wrap labor-currancy" ng-style="row.statName == 'Total' ? {'font-weight':'bold'} : {'font-weight':'none'}" ng-class ="row.statName == 'UNMAPPED' ? 'unMappedColor' : 'mappedColor'">{{ ::row.value | currency}}</div>
+                        </ion-item>
+                      </ion-list>
+                    </div>
+                  </span>
+                </span>
+                <div class="noData" ng-show="!graphDataSup" >
+                  <b>No data available</b>
+                  </div>
+                  <div style="text-align: center;padding-top: 18px;font-size: 20px;" ><b>P&L Category Summary </b></div>
+                <span ng-show="graphData">
+                  <div style="margin-top:20px; margin-bottom:0px; margin-left: 5px; margin-right: 5px;" class="card tbl-head app-theme-color">
+                    <div class="row app-back-ground app-theme-color" style="color: white;"ng-show="graphData">
+                      <div  class="col col-67">P&L Name
+                      </div>
+                      <div  class="col col-33 text-right">P&L Total
+                      </div>
+                    </div>
+                  </div>
+                  <span>
+                    <div class="card" style="margin-top:0px; margin-bottom:0px; margin-left: 5px; margin-right: 5px;">
+                      <ion-list>
+                        <ion-item class="row item" ng-class="row.selected? 'ingredient-price-selected-row': ''" ng-repeat="row in pnlTableData" ng-click="change_chart(row)" style="padding-top: 3%;padding-bottom: 3%;">
+                          <div class="col col-67 col-center " ng-style="row.statName == 'Total' ? {'font-weight':'bold'} : {'font-weight':'none'}" ng-class ="row.statName == 'UNMAPPED' ? 'unMappedColor' : 'mappedColor'" ng-click ="row.statName == 'UNMAPPED' && configTab()">{{ ::row.statName | titleCase}}</div>
+                          <div class="col col-33 col-center text-center item-text-wrap labor-currancy" ng-style="row.statName == 'Total' ? {'font-weight':'bold'} : {'font-weight':'none'}"ng-class ="row.statName == 'UNMAPPED' ? 'unMappedColor' : 'mappedColor'">{{ ::row.value | currency}}</div>
+                        </ion-item>
+                      </ion-list>
+                    </div>
+                  </span>
+                </span>
+                <div class="noData" ng-show="!graphData" >
+                  <b>No data available</b>
+                  </div>
+                  <div style="padding-bottom: 50px;"></div>
+                </ion-content>
+              </ion-nav-view>
+          </ion-tab>
+      </ion-tabs>
+    <!-- </div> -->
+    <div style="padding-bottom: 100px;"></div>
+  </ion-content>
+  <ion-floating-menu id="my-float-invoiceTracking" has-footer="false" menu-color="#33cd5f" menu-open-color="#84e19f">
+    <ion-floating-item id="inv-summary" is-centered="true" icon-color="white" icon="ion-android-mail" text="Export Invoice Summary" button-color="#33cd5f" click="openPrompt()">
+    </ion-floating-item>
+
+  </ion-floating-menu>
+  <ion-footer-bar>
+    <button  class="full-width-button app-theme-text app_theme_color"  style="border: none;background: #33CD5F;text-align: center;color: white;font-size: 15px;position: fixed;" ng-click="regenerateSummaryChanges()" >Regenerate summary
+    </button >
+  </ion-footer-bar>
+  <!-- <ion-footer-bar>
+    <button  class="full-width-button app-theme-text " ng-disabled="$root.regenerateSummary" style="border: none;background: #33CD5F;text-align: center;color: white;font-size: 15px;position: fixed;" ng-click="regenerateSummaryChanges()"  ng-class="{app_theme_color: !$root.regenerateSummary, app_theme_disabled_color: $root.regenerateSummary}">Regenerate summary
+    </button >
+  </ion-footer-bar> -->
+</ion-view>

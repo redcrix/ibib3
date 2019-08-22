@@ -1,0 +1,28 @@
+<ion-view title="Menu Performance Optimizer">
+    <div ng-show="spinnerhide">
+        <ion-content style="width:100%" class="bar bar-subheader has-header">
+            <div class="bar bar-balanced row" ng-click="showMenus()">
+                <div class="col col-60" style="font-size:large;">{{menu_name | titleCase }} <i class="icon"
+                                                                                               ng-class="menu_click? 'ion-arrow-up-b':'ion-arrow-down-b'"></i>
+                </div>
+                <!--<div class="col">Food Cost : {{categories.Food.category_cost_percent | number:0}}%</div>-->
+                <div class="col">Food Cost : {{menu_cost_percent | number:0}}%</div>
+                <!--<div class="col col-10">-->
+                <!--<i class="icon ion-android-more-horizontal"></i>-->
+                <!--</div>-->
+            </div>
+        </ion-content>
+        <ion-content class="has-subheader has-header vertical-spacer">
+            <!--<div >-->
+            <div style="margin-top:5px;" class="button-bar"><a ng-repeat="filterbutton in filterbuttons track by $index"
+                                                               style="font-size: small;"
+                                                               class="button {{filterbutton.style}}"
+                                                               ng-class="filterbutton.clicked ? '' : 'button-outline'"
+                                                               ng-click="filterbuttonclick($index)">{{
+                filterbutton.label }}</a></div>
+            <div class="card" ng-repeat="section in categories.Food.sections | orderBy:'section_priority'">
+                <menuperformanceitemlist section="section" hidemore="false"></menuperformanceitemlist>
+            </div>
+        </ion-content>
+    </div>
+</ion-view>

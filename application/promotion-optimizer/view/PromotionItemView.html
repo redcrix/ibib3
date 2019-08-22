@@ -1,0 +1,41 @@
+<ion-item class="no-padding" ng-controller="PromotionOptimizerCtrl">
+
+    <div class="row row-center" ng-class="ifeven? 'app-back-ground': ''">
+        <div class="col col-20 x-smaller">
+            <div>{{ promotion.promotion_day | titleCase}}</div>
+            <div style="font-size:80%;">{{ promotion.promotion_time | titleCase }}</div>
+        </div>
+        <div class="col"><div class="vertical-row-divider"></div></div>
+        <div class="col col-25 smaller item-text-wrap">
+
+            <div>{{ promotion.item_name | titleCase}}</div>
+            <div>{{ promotion.promotion_price | currency}}</div>
+        </div>
+        <!--<div class="vertical-row-divider"></div>-->
+        <div class="col col-50">
+            <div>
+
+                <progress style="margin-top: 0px; margin-bottom: 0px;" class="thresholdmeter"
+                          max="{{maxsales}}"
+                          value={{promotion.sales}}></progress>
+                <span class="xx-smaller">${{promotion.sales | number:0}}</span>
+                <div style="font-size:70%;">(sales)</div>
+            </div>
+            <div>
+
+                <progress style="margin-top: 2px; margin-bottom: 0px;" class="thresholdmeter"
+                          ng-class="promotion.cost_percent>promotion.threshold_cost? 'redflag':'greenflag'"
+                          max="100"
+                          value={{promotion.cost_percent}}></progress>
+                <span class="xx-smaller ">{{promotion.cost_percent | number:0}}%</span>
+                <div style="font-size:70%;">(cost percentage)</div>
+            </div>
+        </div>
+    </div>
+    <ion-option-button class="icon button-assertive ion-android-cancel"
+    ng-click="decide('Promotion Optimizer','Remove Promotion', promotion, promotion.item_name)"
+    >Remove</ion-option-button>
+    <ion-option-button class="button-outline icon ion-ios-bolt"
+    ng-click="decide('Promotion Optimizer','Re-price Promotion', promotion, promotion.item_name)"
+    >Re-price</ion-option-button>
+</ion-item>

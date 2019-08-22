@@ -1,0 +1,98 @@
+<ion-view view-title="Wastage" ng-init="initializeView();">
+  <ion-tabs class="tabs-icon-top tabs-color-active-positive">
+    <ion-tab title="Food" icon="ion-android-restaurant">
+      <ion-content>
+      <div class="card">
+          <!--<isb-line-chart data="wastageData.chartData" horizontal-axis-labels="wastageData.chartLabels"
+          legend-labels="wastageData.foodWastageSeriesLabels" title="wastageData.foodWastageTitle"></isb-line-chart>
+      </div> -->
+    <div class="card">
+          <isb-line-chart data="chartData" horizontal-axis-labels="chartDates"
+          legend-labels="seriesLabels" title="chartTitle"></isb-line-chart>
+      </div>
+        <div class="card">
+          <div class="item item-divider app-theme-color app-theme-text">
+            Top ingredients wastage
+          </div>
+          <ion-list>
+            <ion-item>
+              <div class="row row-center">
+                <div class="col col-40">
+                  <h3><b>Item Description</b></h3>
+                </div>
+                <div class="col col-auto">
+                  <h3><b>$Amount</b></h3>
+                </div>
+                <div class="col col-auto">
+                  <h3><b>%Change</b></h3>
+                </div>
+              </div>
+            </ion-item>
+            <!--<ion-item ng-repeat="item in dataItems" ui-sref="app.wastageFoodDetail({id:item.name})"> -->
+            <ion-item ng-repeat="item in chartFoodItems" ui-sref="app.wastageFoodDetail({id:item.rank})">
+              <div class="row row-center">
+                <div class="col col-50">
+                  <h3>{{item.name}}</h3>
+                </div>
+                <ion-option-button class="button-balanced icon ion-ios-arrow-forward mediumsize "ng-click="decide('Talk to chef', item.items)"> Talk to chef about {{item.name}}
+                </ion-option-button>
+                <div class="col col-33">
+                  <h3>{{item.amount}}</h3>
+                </div>
+                <div class="col col-40">
+                  <h3 ng-style="item.change >= 0 ? {'color':'#ff1744'} : {'color':'#33cd5f'}">{{item.change}}%</h3>
+                </div>
+                <div class="col col-25"  ng-class="setWastageChange(item.change)">
+                </div>
+              </div>
+            </ion-item>
+          </ion-list>
+        </div>
+      </ion-content>
+    </ion-tab>
+    <ion-tab title="Liquor" icon="ion-android-bar" padding="true">
+      <ion-content>
+        <div class="card">
+          <isb-line-chart data="chartData" horizontal-axis-labels="chartDates"
+            legend-labels="seriesLabels" title="chartTitle">
+          </isb-line-chart>
+        </div>
+        <div class="card">
+          <div class="item item-divider app-theme-color app-theme-text">
+            Top ingredients wastage
+          </div>
+          <ion-list>
+            <ion-item>
+              <div class="row row-center">
+                <div class="col col-25">
+                  <h3><b>Item</b></h3>
+                </div>
+                <div class="col  col-25">
+                  <h3><b>$Amount</b></h3>
+                </div>
+                <div class="col col-25">
+                  <h3><b>%Change</b></h3>
+                </div>
+              </div>
+            </ion-item>
+            <ion-item ng-repeat="item in chartLiquorItems" ui-sref="app.wastageLiquorDetail({id:item.rank})">
+             <div class="row row-center">
+               <div class="col col-25">
+                 <h3>{{item.name}}</h3>
+               </div>
+               <div class="col col-25">
+                 <h3>{{item.amount}}</h3>
+               </div>
+               <div class="col" ng-style="item.change >= 0 ? {'background-color':'green'} : {'background-color':'red'}">
+                 <h3>{{item.change}}</h3>
+               </div>
+               <div class="col col-25"  ng-class="setWastageChange(item.change)">
+               </div>
+             </div>
+            </ion-item>
+          </ion-list>
+        </div>
+      </ion-content>
+    </ion-tab>
+  </ion-tabs>
+</ion-view>

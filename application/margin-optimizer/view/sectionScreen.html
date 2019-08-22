@@ -1,0 +1,16 @@
+<ion-view title="{{ section.sectionName | titleCase  }}" ng-controller="sectionScreenCtrl">
+    <backbuttonbar navbartitle="navBarTitle"></backbuttonbar>
+    <busyspinner spinnerhide="spinnerHide"></busyspinner>
+    <span ng-show="spinnerHide">
+    <tasksfloatbutton></tasksfloatbutton>
+    <ion-content class="has-header">
+          
+        <filterbuttonbar filterbuttons="filterButtons"></filterbuttonbar>
+        <span>
+        <marginoptimizersection section="section" hidemore="true"
+                                 itemdisplaylimit="9999"
+                                 sortingclass="userSortingClass()"></marginoptimizersection>
+        </span>
+    </ion-content>
+    </span>
+</ion-view>

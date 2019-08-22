@@ -1,0 +1,66 @@
+<link href="css/loginscreen.css" rel="stylesheet">
+
+<ion-view view-title="Login" align-title="Left">
+	<ion-content>
+		<div>
+			<div class="content">
+				<div class="app-icon appicon-position"></div>
+				<h4 style="font-size: small; color:black;"> pep up restaurant's profits </h4>
+			</div>
+		</div>
+
+
+		<div class="item item-borderless"></div>
+
+		<form name="signIn" novalidate="" ng-submit="loginButtonClickHandler(signIn)">
+
+			<div class="list padding">
+				<label class="item item-input" ng-class="{ 'has-error' : (signIn.username.$error && signIn.$submitted) || loginError, 'valid' : signIn.username.$valid  && signIn.username.$dirty && !loginError }">
+						<input type="text" placeholder="Username" name="username" ng-model="data.username" required>
+		    </label>
+
+				<div class="form-errors" ng-show="signIn.username.$error && signIn.$submitted" ng-messages="signIn.username.$error">
+						<div class="form-error" ng-message="required">Username is required.</div>
+				</div>
+
+
+				<label class="item item-input" ng-class="{ 'has-error' : (signIn.password.$error  && signIn.$submitted) || loginError, 'valid' : signIn.password.$valid && signIn.password.$dirty && !loginError }">
+		        <input type="password" placeholder="Password" name="password" ng-model="data.password" required>
+		    </label>
+
+				<div class="form-errors" ng-show="signIn.password.$error && signIn.$submitted" ng-messages="signIn.password.$error">
+					<div class="form-error" ng-message="required">Password is required.</div>
+				</div>
+
+				<div ng-show="!hasLostInternetConnection() && loginError">
+					<h4 style="font-size: small; color:red;">Wrong Username or Password</h4>
+				</div>
+
+				<div ng-show="hasLostInternetConnection()">
+					<h4 style="font-size: small; color:red;">Unable to Login. Device offline.</h4>
+				</div>
+
+				<button class="button button-block app-theme-color app-theme-text" ng-disabled="progressing || !hasLostInternetConnection ">{{login_name}}</button>
+			</div>
+
+		</form>
+
+		<div style="text-align: right;padding: 0px 12px;">
+			<button class="button button-clear button-positive" ng-click="forgotPw()" style="color: #33cd5f;">Forgot Password?</button>
+		</div> 
+
+
+		<div class="content">
+			<div class="login-icon"></div>
+		</div>
+
+	</ion-content>
+
+	<!-- future validations -->
+	<!-- <script id="form-errors.html" type="text/ng-template">
+		<div class="form-error" ng-message="required">This field is required.</div>
+		<div class="form-error" ng-message="minlength">This field is must be at least 5 characters.</div>
+		<div class="form-error" ng-message="maxlength">This field is must be less than 50 characters</div>
+	</script> -->
+
+</ion-view>

@@ -1,0 +1,87 @@
+<div ng-click="setFocusToInput()" class="white-back-ground {{ ctrl.nodeData.selectedBackGround }}" style="padding: 16px 16px 10px 10px; display: flex; flex-flow: row;align-items: center; justify-content: space-between;" ng-class="ctrl.validationPassedHighlight">
+    <!-- <div style="flex-basis:{{ ::ctrl.rowSize.name }}%; flex-shrink: 0; flex-grow: 1; white-space: normal;width: 20%;padding-right: 5%;" on-hold="showEditConfigAliasName()">{{ :: ctrl.nodeData.ingredient_alias_name | ignoreAccents}}
+        <div style= "opacity: 0.5; font-size:80%; text-transform: capitalize;">{{ :: ctrl.supplier_name}}</div>
+    </div> -->
+    <div style="flex-basis:{{ ::ctrl.rowSize.name }}%; flex-shrink: 0; flex-grow: 1; white-space: normal;width: 20%;padding-right: 5%;" on-hold="showSupplierDetails(ctrl.nodeData)" >{{ :: ctrl.nodeData.ingredient_alias_name | ignoreAccents}}
+      <div style= "opacity: 0.5; font-size:80%; text-transform: capitalize;">{{ ctrl.nodeData.supplier_name}}</div>
+        <span ng-if="ctrl.mode == 'edit'"> <button type="button" class="btn btn-info btn-circle icon " ng-class ="icon" ng-style="{'background-color' : buttonColor, 'color': iconColor}" style="background-color: #FFEB3B; color: black;width: 23px;height: 23px;" ng-click="showItemSummary()">i</button> </span>
+
+
+    </div>
+    <div  style="flex-basis: {{ ::ctrl.rowSize.price }}%;margin-left: -1%; flex-shrink: 0; flex-grow: 1" on-hold="showEditConfigPrice({ makeServerRequest: true})" ng-hide="!minorCategoryItem">{{ctrl.nodeData.ingredient_price| currency}}
+      <div style= "opacity: 0.5; font-size:80%;">{{ :: ctrl.supplier_item_updated_at}}</div>
+    </div>
+
+    <!-- <div style="flex-basis:{{ ::ctrl.rowSize.qty }}%; flex-shrink: 0; flex-grow: 1" ng-if="ctrl.mode === 'edit'"  class="inventory-input-wrapper">
+        <input type="number" placeholder="qty" style="width: 70%; text-align: center;" ng-change="ctrl.valueUpdated({ makeServerRequest: true})"
+               ng-model="ctrl.nodeData.stageQuantity" ng-model-options="{debounce: 500}" ng-class="ctrl.parValueHighlight"/>
+    </div> -->
+
+    <div style="text-align: -webkit-center;margin-left: -1%; flex-basis:{{ ctrl.rowSize.qty }}%; flex-shrink: 0; flex-grow: 1" ng-if="ctrl.mode === 'edit' && ctrl.filterView != 'PAR'"  class="inventory-input-wrapper" ng-hide="!minorCategoryItem">
+
+       <!-- <input type="number"
+               ng-focus="focusQty()"
+               focus-next string-to-number
+               placeholder="qty"
+               style="border:thin solid #dddddd; margin-left: -1%;width: 80%; text-align: center;"
+               ng-change="ctrl.valueUpdated({ makeServerRequest: true},ctrl.nodeData.stageQuantity)"
+               ng-model="ctrl.nodeData.stageQuantity"
+               ng-class="{'highlight-quantity': ctrl.nodeData.stageQuantity < ctrl.nodeData.par &&  ctrl.nodeData.stageQuantity && ctrl.nodeData.par && ctrl.filterView == 'PRODUCT_CATEGORY'}"
+               ng-model-options="{debounce: 100}"
+               convert-to-decimal-dir required/> -->
+               <!-- <input type="text"
+                      ng-focus="focusQty()"
+                      focus-next string-to-number
+                      placeholder="qty"
+                      style="border:thin solid #dddddd; margin-left: -1%;width: 80%; text-align: center;"
+                      ng-change="ctrl.valueUpdated({ makeServerRequest: true},ctrl.nodeData.stageQuantity)"
+                      ng-model="ctrl.nodeData.stageQuantity"
+                      ng-class="{'highlight-quantity': ctrl.nodeData.stageQuantity < ctrl.nodeData.par &&  ctrl.nodeData.stageQuantity && ctrl.nodeData.par && ctrl.filterView == 'PRODUCT_CATEGORY'}"
+                      ng-model-options="{debounce: 500}"
+                      valid-number required/> -->
+
+
+                      <input type="number"
+                             ng-focus="focusQty()"
+                             focus-next
+                             placeholder="qty"
+                             style="border:thin solid #dddddd; margin-left: -1%;width: 80%; text-align: center;"
+                             ng-change="ctrl.valueUpdated({ makeServerRequest: true},ctrl.nodeData.stageQuantity)"
+                             ng-model="ctrl.nodeData.stageQuantity"
+                             ng-class="{'highlight-quantity': ctrl.nodeData.stageQuantity <= ctrl.nodeData.par &&  ctrl.nodeData.stageQuantity && ctrl.nodeData.par && ctrl.filterView == 'PRODUCT_CATEGORY'}"
+                             ng-model-options="{debounce: 800}"
+                             required/>
+
+        <div style= "opacity: 0.5; font-size:80%;">{{ :: ctrl.nodeData.last_inv_qty | number:2}}</div>
+   </div>
+
+    <div ng-hide="!minorCategoryItem" ng-if="ctrl.mode === 'view' || ctrl.filterView == 'PAR'"  ng-class="{'highlight-quantity': ctrl.nodeData.stageQuantity < ctrl.nodeData.par &&  ctrl.nodeData.stageQuantity && ctrl.nodeData.par && ctrl.filterView == 'PRODUCT_CATEGORY'}"  style="flex-basis:{{ ctrl.rowSize.qty }}%; margin-left: -1%; flex-shrink: 0; flex-grow: 1;width: 80%; text-align: center;">{{ctrl.nodeData.quantity | number:2}}
+      <!--<div style= "opacity: 0.5; font-size:80%; flex-basis:{{ ctrl.rowSize.units }}%">{{ctrl.nodeData.quantity_units}}</div>-->
+    </div>
+
+
+    <!-- <div ng-if="ctrl.mode == 'view'" style="flex-basis:{{ ::ctrl.rowSize.qty }}%; flex-shrink: 0; flex-grow: 1">{{ :: ctrl.nodeData.quantity}} -->
+      <!--<div style= "opacity: 0.5; font-size:80%; flex-basis:{{ ctrl.rowSize.units }}%">{{ctrl.nodeData.quantity_units}}</div>-->
+    <!-- </div> -->
+
+
+    <!-- <div style= "font-size:80%; flex-basis:{{ ctrl.rowSize.units }}%" on-hold="showEditConfigUnits()">{{ :: ctrl.nodeData.quantity_units}}</div> -->
+    <div style= "font-size:80%;margin-left: -1%; flex-basis:{{ ctrl.rowSize.units }}%" on-hold="showEditUnits({ makeServerRequest: true})" ng-hide="!minorCategoryItem">{{  ctrl.nodeData.quantity_units}}</div>
+
+    <div  style="flex-basis: 2%; flex-shrink: 0; flex-grow: 1;text-transform: lowercase;" ng-hide="!minorCategoryItem">{{  ctrl.nodeData.par  | number : 2}}</div>
+    <div class="item-text-wrap" style="flex-basis: {{ ::ctrl.rowSize.value }}%; flex-shrink: 0; flex-grow: 1; flex-wrap: wrap; text-align: end" ng-hide="!minorCategoryItem">{{ctrl.nodeData.ingValue | currency }}</div>
+
+  <div style= "font-size:80%;margin-left: -1%; flex-basis:{{ ctrl.rowSize.category }}%" ng-hide="minorCategoryItem" >
+        <span class="unit-config2-num-field col"  style="background-color: #DDDDDD;text-align: center;padding-right: 0px" placeholder ="ctrl.nodeData.minor_category">
+            <select type = "text" class="unit-select-box col" placeholder ="ctrl.nodeData.minor_category" name="singleSelect" style="background-color: #DDDDDD;" ng-model="ctrl.nodeData.minor_category" ng-change="changeMinorUnit(ctrl.nodeData.minor_category,ctrl.nodeData)" >
+              <option ng-repeat ="newUnit in ctrl.nodeData.minor_categories track by $index">{{newUnit | uppercase }}</option>
+            </select>
+            <i class="icon ion-arrow-down-b inv-config-arrow" style="color: black;padding-right: 10px;"></i>
+        </span>
+    </div>
+    <!-- <div style= "font-size:80%;margin-left: -1%; flex-basis:{{ ctrl.rowSize.category }}%" ng-hide="minorCategoryItem" >{{ :: ctrl.nodeData.minor_category}}</div> -->
+
+    <div class="col col-5 col-center"  style="flex-basis: 5%; flex-shrink: 0; flex-grow: 1; flex-wrap: wrap;  margin-left: -0.5%; text-align: end"  ng-click="showReportPopover($event)">
+         <i class="icon larger ion-android-more-vertical"></i>
+     </div>
+</div>

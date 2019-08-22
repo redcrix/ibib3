@@ -1,0 +1,63 @@
+<ion-view view-title="Margin Optimizer">
+
+    <button class="button button-bal icon ion-clipboard float-button button-fab-bottom-right" ui-sref="app.taskmanager()" fab>
+            <!--<div style="font-size:xx-small;margin-top:-8px;">Dashboard</div>-->
+    </button>
+    <ion-content>
+        <div class="card">
+
+            <div class="item item-divider app-theme-color app-theme-text ">
+
+                <div class="row " ui-sref="app.costingoptimizercategory({flcategory:'Food',
+                                                                                    mcategory:'{{category.category}}'
+                                                                                    })">
+                    <div class="col col-75">{{category.category}}</div>
+                    <div class="col">{{category.categorycost | number:0}}%</div>
+                    <!--<div class="col">-->
+                        <!--<a ng-href="#/costingoptimizer/Food/{{category.category}}">-->
+                        <!--<i class="ion-android-more-horizontal"></i>-->
+                        <!--</a>-->
+                    <!--</div>-->
+                </div>
+
+            </div>
+
+            <ion-list class="item paddingzero" ng-repeat="item in items">
+                <ion-item class="paddingzero">
+                    <div class="row smaller" ui-sref="app.costingoptimizermenuitem({flcategory:'Food',
+                                                                                    mcategory:'{{category.category}}',
+                                                                                    menuitem:'{{item.itemid}}'})">
+                        <div class="col col-60 item-text-wrap">{{item.itemname}}<br>
+                            <progress class="thresholdmeter" ng-class="item.itemcostp>item.tc? 'redflag':'greenflag'"
+                                      max="100" value={{item.itemcostp}}></progress>
+                        </div>
+                        <div class="col">
+                            <div ng-class="item.itemcostp>item.tc? 'redflag':'greenflag'">{{item.price | currency}}
+                                <!--(-->
+                                <!--<i class="icon smaller" ng-class="item.costchange>0 ? 'ion-plus' : 'ion-minus'"></i>-->
+                                <!--{{item.costchange | makePositive | currency}}-->
+                                <!--)-->
+                                <br>
+
+                                <div class="subscripttag">(Price)</div>
+                            </div>
+                            <br>
+                            <div ng-class="item.itemcostp>item.tc? 'redflag':'greenflag'">{{item.itemcostp | number:0}}%
+                            <br><div class="subscripttag">(Cost Percentage)</div>
+                            </div>
+                        </div>
+                        <div class="col col-offset-50 col-center">
+                            <!--<a ng-href="#/costingoptimizer/Food/{{category.category}}/{{category.itemid}}">-->
+                            <i class="ion-ios-arrow-right"></i>
+                            <!--</a>-->
+                        </div>
+                    </div>
+                    <ion-option-button class="button-balanced icon ion-ios-arrow-forward mediumsize" ng-click="decide('Change Price',item.itemname)">&nbspChange price
+                    </ion-option-button>
+                </ion-item>
+            </ion-list>
+
+        </div>
+    </ion-content>
+
+</ion-view>

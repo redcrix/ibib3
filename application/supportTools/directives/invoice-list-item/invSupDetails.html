@@ -1,0 +1,50 @@
+
+
+<ion-modal-view class="add-conversion-modal">
+        <ion-header-bar class="bar error-reporting-modal">
+            <h1 class="title">{{data.ingredient_alias_name}}</h1>
+            <a class="button" ng-click="closeModalCtrl()">Cancel</a>
+        </ion-header-bar>
+        <busyspinner spinnerhide="dataReceived"></busyspinner>
+        <ion-content ng-show="dataReceived">
+            <div class="row">
+                <div class="col-30">Price</div>
+                <div class="col-5">:</div>
+                <div class="col-50">{{data.ingredient_price}}</div>
+            </div>
+            <div class="row">
+                <div class="col-30">Unit</div>
+                <div class="col-5">:</div>
+                <div class="col-50"> {{data.quantity_units_id}}</div>
+            </div>
+            <div class="row"><div class="col col-30">Active Supplier</div>
+                <div class="col col-45">
+                    <div class="unit-config2-num-field col"  style="" disabled = "invData">
+                        <select class="unit-select-box col" name="singleSelect" style="background-color: #DDDDDD;" ng-model="selectedItem" ng-change="currentMapping(selectedItem)" >
+                            <option ng-repeat="supplier in activeSupplierList track by $index">{{supplier.supplierName}}::{{supplier.supplierItemName}}</option>
+                        </select>
+                        <!-- <i class="icon ion-arrow-down-b inv-config-arrow" style="color: black;"></i> -->
+                    </div></div>
+                    <div class="col col-30"><button ng-click="removesupplier(selectedItem)">Remove</button></div>
+
+                </div>
+                <div class="row"><div class="col col-30">Add New Supplier</div>
+                <div class="col col-45">
+                    <div class="unit-config2-num-field col"  style="">
+                        <select class="unit-select-box col" name="singleSelect" style="background-color: #DDDDDD;"ng-model="newSupplier.supplierName">
+                            <option ng-repeat="newSupplier in newSupplierList track by $index" >{{newSupplier.supplierName}}::{{newSupplier.supplierItemName}}</option>
+                        </select>
+                        <!-- <i class="icon ion-arrow-down-b inv-config-arrow" style="color: black;"></i> -->
+                    </div></div>
+                    <div class="col col-30"><button ng-click="addNewSupplier(newSupplier.supplierName)">Add</button></div>
+
+                </div>
+                
+        </ion-content>
+        <ion-footer-bar align-title="left" style="background: #33CD5F;">
+      <button  class="button " style="border: none;background: #33CD5F;text-align: center;color: white;padding-left: 145px;font-size: 15px" ng-click="confirmSave()" >
+                Save
+            </button>
+    </ion-footer-bar>
+        
+</ion-modal-view>

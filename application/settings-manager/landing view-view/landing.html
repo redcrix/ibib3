@@ -1,0 +1,11 @@
+<ion-view view-title="Settings" ng-controller="SettingsLandingCtrl">
+	<busyspinner spinnerhide="showPage"></busyspinner>
+    <ion-content class="has-header" >
+
+        <span ng-repeat="category in settingscategories" ng-if="showPage">
+            <a class="button button-block icon-right ion-chevron-right" ui-sref="{{ ::category.link }}">
+                {{ ::category.label }}
+            </a>
+        </span>
+    </ion-content>
+</ion-view>

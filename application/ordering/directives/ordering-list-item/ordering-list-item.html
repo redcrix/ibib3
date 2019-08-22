@@ -1,0 +1,11 @@
+<div style="display: flex; flex-flow: row; justify-content: space-between;align-items: center;">
+    <div class="col col-70">
+        <div style="font-size: 100%; overflow: hidden; text-overflow: ellipsis;">{{ctrl.Item.name}}</div>
+        <div style="font-size: 60%; text-transform: uppercase; font-style: italic;margin-top: 5px; min-width: 150px">{{ctrl.Item.date}}</div>
+    </div>
+    <div class="col col-30">
+      <!-- overflow: hidden; -->
+        <div style="font-size: 100%;text-overflow: ellipsis;">${{ctrl.Item.total_value_of_ordering}}</div>
+        <div style="font-size: 60%; text-transform: uppercase; font-style: italic; min-width: 150px">Total Value</div>
+    </div>
+</div>

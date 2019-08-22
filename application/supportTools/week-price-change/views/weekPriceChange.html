@@ -1,0 +1,95 @@
+<ion-view view-title="Weekly Price Change" align-title="center">
+
+  <!-- HEADER PART -->
+  <ion-header-bar>
+    <span style="margin-top: 4%;width:100%;" ng-if="spinnerHide">
+
+      <!-- hidden button to display business drop-down -->
+      <button style="display:hidden;min-height:unset;" class="button upload-btn" id="my_biz" modal-select="" ng-model="mySelect" options="businessList" modal-title="Select Business" hide-reset='true' on-select="shoutLoud(newValue, oldValue)"
+        modal-class="camera-set" has-search="true" on-close="closeModal()" on-reset="shoutReset()">
+        <div class="option">
+          <h2>{{option.businessName}}</h2>
+        </div>
+      </button>
+
+      <div class="row" style="background-image: linear-gradient(0deg, #b2b2b20d, #b2b2b205 50%, transparent 50%);">
+        <div class="support-tool-header">
+          SUPPORT TOOL
+        </div>
+        <!-- <div class="support-tool-header" ng-if="!tblDatas.length">Recipe information unavailable</div> -->
+      </div>
+
+
+      <div class="row content-data" style="margin-top:1%;padding-bottom:unset;background-image: linear-gradient(0deg, #b2b2b20d, #b2b2b205 50%, transparent 50%);">
+        <div class="col-20">
+          <button class="config-button week-price-change-btn" ng-click="">
+            <div class="item item-input-inset biz-list-input-div" ng-click="setBusiness(item,1,$index)">
+              <div class="item-input-wrapper biz-input-wrapper" style="background: {{items.bg}}">
+                <i class="icon ion-ios-search"></i>
+                <b> <input type="text" style="font-weight:500;" ng-model="current_selected.businessName" placeholder="Search" class="map-inv-drop-down" disabled></b>
+              </div>
+              <i class="ion-arrow-down-b week-price-change-arrow-ibtn"></i>
+            </div>
+
+          </button>
+        </div>
+        <div class="col-20" style="margin-left:6%;">
+          <button class="config-button week-price-change-btn week-price-change-text" ng-click="showPeriod()">
+            {{ periodDetailSelection() }}
+            <i class="ion-arrow-down-b week-price-change-arrow-ibtn"></i>
+          </button>
+        </div>
+        <div class="col-20" style="margin-left:6%;">
+          <button class="config-button week-price-change-btn" ng-click="loadData()">Load Data</button>
+        </div>
+        <div class="col-20" style="margin-left:8%;">
+          <button class="config-button week-price-change-btn" ng-click="openPrompt()">Send Email</button>
+        </div>
+      </div>
+
+
+      <div class="" style="height:10px;background-image: linear-gradient(0deg, #b2b2b20d, #b2b2b205 50%, transparent 50%);">
+
+      </div>
+      <div class="card tblHead week-price-tblHead" ng-if="tblDatas.length" style="background-image: linear-gradient(0deg, #b2b2b20d, #b2b2b205 50%, transparent 50%);">
+        <div class="row app-back-ground no-vertical-padding no-horizontal-padding" style="background-color: #F05C33;margin-top:1%;">
+          <div class="week-price-head-col" ng-repeat="head in tblHeader">{{head.name}}
+          </div>
+        </div>
+      </div>
+    </span>
+  </ion-header-bar>
+
+
+  <busyspinner spinnerhide="spinnerHide"></busyspinner>
+  <ion-content style="top:21%;">
+    <span ng-if="spinnerHide">
+
+      <div class="row">
+        <div class="card support-tool-header" ng-if="!tblDatas.length">No Data available</div>
+      </div>
+      <!-- DISPLAY ROW DATAS -->
+      <div class="card tblHead week-price-data" ng-if="tblDatas.length">
+        <div class="row item smaller" style="padding-top: 10px;padding-bottom: 10px;height: 55px;" ng-repeat="ing in tblDatas" ng-class="ing.clicked? 'ingredient-price-selected-row': ''" ng-click="change_display_ingredient(ing)">
+          <div class="week-price-head-col">{{ing.InvItemID}}</div>
+          <div class="week-price-head-col">{{ing.InvItemName}}</div>
+          <div class="week-price-head-col">{{(ing.PriceChange).toFixed(2)}}</div>
+          <div class="week-price-head-col">{{(ing.DollarImpact).toFixed(2)}}</div>
+          <div class="week-price-head-col">{{ing.usage}}</div>
+          <div class="week-price-head-col">{{ing.ReportingUnit}}</div>
+          <div class="week-price-head-col">{{ing.ReportingPrice}}</div>
+          <div class="week-price-head-col">{{ing.InvPrice_PW}}</div>
+          <div class="week-price-head-col">{{ing.InvUnit_PW}}</div>
+          <div class="week-price-head-col">{{ing.InvDate_PW | date:"MM/dd/yyyy"}}</div>
+          <div class="week-price-head-col">{{ing.SuppName_PW}}</div>
+          <div class="week-price-head-col">{{ing.InvPrice_CW}}</div>
+          <div class="week-price-head-col">{{ing.InvUnit_CW}}</div>
+          <div class="week-price-head-col">{{ing.InvDate_CW | date:"MM/dd/yyyy" }}</div>
+          <div class="week-price-head-col">{{ing.SuppName_CW}}</div>
+        </div>
+      </div>
+    </span>
+  </ion-content>
+
+
+</ion-view>

@@ -1,0 +1,47 @@
+<!-- Old Dashboard -->
+<!--
+<div class="card" >
+    <div class="row no-vertical-padding no-horizontal-padding">
+        <div class="col col-center col-center" style="font-size: medium;" ui-sref="{{ ::clickDestination }}">{{ subCardName }}
+            <div class="item item-borderless">
+                {{ subCardDataDisplay }}
+
+
+            </div>
+            <span class="subscripttag"
+                     ng-style="colorReverser * cardDiff >= 0 ? {'color':'#33cd5f'} : {'color':'#ff1744'}">{{ subCardDiffDisplay }}
+                </span>
+        </div>
+
+        <div class="col col-5 col-center" ng-click="showReportPopover($event, subCardName)"
+             style="float: right;padding-right: 1em;">
+            <i class="icon larger ion-android-more-vertical"></i>
+        </div>
+    </div>
+</div> -->
+
+<!-- New Dashboard -->
+
+<div class="card" >
+    <div class="row no-vertical-padding no-horizontal-padding">
+        <div class="col col-25" style="padding-top: 5%;text-align: center;">
+            <i class="{{subCardIcon}} set-card-icon"></i>
+            <div class="col" style="font-size: 13px;" ui-sref="{{ ::clickDestination }}">{{ subCardName }}
+            </div>
+        </div>
+        <div class="col col-75 col-center" ng-click="showReportPopover($event, subCardName)"
+             style="float: right;padding-right: 1em;text-align: right">
+            <i class="icon larger ion-android-more-vertical" style="float: right;margin-top: 5%"></i>
+
+            <div class="item item-borderless">
+                {{ subCardDataDisplay }}
+                <div class="subscripttag"
+                     ng-style="colorReverser * cardDiff >= 0 ? {'color':'#33cd5f'} : {'color':'#ff1744'}">{{ subCardDiffDisplay }}
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+</div>

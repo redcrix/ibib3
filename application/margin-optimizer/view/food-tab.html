@@ -1,0 +1,23 @@
+<!--
+
+<ion-view title="Margin Optimizer">
+    <busyspinner spinnerhide="spinnerhide"></busyspinner>
+    <span ng-show="spinnerhide">
+        <ion-content class="has-header has-subheader">
+            <filterbuttonbar filterbuttons="filterButtons"></filterbuttonbar>
+            <span ng-repeat="section in categories.Food.sections  | orderBy:'section_priority'">
+                <marginoptimizeritemlist section="section" hidemore="false"
+                                         itemdisplaylimit="3"
+                                         sortingclass="userSortingClass()"></marginoptimizeritemlist>
+            </span>
+    </ion-content>
+    </span>
+</ion-view>-->
+<ion-view view-title="Menu Performance">
+    <ion-nav-buttons side="secondary">
+
+        <button class="button button-icon icon ion-ios-search-strong" style="color:white;" ng-click="showFilterBarMenuperformance()">
+        </button>
+
+    </ion-nav-buttons>
+<marginoptimizertab menutype="'Food'"></marginoptimizertab></ion-view>

@@ -1,0 +1,78 @@
+<ion-view title="{{headerTitleINV}}" align-title="center">
+    <ion-floating-button id="my-float-inv" ng-click="mapItems()"  class="custom-save" icon-color="white" icon="ion-android-checkmark-circle" button-color="#33cd5f">
+    </ion-floating-button>
+    <ion-content class="has-footer">
+        <busyspinner spinnerhide="spinnerShow" class="inactive-spinner"></busyspinner>
+        <ion-tabs class="tabs-icon-top tabs-top tabs-color-active-balanced inv-map-tabs" delegate-handle="myhandle">
+        <ion-tab title="Inactive-items" icon-on="ion-ios-circle-filled" icon-off="ion-ios-circle-outline" on-select="inactiveTabClick()">
+          <ion-scroll direction="y" style="height: 100%">
+            <ion-content style="top:150px" spinnerhide="spinnerShow">
+                <div ng-repeat="inactiveItems in inActiveList" ng-show="inactiveDataReceived">
+                    <div style="width: 100%; padding: 16px 16px 16px 10px;display: flex; flex-flow: row; justify-content: flex-start;" class="item-divider" ng-click="toggleGroup(inactiveItems)">
+                        <i class="icon  icon-left" ng-class="inactiveItems.isExpanded ? 'ion-ios-minus-outline' : 'ion-ios-plus-outline'"></i> &nbsp
+                        <div style="font-size: 15px">{{inactiveItems.name}}</div>
+                    </div>
+                    <ion-list class="sub-list paddingzero" ng-if="inactiveItems.isExpanded">
+                        <ion-item ng-repeat="item in inactiveItems.ingredients" class="no-padding" on-finish-render="finishedCategoryItemsRenderInactive" item-height="100" item-width="100%">
+                            <div class="row invRow" style=" padding-top: 10px;" ng-class="ctrl.validationPassedHighlight">
+                                <div class="col col-70" >
+                                    <div class="item-text-wrap" style="text-align: left;">{{ item.supplierItemAliasName}}</div>
+                                    <div class="item-text-wrap invText">{{ item.supplierName}}</div>
+                                </div>
+                                <div class="col col-30 " >
+                                    <div >
+                                    <button  class="activeButton "
+                                        ng-class="item.active ? 'button-bal' : 'button-out '" class="activeButton {{ selectedOrDummy(unitOption) }}"
+                                        ng-model="item.selectedOption"
+                                        ng-click="inactiveClick(item, inactiveItems.ingredients)"  >
+                                        Make Active
+                                    </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </ion-item>
+                    </ion-list>
+
+                </div>
+                 <div ng-show="inactiveDataNotReceived&&!inactiveDataReceived" class="noData">
+                    <b>No data available</b>
+                </div>
+
+            </ion-content>
+          </ion-scroll>
+        </ion-tab>
+      <ion-tab title="Active-items" icon-on="ion-ios-checkmark" icon-off="ion-ios-checkmark-outline" on-select="activeTabClick()">
+        <ion-scroll direction="y" style="height: 100%">
+          <ion-content style="top:150px;" spinnerhide="spinnerShow">
+              <div ng-repeat="activeItems in activeList" ng-show="activeDataReceived">
+                  <div style="width: 100%; padding: 16px 16px 16px 10px;display: flex; flex-flow: row; justify-content: flex-start;" class="item-divider" ng-click="toggleGroup(activeItems)">
+                      <i class="icon  icon-left" ng-class="activeItems.isExpanded ? 'ion-ios-minus-outline' : 'ion-ios-plus-outline'"></i> &nbsp
+                      <div style="font-size: 15px">{{activeItems.name}}</div>
+                  </div>
+                  <ion-list class="sub-list paddingzero" ng-if="activeItems.isExpanded">
+                      <ion-item ng-repeat="item in activeItems.ingredients" class="no-padding" on-finish-render="finishedCategoryItemsRender" item-height="100" item-width="100%">
+                          <div class="row invRow" style=" padding-top: 10px;" ng-class="ctrl.validationPassedHighlight" >
+                              <div class="col col-70" >
+                                  <div class="item-text-wrap" style="text-align: left">{{ item.supplierItemAliasName}}</div>
+                                  <div class="item-text-wrap invText">{{ item.supplierName}}</div>
+                              </div>
+                              <div class="col col-30 ">
+                                <div style="text-align: right">
+                                  <button class="activeButton" id="inactive{{item.supplierItemId}}"
+                                      ng-class="!item.active ? 'button-inactive' : 'bordercolor '" ng-model="item.selectedOption" ng-click="activeClick(item)" > Make InActive
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                          <!-- </div> -->
+                      </ion-item>
+                  </ion-list>
+              </div>
+              <div ng-show="activeDataNotReceived && !activeDataReceived" class="noData"><b>No data available</b>
+              </div>
+          </ion-content>
+        </ion-scroll>
+      </ion-tab>
+    </ion-tabs>
+  </ion-content>
+</ion-view>

@@ -1,0 +1,275 @@
+<ion-modal-view>
+  <!--style="width: 90%; height: 60%; top: 20%; left: 5%; right: 5%; bottom: 20%;  min-height: 50%;"-->
+  <form name="itemEdit" novalidate="">
+    <ion-header-bar class="bar error-reporting-modal">
+      <h1 class="title">Supplier Item Configuration</h1>
+      <a class="button" ng-click="closeModalCtrl()">Cancel</a>
+    </ion-header-bar>
+    <ion-content>
+      <busyspinner spinnerhide="dataReceived"></busyspinner>
+      <span ng-if="dataReceived">
+            <div class="row">
+                <div class="col col-33 col-center">
+                    Ingredient:
+                </div>
+                <div class="col col-67-new col-center" style="margin-left: -3%;">
+                    <div class="row no-vertical-padding no-horizontal-padding">
+                        <div class="col col-75 col-center" ng-if="!editAliasName" ng-click="editAliasNameFn('edit')">
+                            {{ configModifierItem.supplierItemAliasNameStage }}
+                        </div>
+                        <div class="col col-75 col-center" ng-if="editAliasName">
+                            <input sync-focus-with="aliasNameFocus" name="ingredientName" class="inventory-config-input" style="width:100%;" type="text" ng-model="configModifierItem.supplierItemAliasNameStage" ng-model-options="{ debounce: 100 }" ng-maxlength="30">
+                        </div>
+                        <div ng-click="editAliasNameFn('edit')" class="col col-25 col-center  no-horizontal-padding" ng-if="!editAliasName"><i class="button  button-small button-stable icon ion-edit"></i></div>
+                        <div ng-click="editAliasNameFn('set')"  class="col col-10 col-center  no-horizontal-padding" ng-if="editAliasName"><i class="button  button-small  button-balanced icon ion-checkmark"></i></div>
+                        <div class="col col-5 col-center no-horizontal-padding" ng-if="editAliasName"></div>
+                        <div ng-click="editAliasNameFn('cancel')"  class="col col-10 col-center  no-horizontal-padding"ng-if="editAliasName"><i class="button button-small button-assertive icon ion-android-cancel" ></i></div>
+                    </div>
+                    </div>
+            </div>
+            <!-- <div class="row col-center"> -->
+                <div ng-show="itemEdit.ingredientName.$error.maxlength" class="help-block error edit-config-err">Ingredient Name is too long</div>
+            <!-- </div> -->
+            <div class="row">
+                <div class="col col-33 col-center">
+                    Supplier:
+                </div>
+                <div class="col col-67-new col-center">{{ configModifierItem.supplier_name | titleCase }} </div>
+            </div>
+
+            <!--<div class="row">-->
+            <!--<div class="col col-33 col-center">Location: </div>-->
+            <!--<div class="col col-67 col-center">-->
+            <!--&lt;!&ndash;<select class="settings-select" ng-model="errorReport.selectedStore"&ndash;&gt;-->
+            <!--&lt;!&ndash;ng-options="option.store_id as option.store_name for option in stores"&ndash;&gt;-->
+            <!--&lt;!&ndash;ng-model-options="{ debounce: 100 }">&ndash;&gt;-->
+            <!--&lt;!&ndash;</select>&ndash;&gt;-->
+            <!--</div>-->
+            <!--</div>-->
+
+            <!--<div class="row">-->
+                <!--<div class="col col-33 col-center">Location: </div>-->
+                <!--&lt;!&ndash;<div class="col">-->
+                    <!--<div style="margin-top:0px;" class="button-bar">-->
+                        <!--<a ng-repeat="locationOption in locationOptions track by $index" style="text-overflow: inherit;" class="button button-bal button-small no-horizontal-padding"-->
+                            <!--ng-class="locationOption.selected ? '' : 'button-out'" ng-click="locationOptionClick(locationOption)">-->
+                            <!--<span class='x-smaller'>{{ locationOption.label }}</span></a>-->
+      <!--</div>-->
+      <!--</div>&ndash;&gt;-->
+      <!--<div class="col col-67 col-center">-->
+      <!--<select multiple class="inventory-config-select" ng-model="configModifierItem.ingredientInventoryLocationIds" ng-options="option.key as option.label for option in locationOptions">-->
+      <!--</select>-->
+      <!--</div>-->
+      <!--</div>-->
+
+
+
+      <!--<div class="row" ng-show="customLocationSelected()">-->
+      <!--<div class="col col-33 col-center">Custom Location: </div>-->
+      <!--<div class="col col-67 col-center">-->
+      <!--<input sync-focus-with="customLocationFocus" class="inventory-config-input" type="text" ng-model="customField.location" ng-model-options="{ debounce: 100 }">-->
+      <!--</div>-->
+      <!--</div>-->
+      <div class="row">
+        <div class="col col-33 col-center">Category: </div>
+        <!--<div class="col">
+                    <div style="margin-top:0px;" class="button-bar">
+                        <a ng-repeat="categoryOption in categoryOptions track by $index" style="text-overflow: inherit;" class="button button-bal button-small no-horizontal-padding"
+                            ng-class="categoryOption.selected ? '' : 'button-out'" ng-click="categoryOptionClick(categoryOption)">
+                            <span class='x-smaller'>{{ categoryOption.label }}</span></a>
+                    </div>
+                </div>-->
+        <!--<div class="col col-67 col-center">-->
+        <!--<select class="inventory-config-select" ng-model="configModifierItem.ingredientInventoryCategory" ng-options="option.key as option.label for option in categoryOptions">
+                    </select>-->
+        <!--</div>-->
+        <!-- <slide-box-selector slider-options="categoryOptions" slider-index="configSliders.categorySlider" slide-change-broadcast="'config-category-changed'"></slide-box-selector> -->
+      <div class="col col-33 col-center no-horizontal-padding">
+        <div class="row unit-select-box">
+        <select  name="singleSelect" ng-model="selectedCategory" ng-change="checkForCustom(selectedCategory)">
+          <option ng-repeat="category in categoryOptions">{{category.key}}</option>
+       </select>
+       <i class="icon ion-arrow-down-b inv-config-arrow" style="position: absolute;right: 10px;color: black;"></i>
+     </div>
+          <!-- <slide-box-selector slider-options="categoryOptions" slider-index="configSliders.categorySlider" slide-change-broadcast="'config-category-changed'"></slide-box-selector> -->
+        </div>
+        <div class="col col-33 col-center"></div>
+      </div>
+
+      <div class="row" ng-if="customCategorySelected()">
+        <div class="col col-33 col-center">Custom Category:</div>
+        <div class="col col-67-new">
+          <input sync-focus-with="customCategoryFocus" class="inventory-config-input" type="text" ng-model="customField.category">
+        </div>
+      </div><div class="row">
+        <div class="col col-33 col-center">Status: </div>
+        <div class="col col-67-new col-center">
+          <div class="button-bar" style="width:90%;">
+            <a ng-repeat="statusOption in statusOptions track by $index" class="button edit-config-status" ng-class="statusOption.key == 'inactive'? (statusOption.selected ? 'button-assertive' : 'button-assertive button-out' ): (statusOption.selected ? 'button-bal' : 'button-bal button-out')"
+              ng-click="statusOptionClick(statusOption)">
+                            <span>{{ statusOption.label }}</span></a>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col col-33 col-center">
+          Par value:
+        </div>
+        <div class="col col-67-new col-center">
+          <input class="inventory-config-input" type="number" string-to-number convert-to-decimal ng-model="configModifierItem.parStage" ng-change="configModifierItem.par=configModifierItem.parStage" ng-model-options="{ debounce: 100 }">
+        </div>
+      </div>
+
+      <!--<div class="row">-->
+      <!--<div class="col col-33 col-center">Units: </div>-->
+
+      <!--<div class="col col-33 col-center no-horizontal-padding">-->
+      <!--&lt;!&ndash;<div class="row">&ndash;&gt;-->
+      <!--&lt;!&ndash;<div class="col col-center col-5">&ndash;&gt;-->
+      <!--&lt;!&ndash;<i ng-hide="configSliders.unitslider==0" class= "icon icon ion-ios-arrow-left" on-tap="prevSlide('configSliders.unitslider')"></i>&ndash;&gt;-->
+      <!--&lt;!&ndash;</div>&ndash;&gt;-->
+
+      <!--&lt;!&ndash;<div class="col col-75 col-center">&ndash;&gt;-->
+      <!--&lt;!&ndash;<ion-slide-box show-pager="false" active-slide="configSliders.unitslider" style="height:34px; text-align: center; padding: inherit; font-weight: 700">&ndash;&gt;-->
+      <!--&lt;!&ndash;<ion-slide ng-repeat="option in unitsOptions">&ndash;&gt;-->
+      <!--&lt;!&ndash;<div style="padding-top: 2px;"> {{ option.measurementName }}&ndash;&gt;-->
+      <!--&lt;!&ndash;</div>&ndash;&gt;-->
+      <!--&lt;!&ndash;</ion-slide>&ndash;&gt;-->
+
+      <!--&lt;!&ndash;</ion-slide-box>&ndash;&gt;-->
+      <!--&lt;!&ndash;</div>&ndash;&gt;-->
+      <!--&lt;!&ndash;<div class="col col-center col-5" on-tap="nextSlide('configSliders.unitslider')">&ndash;&gt;-->
+      <!--&lt;!&ndash;<i ng-hide="configSliders.unitslider==(unitsOptions.length-1)" class = "icon icon ion-ios-arrow-right"></i>&ndash;&gt;-->
+      <!--&lt;!&ndash;</div>&ndash;&gt;-->
+      <!--&lt;!&ndash;</div>&ndash;&gt;-->
+
+      <!--<slide-box-selector slider-options="unitsOptions" slider-index="configSliders.unitSlider" slide-change-broadcast="'config-units-changed'"></slide-box-selector>-->
+
+      <!--</div>-->
+
+      <!--<div class="col col-33 col-center inventory-config-subscript" ng-if="unitConversionText">( {{ unitConversionText }} )</div>-->
+
+      <!--</div>-->
+
+      <div class="row" ng-if="item_supplier_id == 'S130'">
+          <div class="col col-center red-font">Please map a supplier item to this inventory item to view additional unit options. </div>
+      </div>
+
+      <div class="row" ng-if="item_supplier_id != 'S130'">
+        <div class="col col-33 col-center">Units: </div>
+        <div class="col col-67-new col-center">
+          <div class="row">
+            <div class="col col-90-new col-center">
+              <span ng-repeat="unitOptionChunk in unitOptionsChunks">
+                <div class="button-bar no-vertical-padding" style="width:90%;">
+                <a ng-repeat="unitOption in unitOptionChunk track by $index"
+                   class="button button-small config-modify-unit {{ selectedOrDummy(unitOption) }}"
+                   ng-click="unitOptionClick(unitOption)" style="padding: 0 4px;">
+
+                    <div class="row no-vertical-padding no-horizontal-padding">
+                        <div class="col col-center no-vertical-padding no-horizontal-padding">
+                            {{ unitOption.label }}
+                        </div>
+                    </div>
+                    <div class="row no-vertical-padding no-horizontal-padding">
+                        <div class="col col-center no-vertical-padding no-horizontal-padding inventory-config-subscript">
+                            {{ unitOption.unitConversionText }}
+                        </div>
+                    </div>
+                    <!--<span class="no-vertical-padding"><div class="no-vertical-padding " style="margin-top:-10px;">-->
+                        <!---->
+                    <!--</div></span>-->
+                  </a>
+                </div>
+              </span>
+            </div>
+            <!-- <a class=" btn-circle btn-circle-small ion-plus"  style="background-color: rgb(51, 205, 95); color: rgb(255, 255, 255);" ng-click="addUnit(configModifierItem)"></a>
+             -->
+
+            <div class="col col-10 col-center" ng-if="item_supplier_id != 'S130' && showPlus">
+              <button type="button" class="btn btn-info btn-circle icon ion-plus" ng-class ="icon" ng-style="{'background-color' : buttonColor, 'color': iconColor}" style="background-color: rgb(51, 205, 95); color: rgb(255, 255, 255);" ng-click="addUnit(configModifierItem)"></button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row"  style="padding-bottom: 50px;">
+        <div class="col col-33 col-center">Unit Price: </div>
+        <div class="col col-67-new col-center">
+          <div class="row">
+            <!--<div class="col col-75 col-center" ng-if="!editUnitPrice" ng-click="editUnitPriceFn('edit')">-->
+            <!--{{ configModifierItem.inventoryMeasurementUnitPriceStage | currency }} / {{ configModifierItem.measurementNameStage }}-->
+            <!--</div>-->
+
+            <div class="col col-75-new col-center">
+              <input sync-focus-with="measurementUnitsFocus" class="inventory-config-input" string-to-number type="number" ng-model="configModifierItem.inventoryMeasurementUnitPriceStage" ng-model-options="{ debounce: 100 }" ng-change ="unitPriceChange(configModifierItem)">
+            </div>
+            <div class="col col-25 col-center justbolder">
+              / {{ configModifierItem.measurementNameStage }}
+            </div>
+            <!--<div ng-click="editUnitPriceFn('edit')" class="col col-25 col-center  no-horizontal-padding" ng-if="!editUnitPrice"><i class="button  button-small button-stable icon ion-edit"></i></div>-->
+            <!--<div ng-click="editUnitPriceFn('set')"  class="col col-10 col-center  no-horizontal-padding" ng-if="editUnitPrice"><i class="button  button-small  button-balanced icon ion-checkmark"></i></div>-->
+            <!--<div class="col col-5 col-center no-horizontal-padding" ng-if="editUnitPrice"></div>-->
+            <!--<div ng-click="editUnitPriceFn('cancel')"  class="col col-10 col-center  no-horizontal-padding"ng-if="editUnitPrice"><i class="button button-small button-assertive icon ion-android-cancel" ></i></div>-->
+          </div>
+
+        </div>
+      </div>
+      <!-- <div class="row">
+        <div class="col col-25 col-center">
+          <button type="button" class="btn btn-sm btn-warning" ng-click="addUnit(configModifierItem)"> Add unit</button>
+        </div>
+        <div class="col col-67 col-center">
+        </div>
+      </div> -->
+      <!--<div class="row">-->
+      <!--<div class="col col-33 col-center">-->
+      <!--Error:-->
+      <!--</div>-->
+      <!--<div class="col col-67 col-center">-->
+      <!--<select class="settings-select" ng-model="errorReport.error_message"-->
+      <!--ng-options="option.error_id as option.error_message for option in cannedErrorOptions"-->
+      <!--ng-model-options="{ debounce: 100 }">-->
+      <!--</select>-->
+      <!--</div>-->
+
+
+      <!--</div>-->
+
+
+      <!--<ion-list>-->
+      <!--<span ng-repeat="option in cannedErrorOptions track by $index">-->
+      <!--<ion-item class="no-horizontal-padding no-vertical-padding" style="width:90%; left:5%; right:5%;" ng-click="selectError($index)">-->
+      <!--<div class="row" ng-class="option.selected? 'selected-error-msg justbolder' : 'un-selected-error-msg'">-->
+      <!--<div class="col">-->
+      <!--{{ option.error_message }}-->
+      <!--</div>-->
+      <!--</div>-->
+      <!--</ion-item>-->
+
+      <!--</span>-->
+
+      <!--</ion-list>-->
+      <!--<div class="row" ng-if="errorReport.selected_error.error_id == 'CUSTOM'">-->
+      <!--<div class="col">-->
+      <!--<label class="item item-input text">-->
+      <!--<textarea placeholder="Please describe in detail the error you encountered" rows="5" ng-model="errorReport.comments" ng-Required="true" name="description" lose-focus-on-return></textarea>-->
+      <!--</label>-->
+      <!--</div>-->
+      <!--</div>-->
+
+
+      </span>
+    </ion-content>
+    <!-- <div class="bar buttonbar-footer-larger no-vertical-padding">
+            <button class="full-width-button app-theme-text" ng-click="confirmSave()" ng-class="saveButtonColor">
+                {{ saveButtonText }}
+            </button>
+        </div> -->
+    <ion-footer-bar align-title="left"  ng-style="saveRestrict && {'background':'#33cd5f7d'} || {'background': '#33CD5F'}">
+      <button  class="full-width-button app-theme-text" style="border: none;" ng-click="confirmSave()" ng-class="saveButtonColor">
+                {{ saveButtonText }}
+            </button>
+    </ion-footer-bar>
+  </form>
+</ion-modal-view>

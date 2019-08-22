@@ -1,0 +1,23 @@
+<ion-header-bar ng-show="spinnerhide" style="width:100%"
+                class="bar bar-subheader app-theme-color-level2 app-theme-text-level2 has-header" has-header="true">
+    <div class="row" ng-click="showMenus()">
+        <div class="col col-60">{{menu_name | titleCase }}
+            <i class="icon" ng-class="menu_click? 'ion-arrow-up-b':'ion-arrow-down-b'"></i>
+        </div>
+        <!--<div class="col">Food Cost : {{categories.Food.category_cost_percent | number:0}}%</div>-->
+        <div class="col">Food Cost : {{menu_cost_percent | number:0}}%</div>
+    </div>
+</ion-header-bar>
+<ion-view title="{{pageTitle}}" ng-init="init()">
+    <busyspinner spinnerhide="spinnerhide"></busyspinner>
+    <span ng-show="spinnerhide">
+        <ion-content class="has-header has-subheader">
+            <filterbuttonbar filterbuttons="filterButtons"></filterbuttonbar>
+            <span ng-repeat="section in categories.Food.sections  | orderBy:'section_priority'">
+                <marginoptimizeritemlist section="section" hidemore="false"
+                                         itemdisplaylimit="3"
+                                         sortingclass="userSortingClass()"></marginoptimizeritemlist>
+            </span>
+    </ion-content>
+    </span>
+</ion-view>

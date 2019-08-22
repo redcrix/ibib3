@@ -1,0 +1,66 @@
+<ion-view title="Inventory Config" align-title="center">
+    <!--  -->
+    <ion-floating-button id="my-float-pnl" class="custom-save" ng-click="save()" icon-color="white" icon="ion-android-checkmark-circle" button-color="#33cd5f">
+    </ion-floating-button>
+<ion-tabs class="tabs-icon-top tabs-top tabs-color-active-balanced" ng-class="{'inv-map-tabs': invConfig, 'pnl-map-tabs': !invConfig}" delegate-handle="myhandle">
+
+
+    <ion-tab title="{{headTitle1}}" icon-on="ion-ios-circle-filled" icon-off="ion-ios-circle-outline" on-select="toBeMapClick()">
+        <!-- <ion-content> -->
+
+            <ion-nav-view name="to-be-mapped-tab">
+                <busyspinner spinnerhide="mainDataReceived" class="pnl-to-map-spinner"></busyspinner>
+                    <to-be-mapped-pnl items="toBeMappedItems" from="from"></to-be-mapped-pnl>
+            </ion-nav-view>
+        <!-- </ion-content> -->
+    </ion-tab>
+    <!-- ************************************************** Mapped Tab *********************************************** -->
+    <ion-tab title="{{headTitle2}}" icon-on="ion-ios-checkmark" icon-off="ion-ios-checkmark-outline" on-select="mappedClick()">
+        <!-- <ion-content> -->
+            <ion-nav-view name="mapped-tab">
+                <busyspinner spinnerhide="mainMappedDataReceived" class="pnl-to-map-spinner"></busyspinner>
+                <mapped-pnl-section items="mappedItems" from="from"></mapped-pnl-section>
+            </ion-nav-view>
+        <!-- </ion-content> -->
+    </ion-tab>
+</ion-tabs>
+
+</ion-view>
+
+
+<!-- <ion-tabs class="tabs-icon-top tabs-top tabs-color-active-balanced pnl-map-tabs" delegate-handle="myhandle">
+
+    <ion-tab title="To be Mapped" icon-on="ion-ios-circle-filled" icon-off="ion-ios-circle-outline"  on-select="toBeMapClick()">
+
+        <ion-content>
+            <ion-nav-view name="to-be-mapped-tab" style="top:0px;">
+                    <busyspinner spinnerhide="mainDataReceived" class="pnl-to-map-spinner"></busyspinner>
+                    <to-be-mapped-pnl items="toBeMappedItems"></to-be-mapped-pnl>
+            </ion-nav-view>
+        </ion-content>
+    </ion-tab> -->
+    <!-- ************************************************** Mapped Tab *********************************************** -->
+   <!--  <ion-tab title="Mapped" icon-on="ion-ios-checkmark" icon-off="ion-ios-checkmark-outline" on-select="mappedClick()" >
+        <ion-content>
+            <ion-nav-view name="mapped-tab" style="top:0px;">
+                <busyspinner spinnerhide="mainDataReceived" class="pnl-to-map-spinner"></busyspinner>
+                <mapped-pnl-section items="mappedItems"></mapped-pnl-section>
+            </ion-nav-view>
+        </ion-content>
+    </ion-tab>
+</ion-tabs> -->
+
+<!--
+
+<ion-tabs class="tabs-icon-top tabs-top tabs-color-active-balanced pnl-map-tabs" delegate-handle="myhandle">
+
+    <ion-tab title="To be Mapped" icon-on="ion-ios-circle-filled" icon-off="ion-ios-circle-outline"  on-select="toBeMapClick()">
+         <content-pnl contentItems = "toBeMappedItems" ng-if="dataReceived"></content-pnl>
+    </ion-tab>
+
+    <ion-tab title="Mapped" icon-on="ion-ios-checkmark" icon-off="ion-ios-checkmark-outline" on-select="mappedClick()" >
+        <content-pnl contentItems = "mappedItems" ng-if="dataReceived"></content-pnl>
+    </ion-tab>
+</ion-tabs>
+
+ -->

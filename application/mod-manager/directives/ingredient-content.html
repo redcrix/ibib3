@@ -1,0 +1,67 @@
+<!-- <button class="button button-icon icon ion-ios-search-strong" ng-if="!spinnerShow" ng-click="showFilterBar()"></button> -->
+<ion-view view-title="{{ item.mod_name | titleCase }}"  >
+
+<ion-header-bar style="height: unset;top: 5%;display: block;">
+<div class="row">
+  <div class="item-input-wrapper mod-search-wrapper" style="background: white;">
+    <span ng-click="closeSearch()">
+      <i class="icon ion-android-arrow-back back-inv-config-search" ></i>
+    </span>
+    <input type='text' ng-model='data.searchText' class="search-mod-config" placeholder="Search item name" style="width: 100%;" />
+
+  </div>
+</div>
+<!-- <div class="row">
+  <ul class="list mod-ul">
+    <li class="item item-toggle">
+      <span class="set-toggle-text">View mod items without recipes</span>
+      <label class="toggle toggle-balanced set-toggle-height">
+         <input type="checkbox" ng-model="toggle" ng-change="detectToggle(toggle)">
+         <div class="track set-toggle-track">
+           <div class="handle set-toggle-handle"></div>
+         </div>
+      </label>
+    </li>
+  </ul>
+</div> -->
+<div class="row">
+  <ul class="list mod-ul">
+    <li class="item item-toggle">
+      View mod items without recipes
+     <label class="toggle toggle-balanced">
+       <input type="checkbox" ng-model="toggle" ng-change="detectToggle(toggle)">
+       <div class="track set-toggle-track" >
+         <div class="handle set-toggle-handle"></div>
+       </div>
+     </label>
+    </li>
+  </ul>
+</div>
+</ion-header-bar>
+<ion-content style="top: 16%;">
+  <div class="text-center" ng-if="!displayItems.length" style="margin-top: 30%;"> <h3>No Ingredients available.</h3></div>
+  <ion-list >
+    <div  ng-repeat="item in displayItems | filter:searchIngredient" ng-if="displayItems.length" class="card">
+      <ion-item id="mod-list_{{item.mod_id}}" class="invoice-tacking-padding">
+          <div class="row" ng-click="gotoModDetail(item)">
+              <div class="col col-33 item-text-wrap" style="text-align:left">
+                  <span class="invoice-data-first font-dark"> {{item.mod_name | titleCase}} </span>
+                  <!-- <span class="invoice-data">{{item.invoice_id}}</span> -->
+              </div>
+              <div class="col col-60" style="text-align:right">
+                  <span class="invoice-data"><i class="icon larger ion-cash"></i> Cost: ${{item.mod_cost | number : 2}}</span>
+              </div>
+          </div>
+          <div class="col col-5 error-reporting-center"
+               ng-click="showReportPopover($event, item)" style="float: right;">
+              <i class="icon larger ion-android-more-vertical"></i>
+          </div>
+          <ion-option-button class="button-balanced icon ion-ios-arrow-forward mediumsize"
+                                                   ng-click="decide(item)"> &nbspAdd Task
+          </ion-option-button>
+
+      </ion-item>
+    </div>
+  </ion-list>
+</ion-content>
+</ion-view>

@@ -1,0 +1,120 @@
+<ion-view view-title="{{menuitem.item_name | titleCase }}" ng-init="onMenuItemInit()"
+          ng-controller="MarginOptimizerCtrl">
+    <backbuttonbar navbartitle="navBarTitle"></backbuttonbar>
+    <busyspinner spinnerhide="spinnerhide"></busyspinner>
+    <div ng-show="spinnerhide">
+        <button class="button button-bal icon ion-clipboard float-button button-fab-bottom-right"
+                ui-sref="app.dashboard.tasks()" fab>
+            <!--<div style="font-size:xx-small;margin-top:-8px;">Dashboard</div>-->
+        </button>
+        <ion-content>
+            <!--<div class="button button-full app-theme-color app-theme-text">{{item.name}}</div>-->
+            <ion-list>
+                <marginoptimizeritem item="menuitem" detaillink="false" ifeven="true"></marginoptimizeritem>
+            </ion-list>
+            <div class="card" ng-show="menuitem.competitor_items.length>0">
+                <div class="item item-divider app-theme-color app-theme-text">
+                    <div class="row ">Competitor Pricing</div>
+                </div>
+                <ion-list>
+                    <ion-item class="item-stable " ng-click="toggleGroup(competitor_pricing)"
+                              ng-class="{active: isGroupShown(competitor_pricing)}">
+                        <div class="row">
+                            <div class="col col-10"><i class="icon"
+                                                       ng-class="isGroupShown(competitor_pricing) ? 'ion-minus' : 'ion-plus'"></i>
+                            </div>
+                            <div class="col col-40">Average Price</div>
+                            <div class="col col-10">:</div>
+                            <div class="col">{{ average_price | currency}}</div>
+                        </div>
+                        <ion-option-button class="button-balanced icon ion-ios-arrow-forward mediumsize "
+                                           ng-click="decide('Change Price',item.name)">&nbspChange price
+                        </ion-option-button>
+                    </ion-item>
+                    <ion-item class="item-accordion" ng-repeat="competitior in menuitem.competitor_items"
+                              ng-show="isGroupShown(competitor_pricing)">
+                        <div class="row smaller">
+                            <div class="col col-50 item-text-wrap">
+                                <div> {{competitior.competitor_item_name | titleCase }}
+                                    <div class="subscripttag" ng-show="competitior.competitor_name"> (
+                                        {{competitior.competitor_name}} )
+                                    </div>
+                                    <br>
+                                </div>
+                            </div>
+                            <div class="col col-10">:</div>
+                            <div class="col">{{competitior.competitor_item_price | currency}}</div>
+                            <div class="col">( <i class="icon"
+                                                  ng-class="competitior.competitor_item_price-average_price>0 ? 'ion-plus' : 'ion-minus'"></i>
+                                {{competitior.competitor_item_price-average_price | makePositive | currency}} )
+                            </div>
+                        </div>
+                        <ion-option-button class="button-balanced icon ion-ios-arrow-forward mediumsize"
+                                           ng-click="decide('Change Price',item.name)">&nbspChange price to
+                            {{competitior.price | currency}}
+                        </ion-option-button>
+                    </ion-item>
+                </ion-list>
+            </div>
+            <div class="card">
+                <div class="item item-divider item-balanced">
+                    <div class="row">
+                        <div class="col col-30 item-text-wrap">Cost</div>
+                        <div class="col col-5"></div>
+                        <div class="col col-10">&nbsp:</div>
+                        <div class="col">{{total_ingredients_cost | currency}}</div>
+                        <div class="col"><i class="icon"
+                                            ng-class="receipe.change>0 ? 'ion-arrow-up-b redflag' : 'ion-arrow-down-b greenflag'"></i>
+                            {{total_ingredients_costchange | makePositive | currency}}
+                        </div>
+                        <div class="col col-5"></div>
+                    </div>
+                </div>
+                <ion-list class="list">
+                    <ion-item class="item" ng-repeat="ingredient in menuitem.ingredients  | orderBy:'-ingredient_cost'"
+                              ng-show="ingredient.ingredient_name">
+                        <div class="row smaller">
+                            <div class="col col-40 item-text-wrap">{{ingredient.ingredient_name | titleCase }}
+                                <div ng-show="ingredient.ingredient_qty">({{ingredient.ingredient_qty}}
+                                    {{ingredient.ingredient_uom}})
+                                </div>
+                            </div>
+                            <div class="col col-10">:</div>
+                            <div class="col col-20">{{ingredient.ingredient_cost | currency}}</div>
+                            <div class="col"><i class="icon"
+                                                ng-class="ingredient.ingredient_costchange>0 ? 'ion-arrow-up-b redflag' : 'ion-arrow-down-b greenflag'"></i>
+                                {{ingredient.ingredient_costchange| makePositive | currency}}
+                            </div>
+                            <div class="col col-5"></div>
+                            <!--<div class="col col-25"></div>--></div>
+                        <ion-option-button class="button-balanced icon ion-ios-people smallsize"
+                                           ng-click="decide('Margin Optimizer','Negotiate lower cost',menuitem, ingredient.ingredient_name)">
+                            &nbsp Negotiate lower cost
+                        </ion-option-button>
+                        <ion-option-button class="button-balanced icon ion-ios-personadd smallsize"
+                                           ng-click="decide('Margin Optimizer','Change Supplier',menuitem, ingredient.ingredient_name)">
+                            &nbsp Change Supplier
+                        </ion-option-button>
+                    </ion-item>
+                </ion-list>
+            </div>
+        </ion-content>
+    </div>
+    <!--<script id="ingredient_supplier_modal.html" type="text/ng-template">-->
+    <!--<ion-modal-view style="width: 90%; height: 20%; top: 50%; left: 5%; right: 5%; bottom: 30%;">-->
+    <!--<ion-header align="center middle" class="bar app-theme-color app-theme-text">-->
+    <!--<div class="title" style="text-align:center;">{{receipeitemoptions.ingredient_name}} <span-->
+    <!--class="smaller"> ({{receipeitemoptions.ingredient_uom}})</span></div>-->
+    <!--<div class="button app-theme-color app-theme-text" ng-click="modal.hide()"><i-->
+    <!--class="icon ion-close"></i></div>-->
+    <!--</ion-header>-->
+    <!--<ion-content class="has-header">-->
+    <!--<div class="row">-->
+    <!--<div style=" margin-left: auto; margin-right: auto; display: block;" class="col-100">-->
+    <!--<marginoptimizersupplierlist suppliers="receipeitemoptions.suppliers"></marginoptimizersupplierlist>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</ion-content>-->
+    <!--</ion-modal-view>-->
+    <!--</script>-->
+</ion-view>

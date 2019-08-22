@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html data-ng-app="costbyte">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <meta http-equiv="Content-Security-Policy" content="default-src * gap://ready file: data:; style-src 'self' 'unsafe-inline' *; script-src 'self' 'unsafe-inline' 'unsafe-eval' *">
+
+    <link href="lib/angularjs-datepicker/src/css/angular-datepicker.css" rel="stylesheet" type="text/css" />
+    <link href="//code.ionicframework.com/nightly/css/ionic.css" rel="stylesheet">
+    <script src="//code.ionicframework.com/nightly/js/ionic.bundle.js"></script>
+    <script type="text/javascript" src="lib/angular-fixed-table-header/src/fixed-table-header.min.js"></script>
+    
+    <title>Pepr</title>
+
+    <!--***********************ionic/angularjs js ***************************-->
+    <script src="lib/ionic/js/ionic.bundle.min.js"></script>
+    <!-- ***********************ion-md-input***************************** -->
+    <!-- <script src="lib/ion-md-input/ion-md-input.js"></script> -->
+
+    <!--<link href="lib/chart-js/angular-chart.css" rel="stylesheet">-->
+    <!--<link href="lib/chart-js/angular-chart.css" rel="stylesheet">-->
+    <link href="lib/ionic-date-time-picker/ion-datetime-picker.min.css">
+
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> -->
+
+    <!--<link href="lib/ionic-one-filter-bar/ionic.filter.bar.min.css">-->
+    <!--<link href="lib/ionic-one-filter-bar/ionic.filter.bar.min.css">-->
+    <link href="lib/ion-floating-menu/dist/ion-floating-menu.css" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" href="lib/ionic-filter-bar/dist/ionic.filter.bar.css">
+    <script src="lib/ionic-filter-bar/dist/ionic.filter.bar.js"></script>
+
+    <!-- compiled css output -->
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/ionic.app.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/ion-md-input.css">
+
+    <!-- ************************************************** multi axis chart *************************************************** -->
+    <script type="text/javascript" src="application/canvasjs.min.js"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.1.4/Chart.min.js' ></script>
+
+
+    <!-- ************************************************** multi axis chart *************************************************** -->
+    <!-- <script src="https://unpkg.com/ag-grid@17.1.1/dist/ag-grid.min.js"></script> -->
+
+    <!--***********************datepicker js ***************************-->
+    <script src="lib/ionic-datepicker/dist/ionic-datepicker.bundle.min.js" type="text/javascript"></script>
+    <link rel="stylesheet" href="lib/ion-datetime-picker/release/ion-datetime-picker.min.css">
+    <script src="lib/ion-datetime-picker/release/ion-datetime-picker.min.js"></script>
+
+    <script src="lib/angularjs-datepicker/src/js/angular-datepicker.js"></script> 
+
+
+
+
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.1/jszip.js"></script>
+    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.1/xlsx.js"></script>
+    <script type="text/javascript" src="https://fastcdn.org/FileSaver.js/1.1.20151003/FileSaver.js"></script>
+
+    <!--***********************chartjs lib ***********************************-->
+    <!--<script src="lib/chart-js/Chart.js" type="text/javascript"></script>-->
+    <script src="lib/chart.js/dist/Chart.min.js" type="text/javascript"></script>
+    <!--<script src="lib/chart-js/angular-chart.js" type="text/javascript"></script>-->
+    <script src="lib/angular-chart.js/dist/angular-chart.min.js" type="text/javascript"></script>
+
+    <!-- ****************************PouchDb*********************************** -->
+    <script src="lib/pouchdb/dist/pouchdb.min.js"></script>
+
+    <!-- ****************************Angular touch*********************************** -->
+    <script src="lib/angular-touch/angular-touch.js"></script>
+
+    <!-- cordova script (this will be a 404 during development) -->
+    <script src="lib/ngCordova/dist/ng-cordova.min.js"></script>
+    <script src="cordova.js"></script>
+
+    <script src="lib/lodash/dist/lodash.min.js"></script>
+
+    <!-- ionic-modal -->
+    <!-- <script src="lib/ionic-modal-select/dist/ionic-modal-select.js"></script> -->
+    <!-- <script src="custom/ionic-modal-select/dist/ionic-modal-select.js"></script> -->
+    <script src="js/ionic-modal-select.min.js"></script>
+
+
+
+    <!-- float buttons -->
+    <script src="lib/ion-floating-menu/dist/ion-floating-menu.js" type="text/javascript"></script>
+
+    <!-- moment -->
+    <script src="lib/moment/min/moment.min.js"></script>
+    <script src="lib/angular-moment/angular-moment.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.js"></script>
+    <!-- <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script src="https://code.highcharts.com/stock/highstock.js"></script>
+<script src="https://code.highcharts.com/stock/highstock.js"></script> -->
+
+    <!-- Load c3.css -->
+    <link href="lib/c3/c3.css" rel="stylesheet" type="text/css">
+
+    <!-- Load d3.js and c3.js -->
+    <script src="lib/d3/d3.min.js" charset="utf-8"></script>
+    <script src="lib/c3/c3.min.js"></script>
+
+    <!-- async -->
+    <script src="lib/async/dist/async.min.js"></script>
+
+
+    <!-- ngMessages -->
+    <script src="lib/angular-messages/angular-messages.min.js"></script>
+    <!-- <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.6/angular-messages.min.js"></script> -->
+
+
+    <!-- credit card -->
+
+    <!-- <script src="https://js.stripe.com/v2/"></script> -->
+    <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+
+    <script src="lib/angular-stripe/release/angular-stripe.js"></script>
+
+
+    <!-- Application app and routing files-->
+    <script src="application/app.js"></script>
+    <script src="application/routing.js"></script>
+
+    <!--******************************Controllers******************************-->
+    <!--Core-->
+    <!--AppMenu-->
+    <script src="application/core/app-menu/controller/AppMenuCtrl.js" type="text/javascript"></script>
+
+    <!--Login-->
+    <script src="application/login/controller/LoginCtrl.js" type="text/javascript"></script>
+    <!--forgotPw-->
+    <script src="application/login/controller/forgotPwCtrl.js" type="text/javascript"></script>
+    <!--operations-->
+    <script src="application/operations/controller/OperationsCtrl.js" type="text/javascript"></script>
+    <!-- suuport tools -->
+    <script src="application/supportTools/Reports/controller/reportCtrl.js" type="text/javascript"></script>
+    <script src="application/supportTools/week-price-change/controllers/weekPriceChange.js" type="text/javascript"></script>
+    <script src="application/supportTools/services/support-tool-service.js" type="text/javascript"></script>
+    <script src="application/supportTools/invoice-entry/controllers/invoiceEntry.js" type="text/javascript"></script>
+    <script src="application/supportTools/invoice-tabs.js" type="text/javascript"></script>
+    <script src="application/supportTools/directives/invoice-list-item/invoice-list-item-drct.js"></script>
+    <script src="application/supportTools/directives/invoice-list-submit-item/invoice-list-submit-item-drct.js"></script>
+    <!--Health Tracker-->
+    <script src="application/health-tracker/controller/HealthTrackerCtrl.js" type="text/javascript"></script>
+    <script src="application/health-tracker/controller/healthTrackerTabCtrl.js" type="text/javascript"></script>
+    <script src="application/health-tracker/controller/HealthTrackerDetailCtrl.js" type="text/javascript"></script>
+
+    <!--P & L Charts-->
+    <script src="application/pAndL-charts/js/pandlChartsService.js" type="text/javascript"></script>
+    <script src="application/pAndL-charts/js/pandlTabsCtrl.js" type="text/javascript"></script>
+    <script src="application/pAndL-charts/pandl_tab_directive/pandlTabDirective.js" type="text/javascript"></script>
+
+    <!--costing optimizer-->
+    <!--<script src="application/costing-optimizer/js/controllers.js" type="text/javascript"></script>-->
+    <!--<script src="application/costing-optimizer/js/services.js" type="text/javascript"></script>-->
+    <!--<script src="application/costing-optimizer/js/directives.js" type="text/javascript"></script>-->
+    <!--<script src="application/costing-optimizer/js/filters.js" type="text/javascript"></script>-->
+    <!--<script src="application/costing-optimizer/js/MarginOptimizerCtrl.js" type="text/javascript"></script>-->
+    <!--<script src="application/costing-optimizer/js/MarginOptimizerService.js" type="text/javascript"></script>-->
+    <!--<script src="application/costing-optimizer/js/MarginOptimizerItemDirective.js" type="text/javascript"></script>-->
+
+
+    <script src="application/margin-optimizer/viewControllers/MarginOptimizerServiceOne.js" type="text/javascript"></script>
+    <script src="application/margin-optimizer/directives/menuSelector/MarginOptimizerMenuSelectorDirective.js" type="text/javascript"></script>
+    <script src="application/margin-optimizer/directives/tab/MarginOptimizerTabDirective.js" type="text/javascript"></script>
+    <script src="application/margin-optimizer/directives/section/MarginOptimizerSectionDirective.js" type="text/javascript"></script>
+    <script src="application/margin-optimizer/directives/menuItem/menuItemDirective.js" type="text/javascript"></script>
+    <script src="application/margin-optimizer/directives/menuItem/menuItemModDirective.js" type="text/javascript"></script>
+    <script src="application/margin-optimizer/directives/ingredient/ingredientItemsDirective.js" type="text/javascript"></script>
+
+    <script src="application/margin-optimizer/viewControllers/MarginOptimizerTabsCtrl.js" type="text/javascript"></script>
+    <script src="application/margin-optimizer/viewControllers/menuItemScreenController.js" type="text/javascript"></script>
+    <script src="application/margin-optimizer/viewControllers/sectionScreenController.js" type="text/javascript"></script>
+            <!-- configOptimizerCtrl -->
+    <script src="application/margin-optimizer/directives/menuItem/config-optimizer.js" type="text/javascript"></script>
+    <script src="application/menu-engineering/directives/menuItem/config-optimizer.js" type="text/javascript"></script>
+    <script src="application/menu-engineering/directives/filterbuttonbarmenueng.js" type="text/javascript"></script>
+    <script src="application/menu-engineering/directives/menuEngInfoCtrl.js" type="text/javascript"></script>
+
+    <script src="application/menu-engineering/directives/menuItem/conversionFactorCtrl.js" type="text/javascript"></script>
+    <script src="application/core/shared-components/common/directive/tasksFloatButton.js" type="text/javascript"></script>
+
+    <!--Menu Engineering-->
+    <script src="application/menu-engineering/viewControllers/MenuEngineeringServiceOne.js" type="text/javascript"></script>
+    <script src="application/menu-engineering/directives/menuSelector/MenuEngineeringMenuSelectorDirective.js" type="text/javascript"></script>
+    <script src="application/menu-engineering/directives/tab/MenuEngineeringTabDirective.js" type="text/javascript"></script>
+    <script src="application/menu-engineering/directives/section/MenuEngineeringSectionDirective.js" type="text/javascript"></script>
+    <script src="application/menu-engineering/directives/menuItem/menuItemDirective.js" type="text/javascript"></script>
+    <!--<script src="application/menu-engineering/directives/menuItem/menuItemModDirective.js" type="text/javascript"></script>-->
+    <script src="application/menu-engineering/directives/ingredient/ingredientItemsDirective.js" type="text/javascript"></script>
+
+    <script src="application/menu-engineering/viewControllers/MenuEngineeringTabsCtrl.js" type="text/javascript"></script>
+    <script src="application/menu-engineering/viewControllers/menuItemScreenController.js" type="text/javascript"></script>
+    <script src="application/menu-engineering/viewControllers/sectionScreenController.js" type="text/javascript"></script>
+
+
+    <!--Settings Manager-->
+    <script src="application/settings-manager/landing%20view-view/settingsservice.js" type="text/javascript"></script>
+    <script src="application/settings-manager/landing%20view-view/landingctrl.js" type="text/javascript"></script>
+
+    <script src="application/settings-manager/labor-settings/laborsettingsctrl.js" type="text/javascript"></script>
+    <script src="application/settings-manager/labor-settings/paymanagerservice.js" type="text/javascript"></script>
+    <script src="application/settings-manager/labor-settings/paymanagerctrl.js" type="text/javascript"></script>
+    <script src="application/settings-manager/labor-settings/payhistoryctrl.js" type="text/javascript"></script>
+
+    <script src="application/settings-manager/user-settings/usersettingsctrl.js" type="text/javascript"></script>
+    <script src="application/settings-manager/user-settings/usermanagerservice.js" type="text/javascript"></script>
+    <script src="application/settings-manager/user-settings/userdetailsctrl.js" type="text/javascript"></script>
+
+    <!-- payment -->
+    <script src="application/settings-manager/payment-settings/paymentService.js" type="text/javascript"></script>
+    <script src="application/settings-manager/payment-settings/payment.js" type="text/javascript"></script>
+
+    <!-- switch business -->
+    <script src="application/settings-manager/business-settings/businessSettingsCtrl.js" type="text/javascript"></script>
+
+
+    <!--MenuPerformance optimizer-->
+    <script src="application/menuperformance-optimizer/js/MenuPerformanceOptimizerCtrl.js" type="text/javascript"></script>
+    <script src="application/menuperformance-optimizer/js/MenuPerformanceOptimizerService.js" type="text/javascript"></script>
+    <script src="application/menuperformance-optimizer/js/MenuPerformanceOptimizerItemDirective.js" type="text/javascript"></script>
+
+    <!--task-manager-->
+    <script src="application/task-manager/js/controllers.js" type="text/javascript"></script>
+    <script src="application/task-manager/js/SummaryCtrl.js" type="text/javascript"></script>
+    <script src="application/task-manager/js/OverviewCtrl.js" type="text/javascript"></script>
+    <script src="application/task-manager/js/top10Ctrl.js" type="text/javascript"></script>
+    <script src="application/task-manager/js/services.js" type="text/javascript"></script>
+    <script src="application/task-manager/js/dashboardTaskCtrl.js" type="text/javascript"></script>
+    <script src="application/task-manager/js/dashboardTaskService.js" type="text/javascript"></script>
+    <script src="application/task-manager/js/tasksItemDirective.js" type="text/javascript"></script>
+    <script src="application/task-manager/js/tasksItemListsDirective.js" type="text/javascript"></script>
+    <script src="application/task-manager/js/summaryCardDirective.js" type="text/javascript"></script>
+    <script src="application/task-manager/js/subSummaryCardDirective.js" type="text/javascript"></script>
+    <script src="application/task-manager/js/dollarDifference.js" type="text/javascript"></script>
+    <script src="application/task-manager/js/shortPercent.js" type="text/javascript"></script>
+
+    <!--<script src="application/task-manager/js/anyDetailViewDirective.js" type="text/javascript"></script>-->
+    <script src="application/task-manager/js/tasksItemDetailDirective.js" type="text/javascript"></script>
+    <script src="application/task-manager/js/tasksDetailViewService.js" type="text/javascript"></script>
+    <script src="application/core/shared-components/common/directive/angularBindHtmlCompileDirective.js" type="text/javascript"></script>
+
+    <!--Labor Optimizer-->
+    <!-- <script src="application/labor-optimizer/laborOptimizerCtrl.js" type="text/javascript"></script> -->
+    <script src="application/labor-optimizer/laborOptimizerService.js" type="text/javascript"></script>
+    <script src="application/labor-optimizer/laborSummaryTabsCtrl.js" type="text/javascript"></script>
+    <script src="application/labor-optimizer/laborSummaryTab/LaborSummaryTabDirective.js" type="text/javascript"></script>
+
+    <!--Pl Tracker-->
+    <script src="application/pl-tracker/controller/PlTrackerCtrl.js" type="text/javascript"></script>
+    <script src="application/pl-tracker/service/PlTrackerService.js" type="text/javascript"></script>
+    <script src="application/pl-tracker/directives/pl-category/pl-category-drct.js" type="text/javascript"></script>
+    <script src="application/pl-tracker/directives/pl-item/pl-item-drct.js" type="text/javascript"></script>
+    <script src="application/pl-tracker/directives/map-p&l/map-pnl.js" type="text/javascript"></script>
+    <script src="application/pl-tracker/directives/map-p&l/to-be-mapped-pnl.js" type="text/javascript"></script>
+    <script src="application/pl-tracker/directives/map-p&l/mapped-pnl.js" type="text/javascript"></script>
+    <script src="application/pl-tracker/directives/excel-export/excel-export.js" type="text/javascript"></script>
+    <!--Wastage-->
+    <script src="application/wastage/controller/WastageCtrl.js" type="text/javascript"></script>
+    <script src="application/wastage/service/WastageService.js" type="text/javascript"></script>
+    <script src="application/wastage/service/WastageDetailService.js" type="text/javascript"></script>
+    <script src="application/wastage/controller/WastageDetailCtrl.js" type="text/javascript"></script>
+    <script src="application/wastage/controller/WastageLiquorDetailCtrl.js" type="text/javascript"></script>
+
+    <!--DocumentUpload-->
+    <script src="application/invoice-tracking/controllers/documentSelectionCtrl.js" type="text/javascript"></script>
+    <script src="application/invoice-tracking/controllers/summaryInvoiceCtrl.js" type="text/javascript"></script>
+    <script src="application/invoice-tracking/controllers/trackingInvoiceCtrl.js" type="text/javascript"></script>
+    <script src="application/invoice-tracking/controllers/uploadInvoiceCtrl.js" type="text/javascript"></script>
+    <script src="application/invoice-tracking/controllers/invoiceDetailCtrl.js" type="text/javascript"></script>
+    <script src="application/invoice-tracking/services/documentSelectionService.js" type="text/javascript"></script>
+    <script src="application/invoice-tracking/directives/invoiceListDirective.js" type="text/javascript"></script>
+    <script src="application/invoice-tracking/directives/invoiceFilterDirective.js" type="text/javascript"></script>
+    <script src="application/invoice-tracking/controllers/invoiceConfigCtrl.js" type="text/javascript"></script>
+    <script src="application/invoice-tracking/controllers/configConfirmationCtrl.js" type="text/javascript"></script>
+
+
+    <!--Settings-->
+    <script src="application/settings/controller/SettingsCtrl.js" type="text/javascript"></script>
+    <script src="application/settings/service/SettingsService.js" type="text/javascript"></script>
+    <script src="application/settings/controller/fixedCostsCtrl.js" type="text/javascript"></script>
+    <script src="application/settings/controller/fixedCostDetailCtrl.js" type="text/javascript"></script>
+    <script src="application/settings/service/FixedCostService.js" type="text/javascript"></script>
+    <script src="application/settings/controller/laborCostsCtrl.js" type="text/javascript"></script>
+    <script src="application/settings/controller/laborCostsDetailCtrl.js" type="text/javascript"></script>
+    <script src="application/settings/service/LaborCostsService.js" type="text/javascript"></script>
+
+    <!--Date Picker Refresh-->
+    <script src="application/core/shared-components/date-picker/controller/DatePickerRefreshCtrl.js" type="text/javascript"></script>
+
+
+    <!--Purchase Optimizer-->
+    <!--<script src="application/purchase-optimizer/controller/PurchaseOptimizerCtrl.js" type="text/javascript"></script>-->
+    <!--<script src="application/purchase-optimizer/service/PurchaseOptimizerService.js" type="text/javascript"></script>-->
+    <script src="application/purchase-optimizer/js/PurchaseOptimizerCtrl.js" type="text/javascript"></script>
+    <script src="application/purchase-optimizer/js/PurchaseOptimizerItemDirective.js" type="text/javascript"></script>
+    <script src="application/purchase-optimizer/js/PurchaseOptimizerService.js" type="text/javascript"></script>
+
+    <!-- purchase orders -->
+    <script src="application/purchase-orders/js/PurchaseOrdersCtrl.js" type="text/javascript"></script>
+
+    <!-- Inventory Confi Manager -->
+    <script src="application/org-dashboard/OrgDashboardManagerCtrl.js" type="text/javascript"></script>
+    <script src="application/inventory-tool/inventory-tool.js" type="text/javascript"></script>
+    <!-- price/recipe cost -->
+    <script src="application/recipeCostTracking/recipeCostTrackingCtrl.js" type="text/javascript"></script>
+
+    <!--Promotion Optimizer-->
+    <script src="application/promotion-optimizer/js/PromotionOptimizerCtrl.js" type="text/javascript"></script>
+    <script src="application/promotion-optimizer/js/PromotionOptimizerService.js" type="text/javascript"></script>
+    <script src="application/promotion-optimizer/js/PromotionOptimizerItemDirective.js" type="text/javascript"></script>
+
+    <script src="application/about-us/aboutusController.js"></script>
+    <script src="application/inventory-management/services/date-format-svc.js"></script>
+    <script src="application/inventory-management/inventoryHomeCtrl.js"></script>
+    <script src="application/inventory-management/services/inventory-home-svc.js"></script>
+    <script src="application/inventory-management/directives/inventory-list-item/inventory-list-item-drct.js"></script>
+    <script src="application/inventory-management/directives/inventory-list-item/invSupDetailsCtrl.js"></script>
+    <script src="application/inventory-management/directives/inventory-list-submit-item/inventory-list-submit-item-drct.js"></script>
+    <script src="application/inventory-management/directives/product-category/product-category-drct.js"></script>
+    <script src="application/inventory-management/directives/product-Item/product-item-drct.js"></script>
+    <script src="application/inventory-management/inventoryComposeCtrl.js"></script>
+    <script src="application/inventory-management/inventoryItemsCtrl.js"></script>
+
+    <script src="application/inventory-management/services/inventory-items-svc.js"></script>
+    <script src="application/inventory-management/inventoryViewCtrl.js"></script>
+    <script src="application/inventory-management/directives/config-modifier/inventory-config-modifier-ctrl.js"></script>
+    <script src="application/inventory-management/directives/add-quantity/add-quantity-ctrl.js"></script>
+    <script src="application/inventory-management/directives/change-price/change-price-ctrl.js"></script>
+    <script src="application/inventory-management/directives/change-units/change-units-ctrl.js"></script>
+    <script src="application/inventory-management/directives/slideBoxSelector/slideBoxSelectorDirective.js"></script>
+    <script src="application/inventory-management/directives/map-inventory/map-inventory.js"></script>
+    <script src="application/inventory-management/map-inventory.js"></script>
+    <script src="application/inventory-management/directives/config-page/config-page.js"></script>
+    <script src="application/inventory-management/directives/map-inventory/to-be-mapped.js"></script>
+    <script src="application/inventory-management/directives/map-inventory/mapped.js"></script>
+    <script src="application/inventory-management/inactive-items.js"></script>
+    <script src="application/inventory-management/inventory-ctrl.js"></script>
+    <script src="application/inventory-management/services/connectivity-monitor-svc.js"></script>
+
+    <!--New inventory Manager-->
+    <!-- <script src="application/inventory-management-new/services/date-format-svc.js"></script>
+    <script src="application/inventory-management-new/inventoryHomeCtrl.js"></script>
+    <script src="application/inventory-management-new/services/inventory-home-svc.js"></script>
+    <script src="application/inventory-management-new/directives/inventory-list-item/inventory-list-item-drct.js"></script>
+    <script src="application/inventory-management-new/directives/inventory-list-submit-item/inventory-list-submit-item-drct.js"></script>
+    <script src="application/inventory-management-new/directives/product-category/product-category-drct.js"></script>
+    <script src="application/inventory-management-new/directives/product-Item/product-item-drct.js"></script>
+    <script src="application/inventory-management-new/inventoryComposeCtrl.js"></script>
+    <script src="application/inventory-management-new/inventoryItemsCtrl.js"></script>
+
+    <script src="application/inventory-management-new/services/inventory-items-svc.js"></script>
+    <script src="application/inventory-management-new/inventoryViewCtrl.js"></script>
+    <script src="application/inventory-management-new/directives/config-modifier/inventory-config-modifier-ctrl.js"></script>
+    <script src="application/inventory-management-new/directives/add-quantity/add-quantity-ctrl.js"></script>
+    <script src="application/inventory-management-new/directives/change-price/change-price-ctrl.js"></script>
+    <script src="application/inventory-management-new/directives/change-units/change-units-ctrl.js"></script>
+    <script src="application/inventory-management-new/directives/slideBoxSelector/slideBoxSelectorDirective.js"></script>
+    <script src="application/inventory-management-new/directives/map-inventory/map-inventory.js"></script>
+    <script src="application/inventory-management-new/map-inventory.js"></script>
+    <script src="application/inventory-management-new/directives/config-page/config-page.js"></script>
+    <script src="application/inventory-management-new/directives/map-inventory/to-be-mapped.js"></script>
+    <script src="application/inventory-management-new/directives/map-inventory/mapped.js"></script>
+    <script src="application/inventory-management-new/inactive-items.js"></script>
+    <script src="application/inventory-management-new/inventory-ctrl.js"></script>
+    <script src="application/inventory-management-new/services/connectivity-monitor-svc.js"></script>
+    <script src="application/inventory-management-new/directives/pandl-map-config.js" type="text/javascript"></script> -->
+  
+
+    <!-- ordering -->
+
+    <script src="application/ordering/services/date-format-svc.js"></script>
+    <script src="application/ordering/orderingHomeCtrl.js"></script>
+    <script src="application/ordering/services/ordering-home-svc.js"></script>
+    <script src="application/ordering/directives/ordering-list-item/ordering-list-item-drct.js"></script>
+    <script src="application/ordering/directives/ordering-list-submit-item/ordering-list-submit-item-drct.js"></script>
+    <script src="application/ordering/directives/ordering-product-category/ordering-product-category-drct.js"></script>
+    <script src="application/ordering/directives/ordering-product-Item/ordering-product-item-drct.js"></script>
+    <script src="application/ordering/orderingComposeCtrl.js"></script>
+    <script src="application/ordering/services/ordering-items-svc.js"></script>
+    <script src="application/ordering/orderingViewCtrl.js"></script>
+    <script src="application/ordering/cartViewCtrl.js"></script>
+    <script src="application/ordering/draftTabs.js"></script>
+
+
+    <!--Error Reporting-->
+    <script src="application/error-reporting/appModalService.js"></script>
+    <script src="application/error-reporting/errorReportingService.js"></script>
+    <script src="application/error-reporting/errorReportModalController.js"></script>
+    <!--<script src="application/error-reporting/errorReportingConfirmationDirective.js"></script>-->
+    <!--<script src="application/error-reporting/errorReportingConfirmationDirective.js"></script>-->
+    <!--<script src="application/error-reporting/errorReportingLongPressDirective.js"></script>-->
+    <script src="application/inventory-management/directives/pandl-map-config.js" type="text/javascript"></script>
+
+
+    <!--Task Creation-->
+    <script src="application/task-creation/taskCreationService.js"></script>
+    <script src="application/task-creation/taskCreationModalController.js"></script>
+    <script src="application/task-creation/taskCreationPopupDirective.js"></script>
+    <!--<script src="application/error-reporting/errorReportingConfirmationDirective.js"></script>-->
+    <!--<script src="application/error-reporting/errorReportingConfirmationDirective.js"></script>-->
+    <!--<script src="application/error-reporting/errorReportingLongPressDirective.js"></script>-->
+
+
+    <!-- health tracker tabs -->
+    <!-- <script src="application/health-tracker/controller/healthTrackerTabCtrl.js" type="text/javascript"></script> -->
+
+    <!-- payment -->
+    <!-- <script src="application/payment/payment.js" type="text/javascript"></script> -->
+
+
+    <!-- utils module -->
+    <script src="application/core/shared-components/common/service/utils.js" type="text/javascript"></script>
+
+
+    <!--******************************DIRECTIVES*****************************.js****-->
+    <script src="application/core/shared-components/isb-line-chart/directive/IsbLineChartDir.js" type="text/javascript"></script>
+    <script src="application/core/shared-components/isb-pie-chart/directive/IsbPieChartDir.js" type="text/javascript"></script>
+
+
+    <!--******************************Services *********************************-->
+
+    <!--Core-->
+    <script src="application/core/shared-components/common/service/CommonService.js" type="text/javascript"></script>
+    <script src="application/core/shared-components/common/service/inventoryService.js" type="text/javascript"></script>
+    <script src="application/core/shared-components/common/service/logger.service.js" type="text/javascript"></script>
+    <script src="application/core/shared-components/common/service/orderingService.js" type="text/javascript"></script>
+    <script src="application/core/shared-components/common/service/menuPerformanceService.js" type="text/javascript"></script>
+
+    <!--Health Tracker-->
+    <script src="application/health-tracker/service/HealthTrackerService.js" type="text/javascript"></script>
+    <script src="application/health-tracker/service/HealthTrackerDetailService.js" type="text/javascript"></script>
+
+
+    <!--******************************Constants******************************-->
+    <script src="application/core/shared-components/common/constants/CommonConstants.js" type="text/javascript"></script>
+    <script src="application/core/shared-components/common/constants/key.js" type="text/javascript"></script>
+
+    <!--******************************directives******************************-->
+    <script src="application/core/shared-components/common/directive/filterButtonBarDirective.js" type="text/javascript"></script>
+    <!--<script src="application/core/shared-components/common/directive/checklist-model.js" type="text/javascript"></script>-->
+    <script src="application/core/shared-components/common/directive/iconQuantityDirective.js" type="text/javascript"></script>
+    <script src="application/core/shared-components/common/directive/infoButton.js" type="text/javascript"></script>
+    <script src="application/core/shared-components/common/directive/busyspinnerDirective.js" type="text/javascript"></script>
+    <script src="application/core/shared-components/common/directive/backbuttonbar.js" type="text/javascript"></script>
+    <script src="application/core/shared-components/common/directive/backbuttonwindow.js" type="text/javascript"></script>
+    <script src="application/core/shared-components/common/directive/backbuttonbarAlt.js" type="text/javascript"></script>
+    <script src="application/core/shared-components/common/directive/focusSync.js" type="text/javascript"></script>
+
+    <!--******************************filters******************************-->
+    <script src="application/core/shared-components/common/filter/makePositive.js" type="text/javascript"></script>
+    <script src="application/core/shared-components/common/filter/titleCase.js" type="text/javascript"></script>
+    <script src="application/core/shared-components/common/filter/convertDateToText.js" type="text/javascript"></script>
+    <!-- Inventory list Manager -->
+    <script src="application/inventory-config/InventoryListManagerCtrl.js" type="text/javascript"></script>
+
+    <!-- ---------------------------------------------- mod manager --------------------------------------------- -->
+    <script src="application/mod-manager/controllers/modmanager.js" type="text/javascript"></script>
+    <script src="application/mod-manager/directives/ingredient-content.js" type="text/javascript"></script>
+    <script src="application/mod-manager/controllers/mod-detail.js" type="text/javascript"></script>
+    <!-- -------------------------------------------------------------------------------------------------------- -->
+    <!-- ---------------------------------------------- prep manager --------------------------------------------- -->
+    <script src="application/prep-manager/controllers/prepmanager.js" type="text/javascript"></script>
+    <script src="application/prep-manager/directives/ingredient-content.js" type="text/javascript"></script>
+    <script src="application/prep-manager/controllers/prep-detail.js" type="text/javascript"></script>
+    <!-- -------------------------------------------------------------------------------------------------------- -->
+
+</head>
+<body>
+<ion-nav-view cache-view="false" style="cursor: default;"></ion-nav-view>
+</body>
+</html>

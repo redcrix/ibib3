@@ -1,0 +1,167 @@
+<ion-view view-title="{{ modItems.modName | titleCase }}" ng-controller="menuItemScreenCtrl" ng-init="onMenuItemDetailInit()">
+<ion-content class="has-header" ng-class="isEditMode?'has-one-footer' :''">
+
+    <!-- <ion-list> -->
+        <!-- <marginoptimizermenuitem item="item" detaillink="false" ifeven="true" getdataoninit="false"
+        showdetails="true"></marginoptimizermenuitem> -->
+        <!-- <ion-item class="no-padding">
+            <div class="row smaller paddingzero">
+                <div class="col col-50 no-right-padding">
+                  <div class="row no-right-padding item-text-wrap justbolder">{{(item.menuItemName | titleCase) }}</div>
+                  <div class="row">
+                    <div class="col">
+                      <iconquantity iconname="priceicon" iconsize="'large'" quantity="iconedPrice" quantitytext="'PRICE'" showtext="true">
+                      </iconquantity>
+                    </div>
+                    <div class="col">
+                      <iconquantity iconname="quantityicon" iconsize="'large'" quantity="iconedQuantity" quantitytext="'QUANTITY'" showtext="true">
+                      </iconquantity>
+                    </div>
+                  </div>
+
+                </div>
+                <div class="col">
+                  <div class="row">
+                    <div class="col col-10"><i class="icon larger {{ ::getIcon('sales') }}"></i></div>
+                    <div class="col col-50">
+                      <progress style="margin-left:6px; margin-top: 0px; margin-bottom: 0px;" class="thresholdmeter" max="{{::item.maxSales}}" value={{::item.dollarSales}}></progress>
+                    </div>
+                    <div class="col">{{ ::(item.dollarSales | currency:'$':0) }}</div>
+                  </div>
+                  <div ng-if="item.costPercent*100>0" class="row">
+                    <div class="col col-10"><i class="icon larger {{ ::getIcon('cost') }}"></i></div>
+                    <div class="col col-50">
+                      <progress style="margin-left:6px; margin-top: 0px; margin-bottom: 0px;" class="thresholdmeter" ng-class="(item.costPercent*100)>item.menuItemThresholdCost? 'redflag':'greenflag'" max="1" value="{{ item.costPercent }}"></progress>
+                    </div>
+                    <div class="col">{{((item.costPercent*100) | number:0)}}%
+                    </div>
+                  </div>
+                  <div ng-if="item.costPercent*100<=0" class="row small-info">
+                    <div class="col">recipe unavailable
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="col col-5 error-reporting-center" ng-click="showReportPopover($event)" style="float: right;">
+                  <i class="icon larger ion-android-more-vertical"></i>
+                </div>
+
+
+            </div>
+            <ion-option-button class="button-balanced icon ion-ios-arrow-forward mediumsize" ng-click="decide(item)"> &nbsp;Add Task </ion-option-button>
+        </ion-item>
+    </ion-list> -->
+    <ion-list>               
+    <div class="card"  style="margin-top: 5%;">
+      <ion-item class=" white-back-ground invoice-tacking-padding">
+          <div class="row">
+              <div class="col col-33 item-text-wrap" style="text-align:left">
+                  <span class="invoice-data-first font-dark"> {{modItems.modName | titleCase}} </span>
+                  <!-- <span class="invoice-data">{{item.invoice_id}}</span> -->
+              </div>
+              <div class="col col-60" style="text-align:right">
+                  <span class="invoice-data"><i class="icon larger ion-cash"></i> Cost: ${{modItems.modCost | number : 2}}</span>
+              </div>
+          </div>                          
+      </ion-item>
+    </div>
+  </ion-list>
+    <!--************** <marginoptimizeringredientlist ingredients="ingredients"></marginoptimizeringredientlist> ************-->
+    <busyspinner spinnerhide="gotList" class="purchase-track-spinner"></busyspinner>
+    <div class="card" style="margin: 5px 10px;" ng-if="ingList">
+        <span ng-if="isRecipeZero()">
+            <div style="padding-right: 10px" class="item item-balanced no-padding ">
+                <div class="row">
+                    <div class="col col-10 item-icon-left">
+                        <i style="color: red;" class="icon ion-alert-circled app-back-ground"></i>
+                    </div>
+                    <div class="col">Recipe information unavailable</div>
+                </div>
+            </div>
+        </span>
+        <span ng-if="!isRecipeZero()">
+            <div style="padding-right: 10px" class="item item-divider item-balanced no-padding">
+                <div class="row">
+                    <div class="col col-40 item-text-wrap">Cost</div>
+                    <div class="col col-30"></div>
+                    <div style="padding-left: 9px" class="col col-20">{{ (totalingredientscost() | currency)}}</div>           
+                </div>
+            </div>
+            <ion-list class="item paddingzero">
+                <span ng-repeat="ingredient in ingList | orderBy:'-ingredientCost'">
+                    <!--************ <marginoptimizeringredientitem ingredient="ingredient" ifeven="$even"></marginoptimizeringredientitem> *******-->
+                    <div class="card" style="margin: 1px 1px;">
+                        <ion-item ng-click="getModdata(ingredient)" class="no-padding" ng-class="$even ? 'app-back-ground':'white-back-ground'" ng-if="ingredient.ingredientName">
+
+                            <div ng-class="$even? 'app-back-ground':'white-back-ground'" class="row smaller no-vertical-padding">
+                                <i ng-class="!isGroupShown(ingredient.moddatagroup) &&  ingredient.ingredientType =='PREP'? 'ion-plus padding' :  ingredient.ingredientType !='PREP' ? 'padding pad-left-20' :'ion-minus padding'"
+                                   class="col-center">&nbsp</i>
+                                <div class="col col-40 col-center item-text-wrap no-horizontal-padding">{{::(ingredient.ingredientName |
+                                    titleCase) }}
+                                </div>
+                                <div class="col col-35 col-center no-horizontal-padding"
+                                     ng-if="ingredient.ingredientQuantity>0 && !editMode">
+                                    <span ng-if="!isGroupShown(ingredient.moddatagroup)">
+                                        <!-- <input type="text" ng-model="ingredient.ingredientQuantity" style="text-indent:5px;width: 20%;" ng-disabled="$root.locationAccepted" style="height: 20px;" ng-class=" $root.locationAccepted ? 'unit-config-price-disabled' : 'unit-config-price-enabled'"> -->
+                                        <div class="col">{{ ::(ingredient.ingredientQuantity) }}</div>
+                                        <span style="font-size: x-small; opacity: 0.5;">{{ ::ingredient.ingredientUnit }}</span>
+                                    </span>
+                                    <span ng-if="isGroupShown(ingredient.moddatagroup)">
+                                        <span style="text-indent:5px; font-weight: 600;">{{ ::ingredient.ingredientYieldQuantity }}</span>
+                                        <span style="font-size: x-small; opacity: 0.5;">{{ ::ingredient.ingredientYieldQuantityMeasurementId }}</span>
+                                      <div style="font-size: x-small; opacity: 0.5;">Yield Quantity</div>
+                                    </span>
+                                </div>
+                                <div class="col col-25  col-center no-horizontal-padding" ng-if="editMode">
+                                    <div class="row no-vertical-padding no-horizontal-padding">
+                                        <div class="col col-75  col-center no-vertical-padding no-horizontal-padding">
+                                            <!-- <input type="number" placeholder="qty" ng-change="validateQuantity()"
+                                                   ng-class="ingredientEdit.validationPassedHighlight"
+                                                   ng-model="ingredientEdit.stageIngredientQuantity" ng-model-options="{debounce: 500}"
+                                                   class="recipe-edit-input no-vertical-padding no-horizontal-padding"/> -->
+                                                   <div class="col">{{ ::(ingredient.stageIngredientQuantity) }}</div>
+                                        </div>
+                                        <div class="col col-25  col-center no-vertical-padding no-horizontal-padding" ng-if="editMode"
+                                             on-tap="resetIngredientQuantity()">
+                                            <i class="icon x-large ion-reply success"></i>
+                                        </div>
+                                    </div>
+                                    <div style="font-size: x-small; opacity: 0.5;">{{ ::ingredient.ingredientUnit }}</div>
+                                </div>
+                                <div class="col col-20 col-center no-horizontal-padding">
+                                    <span ng-if="!isGroupShown(ingredient.moddatagroup)">{{ (ingredient.ingredientCost | currency) }}</span>
+                                    <span ng-if="isGroupShown(ingredient.moddatagroup)" style="font-weight: 600;">{{ (ingredient.moddatagroup.modDataTotal.ingredientCost | currency) }}</span>
+                                    <div ng-if="isGroupShown(ingredient.moddatagroup)" style="font-size: x-small; opacity: 0.5; font-weight: 500;">
+                                        Yield Cost
+                                    </div>
+                                </div>
+                                <div class="col col-5 col-center" ng-click="showReportPopover($event)">
+                                    <i class="icon larger ion-android-more-vertical"></i>
+                                </div>
+                                <ion-option-button class="button-balanced icon ion-ios-arrow-forward mediumsize" ng-click="decide(ingredient)"> &nbspAdd Task
+                                </ion-option-button>
+                            </div>
+                        </ion-item>
+                        <div class="list list-borderless" ng-if="ingredient.ingredientType =='PREP'" ng-class="isGroupShown(ingredient.moddatagroup) ? 'item item-text-wrap' : ''">
+                            <ion-item ng-if="isGroupShown(ingredient.moddatagroup)" style="padding: 6px;" class="item item-accordion no-vertical-padding" ng-repeat="mod in ingredient.moddatagroup.modData | orderBy:'-ingredientCost'">
+                                <div class="row smaller no-vertical-padding no-horizontal-padding" style="line-height: 1.5em;">
+                                    <div class="col col-50  col-center item-text-wrap no-horizontal-padding">{{::(mod.ingredientName |
+                                        titleCase) }}
+                                    </div>
+                                    <div class="col col-30 col-center no-horizontal-padding" ng-if="mod.ingredientQuantity>0">
+                                        <span style="text-indent:5px;">{{ mod.ingredientQuantity }}</span>
+                                        <span style="font-size: x-small; opacity: 0.5;">{{ ::mod.ingredientUnit }}</span>
+                                    </div>
+                                    <div class="col col-20 col-center no-horizontal-padding" style="padding-left: 18px;">{{
+                                        (mod.ingredientCost | currency) }}
+                                    </div>
+                                </div>
+                            </ion-item>
+                        </div>   
+                </span>
+            </ion-list>
+        </span>
+    </div>
+
+</ion-content>
+</ion-view>

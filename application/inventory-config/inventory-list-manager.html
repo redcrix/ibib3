@@ -1,0 +1,338 @@
+
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<script type="text/javascript" src="inv_data.json"></script>
+
+<!-- Web Inventory list Manager-->
+<style>
+@media (min-width: 680px){
+	.modal{
+		border-radius: 8px !important;
+		overflow:hidden !important;
+		z-index: 10000;
+	}
+}
+.add-inv-div-web{margin-bottom:0px !important;padding-top: 1% !important;}
+.web-select {
+	padding: 0px 10px;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	/* Some browsers will not display the caret when using calc, so we put the fallback first */
+	background: url("http://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/br_down.png") white no-repeat 98.5% !important; /* !important used for overriding all other customisations */
+	background: url("http://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/br_down.png") white no-repeat calc(100% - 10px) !important; /* Better placement regardless of input width */
+	border-radius: 8px;
+	height: 25px;
+	line-height: 25px;
+	border-top-style: inset;
+	border-top-width: 2px;
+	border-bottom-style: inset;
+	border-bottom-width: 2px;
+	border-left-style: inset;
+	border-left-width: 2px;
+	border-right-style: inset;
+	border-right-width: 2px;
+}
+input[type="text"].webInputSearch
+{
+	height: 25px;
+	font-size: 12px;
+	line-height:1.5;
+	border-radius: 8px;
+}
+input[type="number"].webInput
+{
+	height: 25px;
+	font-size: 12px;
+	line-height:1.5;
+	border-radius: 8px;
+	border-top-style: inset;
+	border-top-width: 2px;
+	border-bottom-style: inset;
+	border-bottom-width: 2px;
+	border-left-style: inset;
+	border-left-width: 2px;
+	border-right-style: inset;
+	border-right-width: 2px;
+}
+input[type="text"].webInput
+{
+	height: 25px;
+	font-size: 12px;
+	line-height:1.5;
+	border-radius: 8px;
+	border-top-style: inset;
+	border-top-width: 2px;
+	border-bottom-style: inset;
+	border-bottom-width: 2px;
+	border-left-style: inset;
+	border-left-width: 2px;
+	border-right-style: inset;
+	border-right-width: 2px;
+}
+.webColumn {
+	padding-right: 0px;
+}
+.rcorners {
+	border-radius: 8px;
+	border: 1px solid #ccc;
+	margin-bottom: 5px;
+	margin-right: 0px;
+}
+.rcornersBlue {
+	border-radius: 8px;
+	border: 1px solid #76a8e1;
+	margin-bottom: 3px;
+	margin-right: 0px;
+}
+.rcornersCol {
+	background-color:#ffe4e1;
+}
+.table-container{
+	height:auto;
+	overflow-y:scroll;
+}
+.btn-circle {
+	width: 24px;
+	height: 24px;
+	text-align: center;
+	padding: 2px 0;
+	font-size: 12px;
+	line-height: 1.428571429;
+	border-radius: 12px;
+}
+.btn-circle-small {
+	width: 16px;
+	height: 16px;
+	text-align: center;
+	padding: 2px 0;
+	font-size: 8px;
+	line-height: 1.428571429;
+	border-radius: 8px;
+}
+.ng-hide.ng-hide-animate{
+	display: none !important;
+}
+
+.category_drop_down ul[dnd-list] {
+	min-height: 42px;
+	padding-left: 0px;
+}
+
+.item-content{
+	{
+		width: 100% !important;
+
+	}
+
+</style>
+<ion-view title="Inventory List Manager" align-title="center" ng-init="InventoryListManagerCtrl.init()">
+	<ion-content>
+		<div style="height: 50px;"></div>
+		<form>
+			<div class="col-lg-4">
+				<label class="item item-input rcorners">
+					<input class ="webInputSearch" type="text" placeholder="Search"  ng-model="searchAll">
+					<i class="icon ion-search placeholder-icon" style="margin-right: 10px"></i>
+				</label>
+			</div>
+			<div class="col-lg-4"></div>
+			<div class="col-lg-4">
+				<label class="toggle toggle-balanced" style="top: 0px;">
+					<input type="checkbox" ng-model="adddeactive" ng-true-value="" ng-false-value="'active'"><!-- ng-change="showDeactive(adddeactive)"-->
+					<div class="track">
+						<div class="handle"></div>
+					</div>
+				</label>
+				<span style="vertical-align: top;">View deactivated inventory items</span>
+			</div>
+		</form>
+		<div class="container-fluid" scroll="false">
+			<div class="row">
+				<div class="col-lg-2">
+					<button type="button" ng-click="expandAll(allExpanded = !allExpanded)" class="btn btn-sm btn-warning">
+						<i class="glyphicon glyphicon-plus">
+						</i> Expand/Collapse All
+					</button>
+				</div>
+				<div class="col-lg-4"></div>
+				<div class="col-lg-2">
+					<button type="button" class="btn btn-sm btn-warning" ng-click="data.showDelete = false; data.showReorder = !data.showReorder" >
+						Reorder
+					</button>
+				</div>
+				<div class="col-lg-2">
+					<button type="button" ng-click="addInvItem()" class="btn btn-sm btn-warning">
+						<i class="glyphicon glyphicon-plus"></i> Add Inventory Item
+					</button>
+				</div>
+				<div class="col-lg-2">
+					<button type="button" ng-click="updateInvItem()" class="btn btn-sm btn-info">Save Changes</button>
+				</div>
+			</div>
+		</div>
+		<!-- Headers -->
+		<div class="container-fluid" scroll="false">
+			<div class="row" style="margin: 0px;padding: 0px;">
+				<div class="col-lg-10 webColumn">
+					<div class="row">
+						<div class="col small" style="-webkit-box-flex: 0;-webkit-flex: 0 0 6%;-moz-box-flex: 0;-moz-flex: 0 0 6%;-ms-flex: 0 0 6%;flex: 0 0 6%;max-width: 6%;padding: 0px;"></div>
+						<div class="col small" style="-webkit-box-flex: 0;-webkit-flex: 0 0 34%;-moz-box-flex: 0;-moz-flex: 0 0 34%;-ms-flex: 0 0 34%;flex: 0 0 34%;max-width: 34%;padding: 0px;">
+							<a href="" ng-click="">Item Name
+								<span ng-show="sortType == 'item_name' && !sortReverse" class="fa fa-caret-down"></span>
+								<span ng-show="sortType == 'item_name' && sortReverse" class="fa fa-caret-up"></span>
+							</a>
+						</div>
+						<div class="col small" style="-webkit-box-flex: 0;-webkit-flex: 0 0 9%;-moz-box-flex: 0;-moz-flex: 0 0 9%;-ms-flex: 0 0 9%;flex: 0 0 9%;max-width: 9%;padding: 0px;">
+							<a href="" ng-click="">
+								Units
+								<span ng-show="sortType == 'units' && !sortReverse" class="fa fa-caret-down"></span>
+								<span ng-show="sortType == 'units' && sortReverse" class="fa fa-caret-up"></span>
+							</a>
+						</div>
+						<div  class="col small" style="-webkit-box-flex: 0;-webkit-flex: 0 0 10%;-moz-box-flex: 0;-moz-flex: 0 0 10%;-ms-flex: 0 0 10%;flex: 0 0 10%;max-width: 10%;padding: 0px;">
+
+							<a href="" ng-click="">
+								Unit Price
+								<span ng-show="sortType == 'unit_price' && !sortReverse" class="fa fa-caret-down"></span>
+								<span ng-show="sortType == 'unit_price' && sortReverse" class="fa fa-caret-up"></span>
+							</a>
+						</div>
+						<div class="col small" style="-webkit-box-flex: 0;-webkit-flex: 0 0 8%;-moz-box-flex: 0;-moz-flex: 0 0 8%;-ms-flex: 0 0 8%;flex: 0 0 8%;max-width: 8%;padding: 0px;">
+							<a href="" ng-click="">
+								Price Change
+								<span ng-show="sortType == 'price_change' && !sortReverse" class="fa fa-caret-down"></span>
+								<span ng-show="sortType == 'price_change' && sortReverse" class="fa fa-caret-up"></span>
+							</a>
+						</div>
+						<div class="col small" style="-webkit-box-flex: 0;-webkit-flex: 0 0 8%;-moz-box-flex: 0;-moz-flex: 0 0 8%;-ms-flex: 0 0 8%;flex: 0 0 8%;max-width: 8%;padding: 0px;">
+							<a href="" ng-click="">
+								Par
+								<span ng-show="sortType == 'par' && !sortReverse" class="fa fa-caret-down"></span>
+								<span ng-show="sortType == 'par' && sortReverse" class="fa fa-caret-up"></span>
+							</a>
+						</div>
+						<div class="col small" style="-webkit-box-flex: 0;-webkit-flex: 0 0 9%;-moz-box-flex: 0;-moz-flex: 0 0 9%;-ms-flex: 0 0 9%;flex: 0 0 9%;max-width: 9%;padding: 0px;">
+
+							<a href="" ng-click="">
+								Category
+								<span ng-show="sortType == 'categoryActive' && !sortReverse" class="fa fa-caret-down"></span>
+								<span ng-show="sortType == 'categoryActive' && sortReverse" class="fa fa-caret-up"></span>
+							</a>
+						</div>
+						<div class="col small" style="-webkit-box-flex: 0;-webkit-flex: 0 0 9%;-moz-box-flex: 0;-moz-flex: 0 0 9%;-ms-flex: 0 0 9%;flex: 0 0 9%;max-width: 9%;padding: 0px;">
+							<a href="" ng-click="">
+								P&L Category
+								<span ng-show="sortType == 'tags' && !sortReverse" class="fa fa-caret-down"></span>
+								<span ng-show="sortType == 'tags' && sortReverse" class="fa fa-caret-up"></span>
+							</a>
+						</div>
+						<div class="col small" style="-webkit-box-flex: 0;-webkit-flex: 0 0 8%;-moz-box-flex: 0;-moz-flex: 0 0 8%;-ms-flex: 0 0 8%;flex: 0 0 8%;max-width: 8%;padding: 0px;"></div>
+						<div class="col small" style="-webkit-box-flex: 0;-webkit-flex: 0 0 9%;-moz-box-flex: 0;-moz-flex: 0 0 9%;-ms-flex: 0 0 9%;flex: 0 0 9%;max-width: 9%;padding: 0px;"><a href="" ng-click="">AutoUpdate</a></div>
+						<div  class="col small" style="-webkit-box-flex: 0;-webkit-flex: 0 0 10%;-moz-box-flex: 0;-moz-flex: 0 0 10%;-ms-flex: 0 0 10%;flex: 0 0 10%;max-width: 10%;padding: 0px;"><a href="" ng-click="">Active</a></div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+		<div class="container-fluid table-container" scroll="false">
+			<div  ng-repeat="(key, catRepeat) in displayedCollection" ng-init="setLastIndex(catRepeat.length)">
+
+				<div style="width: 100%; padding: 16px 16px 16px 10px;display: flex; fle-flow: row; justify-content: flex-start;" class="item-divider" ><!--ng-click="categoryCollapse(key)"-->
+					<i class="icon  icon-left" ng-click="isCollapsed = !isCollapsed; fetchInventoryListDetails(isCollapsed, key, catRepeat);" ng-class="isCollapsed ? 'ion-ios-plus-outline' : 'ion-ios-minus-outline'"></i> &nbsp
+					<div >{{key}}</div>
+					<ion-list id="{{key}}" ng-hide="isCollapsed" show-delete="data.showDelete" show-reorder="data.showReorder" style="width: 100%;">
+
+					</ion-list>
+				</div>
+			</div>
+		</div>
+	</ion-content>
+</ion-view>
+				<!-- Add Inventory Item Directive -->
+				<script id="add-inventory-item-modal.html" type="text/ng-template">
+					<ion-modal-view >
+						<ion-content style="overflow: auto;" scroll="false">
+							<div class="col"><h1 class="text-center add-inv-header-name">{{addPopTitle}}</h1></div>
+							<form name="form.addInvItem" ng-submit="addInventoryItem()" novalidate style="padding: 30px;">
+								<div class="row">
+									<div class="col-40 add-inv-div-web">
+										<label for="fname">Item Name<span style="color: #ff1744;">*</span> :</label>
+									</div>
+									<div class="col-60">
+										<input list="nameHistory" class="form-control input-sm webInput" placeholder="Inventory Item Name" name="invName" type="text" ng-model="invItem.name" ng-maxlength="20" required/>
+										<datalist id="nameHistory">
+											<option ng-repeat="item in getInventoryItemInfoWeb.item_name" value="{{ item }}"></option>
+										</datalist>
+										<p ng-show="form.addInvItem.invName.$error.required && form.addInvItem.invName.$touched" class="help-block error">Inventory Item Name is required.</p>
+										<p ng-show="form.addInvItem.invName.$error.maxlength" class="help-block error">Inventory Item Name is too long</p>
+									</div>
+								</div>
+								<div class="row add-inv-div-web">
+									<div class="col-40">
+										<label for="Cname">Category<span style="color: #ff1744;">*</span> :</label>
+									</div>
+									<div class="col-60">
+										<select class="web-select form-control" ng-model="invItem.category" name="invCategory" required="" ng-options="addCat for addCat in getInventoryItemInfoWeb.category">
+											<option value="" disabled selected>Category</option>
+										</select>
+										<p ng-show="form.addInvItem.invCategory.$invalid && form.addInvItem.invCategory.$touched" class="help-block error">Category is required.</p>
+									</div>
+								</div>
+								<div class="row add-inv-div-web">
+									<div class="col-40">
+										<label for="lname">P&L Category<span style="color: #ff1744;">*</span> :</label>
+									</div>
+									<div class="col-60">
+										<select class="web-select form-control" ng-model="invItem.pl_cat" name="invplCategory" required="" ng-options="addPLCat for addPLCat in getInventoryItemInfoWeb.pl_cat">
+											<option value="" disabled selected>P&L Category</option>
+										</select>
+										<p ng-show="form.addInvItem.plcategory.$invalid && form.addInvItem.plcategory.$touched" class="help-block error">P&L Category is required.</p>
+									</div>
+								</div>
+								<div class="row add-inv-div-web">
+									<div class="col-40">
+										<label for="lname">Units<span style="color: #ff1744;">*</span> :</label>
+									</div>
+									<div class="col-60">
+										<select class="web-select form-control" ng-model="invItem.measurement" name="invUnit" required="" ng-options="addUnits for addUnits in getInventoryItemInfoWeb.units" ng-disabled="addDuplicate">
+											<option value="" disabled selected>Units</option>
+										</select>
+										<p ng-show="form.addInvItem.invUnit.$invalid && form.addInvItem.invUnit.$touched" class="help-block error">Unit is required.</p>
+									</div>
+								</div>
+								<div class="row add-inv-div-web">
+									<div class="col-40">
+										<label for="fname">Unit Price<span style="color: #ff1744;">*</span> :</label>
+									</div>
+									<div class="col-60">
+										<input class="form-control input-sm webInput" placeholder="Unit Price" name="invPrice" type="number"  ng-model="invItem.price" required ng-blur="checkVal(invItem.price)" ng-change="toTwoDigit(invItem.price)" string-to-number ng-disabled="addDuplicate"/>
+										<p ng-show="form.addInvItem.invPrice.$invalid && form.addInvItem.invPrice.$touched" class="help-block error">Price is required.</p>
+										<p ng-show="PriceError" class="help-block error">Please enter number only.</p>
+									</div>
+								</div>
+								<div class="row add-inv-div-web">
+									<div class="col-40">
+										<label for="fname">Par Value :</label>
+									</div>
+									<div class="col-60">
+										<input class="form-control input-sm webInput" placeholder="Par Value" type="number" name="invPAr" ng-model="invItem.par" ng-change="toTwoDigitPar(invItem.par)" string-to-number/>
+										<p ng-show="form.addInvItem.invPAr.$invalid && form.addInvItem.invPAr.$touched && form.addInvItem.invPAr.$error.number" class="help-block error">Please enter number only.</p>
+									</div>
+								</div>
+								<div class="row add-inv-div-web">
+									<div class="col-40">
+										<label for="fname">Insert at position :</label>
+									</div>
+									<div class="col-60">
+										<input class="form-control input-sm webInput" placeholder="Insert at position" type="number" class="add-inv-par" name="invPos" ng-model="pos" ng-change="toTwoDigitPar(pos)" string-to-number/>
+									</div>
+									<p ng-show="form.addInvItem.invPos.$invalid && form.addInvItem.invPos.$touched && form.addInvItem.invPos.$error.number" class="help-block error">Please enter number only.</p>
+								</div>
+								<div class="popup-buttons">
+									<button type="button" class="button button-default " ng-class="button-default" ng-click="closeModal()">Cancel</button>
+									<button type="submit" class="button button-bal " ng-disabled="form.addInvItem.$invalid" ><b>Add</b></button>
+								</div>
+							</form>
+						</ion-content>
+					</ion-modal-view>
+				</script>

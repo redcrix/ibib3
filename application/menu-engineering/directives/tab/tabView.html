@@ -1,0 +1,28 @@
+<ion-view>
+    <busyspinner spinnerhide="spinnerHide"></busyspinner>
+    <span ng-show="spinnerHide">
+        <div class="bar bar-subheader margin-optimizer-sort-button-bar">
+            <filterbuttonbarmenueng filterbuttons="filterButtons" allowalldeselected="false" eventname="'MENUENGGFILTERCHANGE'"></filterbuttonbarmenueng>
+        </div>
+        <ion-content class="has-header has-subheader has-tabs-bottom app-back-ground " style="top: 160px;overflow-y: scroll;cursor:auto;" >
+            <busyspinner spinnerhide="spinTab"></busyspinner>
+
+            <span ng-repeat="section in sections" ng-show="spinTab">
+                <menuengineeringsection section="section" hidemore="true"
+                                        itemdisplaylimit="9999"
+                                        ></menuengineeringsection>
+            </span>
+                 <!--<div style="padding-right: 10px" class="item item-balanced no-padding ">-->
+                    <!--<div class="row">-->
+                        <!--<div class="col col-10 item-icon-left">-->
+                            <!--<i style="color: red;" class="icon ion-alert-circled app-back-ground"></i>-->
+                        <!--</div>-->
+                        <!--<div class="col">Recipe information unavailable</div>-->
+                    <!--</div>-->
+                 <!--</div>-->
+                <div style="top: 50px;" class="item item-text-wrap text-center" ng-if="(!sections.length || showNoDataMessage) && spinTab">
+                   No menu items fall into this category , may be we don't have recipes for all!. Please contact support
+                </div>
+    </ion-content>
+    </span>
+</ion-view>

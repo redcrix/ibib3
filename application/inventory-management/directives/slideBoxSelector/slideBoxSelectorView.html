@@ -1,0 +1,19 @@
+<div class="row no-horizontal-padding">
+    <div class="col col-center col-20 center no-horizontal-padding">
+        <i class= "icon icon ion-ios-arrow-left x-large bolder" on-tap="prevSlide()"></i>
+    </div>
+
+    <div class="col col-60 col-center">
+        <ion-slide-box show-pager="false" active-slide="sliderIndex" does-continue="true" auto-play="false"
+                       on-slide-changed="slideChangeFn()"
+                       style="height:34px; text-align: center; padding: inherit; font-weight: 700">
+            <ion-slide ng-repeat="option in sliderOptions">
+                <div style="padding-top: 2px;"> {{ option.label }}
+                </div>
+            </ion-slide>
+        </ion-slide-box>
+    </div>
+    <div class="col col-center col-20 center no-horizontal-padding" on-tap="nextSlide()">
+        <i class = "icon icon ion-ios-arrow-right x-large bolder"></i>
+    </div>
+</div>

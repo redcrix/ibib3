@@ -1,0 +1,27 @@
+<ion-view view-title="{{ section.section_name  | titleCase  }}" ng-init="onSectionInit()"
+          ng-controller="MenuPerformanceOptimizerCtrl">
+        <button class="button button-bal icon ion-clipboard float-button button-fab-bottom-right"
+            ui-sref="app.dashboard.tasks()" fab>
+        <!--<div style="font-size:xx-small;margin-top:-8px;">Dashboard</div>-->
+    </button>
+       <backbuttonbar navbartitle="navBarTitle"></backbuttonbar>
+<busyspinner spinnerhide="spinnerhide"></busyspinner>
+    <ion-content>
+
+    <div ng-show="spinnerhide">
+
+            <div style="margin-top:5px;" class="button-bar"><a ng-repeat="filterbutton in filterbuttons track by $index"
+                                                               style="font-size: small;"
+                                                               class="button {{filterbutton.style}}"
+                                                               ng-class="filterbutton.clicked ? '' : 'button-outline'"
+                                                               ng-click="filterbuttonclick($index)">{{
+                filterbutton.label }}</a></div>
+            <!--<div class="card">-->
+            <!--<menuperformanceitemlist section="section" hideMore="true" itemdisplaylimit="99999"></menuperformanceitemlist>-->
+            <menuperformanceitemlist section="section" hidemore="true" itemdisplaylimit="99999"
+                                     filterperformanceclass="filterPerformanceClass"
+                                     userperformanceclass="userPerformanceClass"></menuperformanceitemlist>
+            <!--</div>-->
+    </ion-content>
+    </div>
+</ion-view>

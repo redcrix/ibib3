@@ -1,0 +1,21 @@
+<ion-view title="{{pageTitle}}" align-title="center" ng-init="init()">
+    <div class="spinner" ng-show="showLoader" style="z-index: 10">
+        <ion-spinner icon="lines" class="spinner-calm spinner spinner-lines"></ion-spinner>
+        <div style="text-align:center;">
+          <span class="spinner-text">Pepr is working hard,</span> <br/>
+          <span class="spinner-text">Please wait!</span>
+        </div>
+    </div>
+<ion-content style="top: 14%;">
+    <ion-content class="has-one-footer" padding="true">
+        <ion-list>
+            <ion-item  ng-repeat="item in orderingEntries.submitted" ng-click="onSubmittedItemTap(item)">
+                <ordering-list-submit-item item="item"></ordering-list-submit-item>
+            </ion-item>
+        </ion-list>
+        <div ng-show="!showLoader && (!orderingEntries.submitted||  orderingEntries.submitted.length < 1)" style="padding:120px 16px 16px 16px;text-align: center;font-size: 25px;">
+            No Orders to Show!
+        </div>
+    </ion-content>
+</ion-content>
+</ion-view>

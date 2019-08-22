@@ -1,0 +1,104 @@
+<ion-view title="Inventory Manager" align-title="center">
+  <ion-floating-button id="my-float-pnl" class="custom-save" ng-click="save()" icon-color="white" icon="ion-android-checkmark-circle" button-color="#33cd5f">
+  </ion-floating-button>
+   <!-- <ion-content class=" has-footer"> -->
+      <busyspinner spinnerhide="spinnerShow" class="inactive-spinner"></busyspinner>
+        <ion-tabs class="tabs-icon-top tabs-top tabs-color-active-balanced inv-map-tabs" delegate-handle="myhandle">
+          <ion-tab title="To Be Categorized" icon-on="ion-ios-circle-filled" on-select="switchTab('toCategorise')" icon-off="ion-ios-circle-outline">
+            <busyspinner spinnerhide="tabDataSpinnerHide" class="inactive-spinner"></busyspinner>
+             <!-- <button style="display:hidden" class="button upload-btn" id="PnLCat1" modal-select="" ng-model="mySelect" options="minorCategories"  modal-title="Select Category" hide-reset='true' on-select="shoutLoud(newValue, oldValue)" modal-class="camera-set" has-search="true"  on-close on-reset="newShoutReset()" >
+                <div class="option">
+                  <h2>{{option}}
+                  </h2>
+                </div>
+              </button> -->
+              <ion-content style="top:150px" ng-show="dataReceived">
+                  <ion-item collection-repeat="item in toBeMappedItems | filter:searchText | orderBy:'supItemAlias' track by $index" item-height="140" item-width= "400px" width="100%">
+                    <div class="row">
+                        <div class="col col-33">
+                          <div class="item-text-wrap" style="line-height: 30px;font-size: 14px;">{{item.supItemAlias}}</div>
+                              <div style="font-size: 60%; text-transform: uppercase; font-style: italic;margin-top: 5px; min-width: 108px;white-space: normal;">{{item.supplier}}
+                              </div>
+                              <div class="inv-map-supplier" style="margin-top: 0px;">{{item.supItemId}}
+                              </div>
+                        </div>
+                      <div class="col col-67 col-center">
+                          <span>
+                            <!-- <div class="item item-input-inset" ng-click="setInventory(item,1,$index)" style="border:none;padding: 0px;cursor: auto;width: 90%;margin-top: 5%" >
+                                <div class="item-input-wrapper" style="background: {{item.bg}}">
+                                  <i class="icon ion-ios-search" ></i>
+                                  <input type="text" ng-model="item.selectedOption" placeholder="Search" class="map-inv-drop-down"  disabled>
+
+                                  <i class="icon ion-arrow-down-b" style="position: absolute;right: 10px;color: {{item.color}}"></i>
+                                </div>
+                            </div> -->
+                            <div class="item item-input-inset"  ng-click="setInventory(item)" style="border:none;cursor: auto;width: 90%;margin-top: 2px;padding: 0px;" >
+                            <!-- <div class="item dropdownInvPnl" ng-click="setInventory(item,1,$index)"> -->
+                              <ion-search-select title="Search" options="groupedList" option-selected="groupedList">
+                                <label class="item item-input-inset" style="border:none;padding: 0px;cursor: auto;">
+                                  <div class="item-input-wrapper">
+                                    <i class="icon ion-ios-search"></i>
+                                    <!-- <input type="text" ng-model="item.selectedOption" placeholder="Search" style="width: 90%;" disabled> -->
+                                    <span type="text" ng-model="item.selectedOption" placeholder="Search" style="width: 90%;min-width: 155px;height: 25px;font-size: 14px;margin-left: 3%;margin-top: 3%;" >{{item.selectedOption}}</span>
+                                    <i class="icon ion-arrow-down-b" style="position: absolute;right: 10px;color: {{item.color}}"></i>
+                                  </div>
+                                </label>
+                              </ion-search-select>
+                            </div>
+                          </span>
+                      </div>
+                  </div>
+              </ion-item>
+              <div class="noData" ng-show="toBeMappedItems.length == 0 && tabDataSpinnerHide"><b>No data available</b>
+              </div>
+          </ion-content>
+      </ion-tab>
+      <ion-tab title="Categorized" on-select="switchTab('categorised')" icon-on="ion-ios-checkmark" icon-off="ion-ios-checkmark-outline">
+        <busyspinner spinnerhide="tabDataSpinnerHide" class="inactive-spinner"></busyspinner>
+          <ion-content style="top:150px;" ng-show="mappedDataReceived">
+            <!-- <button style="display:hidden" class="button upload-btn" id="PnlCat" modal-select="" ng-model="mySelect" options="minorCategories"  modal-title="Select Category" hide-reset='true' on-select="shoutLoudMapped(newValue, oldValue)" modal-class="camera-set" has-search="true"  on-close on-reset="shoutReset()" >
+                <div class="option">
+                  <h2>{{option}}</h2> -->
+                  <!-- </div>
+                </div>
+            </button> -->
+              <ion-item collection-repeat="item in mappedItems | filter:searchText | orderBy:'supItemAlias' track by $index"   repeat-end="setLoader()" item-height="140" item-width= "400px" width="100%" style="width:100%;">
+              <div class="row">
+                  <div class="col col-33">
+                      <div class="item-text-wrap" style="line-height: 20px;font-size: 14px;">{{item.supItemAlias}}</div>
+                      <div style="font-size: 60%; text-transform: uppercase; font-style: italic;margin-top: 5px; min-width: 108px;white-space: normal;">{{item.supplier}}</div>
+                      <div class="inv-map-supplier" style="margin-top: 0px;">{{item.supItemId}}</div>
+                  </div>
+                    <div class="col col-67 col-center">
+                        <span>
+                           <!-- <div class="item item-input-inset" style="border:none;padding: 0px;cursor: auto;width: 90%;margin-top: 2%" ng-click="setInventoryMapped(item,2,$index)">
+                                <div class="item-input-wrapper"  style="background: {{item.bg}}">
+                                  <i class="icon ion-ios-search" ></i>
+                                  <input type="text" ng-model="item.selectedOption" placeholder="Search" class="map-inv-drop-down" disabled>
+                                  <i class="icon ion-arrow-down-b" style="position: absolute;right: 10px;color: {{item.color}}"></i>
+                                </div>
+                            </div> -->
+                            <div class="item item-input-inset"  ng-click="setInventoryMapped(item)" style="border:none;cursor: auto;width: 90%;margin-top: 2px;padding: 0px;" >
+                            <!-- <div class="item dropdownInvPnl" ng-click="setInventoryMapped(item,2,$index)"> -->
+                              <ion-search-select title="Search" options="groupedList" option-selected="groupedList">
+                                <label class="item item-input-inset" style="border:none;padding: 0px;cursor: auto;">
+                                  <div class="item-input-wrapper">
+                                    <i class="icon ion-ios-search"></i>
+                                    <!-- <input type="text" ng-model="item.selectedOption" placeholder="Search" style="width: 90%;" disabled> -->
+                                    <span type="text" ng-model="item.selectedOption" placeholder="Search" style="width: 90%;min-width: 155px;height: 25px;font-size: 14px;margin-left: 3%;margin-top: 3%;" >{{item.selectedOption}}</span>
+                                    <i class="icon ion-arrow-down-b" style="position: absolute;right: 10px;color: {{item.color}}"></i>
+                                  </div>
+                                </label>
+                              </ion-search-select>
+                            </div>
+                        </span>
+                    </div>
+                </div>
+            </ion-item>
+            <div class="noData" ng-show="mappedItems.length == 0 && tabDataSpinnerHide"><b>No data available</b>
+            </div>
+            </ion-content>
+         </ion-tab>
+      </ion-tabs>
+   <!-- </ion-content> -->
+</ion-view>

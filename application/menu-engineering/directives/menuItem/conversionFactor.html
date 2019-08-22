@@ -1,0 +1,58 @@
+<ion-modal-view class="add-conversion-modal">
+        <ion-header-bar class="bar error-reporting-modal">
+
+            <h1 class="title">Conversion Factor</h1>
+            <a class="button" ng-click="closeModalCtrl()">Cancel</a>
+        </ion-header-bar>
+        <busyspinner spinnerhide="dataReceived"></busyspinner>
+        <ion-content>
+            <div  ng-show = "dataReceived">
+                <div class="row" ng-model="data.ingredientName">
+                    <div class="col"><pre>IngredientName   :</pre></div>   <div class="col"><pre>{{data.ingredientName}}</pre></div></div>
+                <div class="row" style="padding-top: 5px;" ng-model="data.ingredientSupplierName" >
+                    <div class="col"><pre>SupplierName     :</pre></div> <div class="col"><pre>{{getCoversionData.supplierName}}</pre></div></div>
+                <div class="row" style="padding-top: 5px;">
+                    <div class="col"><pre>Invetory Unit    :</pre></div><div class="col"><pre>{{getCoversionData.inventory_unit}}</pre></div></div>
+                <div class="row" style="padding-top: 5px;">
+                    <div><pre>Inventory Price   :</pre></div><div class="col" style="padding-top: 0px;">   <pre>  {{getCoversionData.inventory_price}}</pre></div></div>
+            </div>
+            <!-- <busyspinner spinnerhide="dataReceived"></busyspinner> -->
+            
+            <!-- <div class="row" ng-repeat="item in coversionData">
+                <div class= "col-30" style="padding-top: 10px">{{item.item_name}}</div><div class="col-15"style="padding-top: 10px">&nbsp;&nbsp;=</div>
+                <div class="col col-35">
+                    <span class="unit-config2-num-field"  style="background-color: whitesmoke;">
+                        <input type="number" id ="unitValue" ng-model="item.val" name="unitValue" required ng-change="changeUnitValue(item)" ng-disabled="currentVal">
+                    </span><br><br>
+                </div>
+                <div class="col col-35">
+                    <span class="unit-config2-num-field col"  style="background-color: #DDDDDD;">
+                        <select class="unit-select-box col" name="singleSelect" style="background-color: #DDDDDD;" ng-model="item.unit" ng-change="changeUnit(item.unit,item,$index)" ng-options= "newUnit for newUnit in item.conversion_unit_list">
+                            <option value="">{{item.unit}}</option>
+                        }
+                        }   
+                        </select>
+                    </span>
+                </div>
+            </div> -->
+
+           <!--  <div class="row" style="padding-left: 250px;padding-bottom: 50px" ng-show ="dataReceived" >
+              <button type="button" class="btn btn-info btn-circle icon ion-plus " ng-class ="icon" ng-style="{'background-color' : buttonColor, 'color': iconColor}" 
+              style="background-color: rgb(51, 205, 95); color: rgb(255, 255, 255);
+              margin-right: 0px" ng-click="addUnit()">
+              </button>
+            </div> -->
+            <div style="padding-bottom: 60px;"></div>
+        </ion-content>
+        <!-- <div class="bar bar-subfooter " style="color:black;" ng-show = "dataReceived"> -->
+            <ion-footer-bar>
+          <button  class="full-width-button  " style="color: black;background-color: white;position: fixed; " disabled="convdata">Recipe Unit&nbsp;&nbsp;  = &nbsp; &nbsp;{{data.ingredientUnit}}
+            </button></ion-footer-bar>
+        <!-- </div> -->
+     <!--    <ion-footer-bar>
+            <button  class="full-width-button app-theme-text " style="border: none;background: #33CD5F;text-align: center;color: white;font-size: 15px;position: fixed;" ng-click="confirmSave()" >
+                Save
+            </button>
+    </ion-footer-bar> -->
+        
+</ion-modal-view>

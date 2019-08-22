@@ -1,0 +1,27 @@
+<ion-view title="{{pageTitle}}" ng-init="init()" ng-controller="BusinessSettingsCtrl">
+    <backbuttonbar navbartitle="navBarTitle"></backbuttonbar>
+    <div ng-if="spinnerHide" class="bar bar-subheader app-theme-color-level2 no-vertical-padding no-horizontal-padding">
+        <div class="app-theme-color-level2">
+            <div class="row">
+                <div class="col col-center no-vertical-padding">
+                    <span ng-repeat="message in saveStatus track by $index" class="{{ message.level }}"> {{ message.text }}</span>
+                </div>
+            </div>
+        </div>
+     </div>
+
+    <ion-content class="has-header" style="bottom: 44px;">
+        <ion-list>
+            <span ng-repeat="user in businesses track by $index">
+                <ion-item class="no-padding" ng-style="user.selected && {'background':'#11cdff'}" ng-click="switch(user)">
+
+                    <div class="row">
+                        <div class="col col-center">
+                            {{user.business_name}}
+                        </div>
+                    </div>
+                </ion-item>
+            </span>
+        </ion-list>
+    </ion-content>
+</ion-view>

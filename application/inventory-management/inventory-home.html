@@ -1,0 +1,84 @@
+<ion-view title="Inventory Manager"  align-title="center" ng-init="ctrl.init()">
+   <!--  <div class="spinner" ng-show="ctrl.showLoader" style="z-index: 10">
+        <ion-spinner icon="lines" class="spinner-calm spinner spinner-lines"></ion-spinner>
+    </div> -->
+    <!-- <ion-floating-menu ng-show="config" id="my-float-inventory" menu-color="#33cd5f" menu-open-color="#84e19f" > -->
+    <!-- <ion-nav-buttons side="secondary">
+
+        <button ng-show="config" class="button button-icon icon ion-ios-search-strong inv-map-search">
+        </button>
+
+    </ion-nav-buttons> -->
+    <ion-floating-button id="my-float-inv" ng-show="config" class="custom-save" icon-color="white" icon="ion-android-checkmark-circle" button-color="#33cd5f">
+    </ion-floating-button>
+    <!-- </ion-floating-menu> -->
+    <busyspinner spinnerhide="!ctrl.showLoader"></busyspinner>
+    <ion-content  style="top: 0 !important;">
+        <ion-tabs delegate-handle="inventoryTabs" ng-hide="ctrl.showLoader" class="tabs-icon-top tabs-top tabs-color-active-balanced">
+            <ion-tab title="Submitted" icon-on="ion-ios-checkmark" icon-off="ion-ios-checkmark-outline" on-select="submittedClick()">
+                <ion-nav-view name="submitted-tab">
+                    <!-- <ion-content padding="true">
+                        <ion-content class="has-one-footer" padding="true" >
+                            <ion-list>
+                                <ion-item style="padding: 0px 9px 0px 16px" ng-repeat="item in ctrl.inventoryEntries.submitted">
+                                    <inventory-list-submit-item item="item" on-tap="ctrl.onSubmittedItemTap(item)"></inventory-list-submit-item>
+                                </ion-item>
+                            </ion-list>
+                            <div ng-show="!ctrl.showLoader && (!ctrl.inventoryEntries.submitted||  ctrl.inventoryEntries.submitted.length < 1)" style="padding:120px 16px 16px 16px;text-align: center;font-size: 25px;">
+                                No Inventories to Show!
+                            </div>
+                        </ion-content>
+                    </ion-content> -->
+                </ion-nav-view>
+            </ion-tab>
+            <ion-tab title="Drafts" icon-on="ion-ios-copy" icon-off="ion-ios-copy-outline" on-select="draftClick()">
+                <ion-nav-view name="drafts-tab">
+                    <!-- <ion-content padding="true" >
+                        <ion-content class="has-one-footer" padding="true">
+                            <ion-list>
+                                <ion-item  class="white-back-ground" style="padding: 0px 0px 0px 16px"   ng-repeat="item in ctrl.inventoryEntries.draft">
+                                    <inventory-list-item on-tap="ctrl.onItemTap(item)"  item="item" ></inventory-list-item>
+                                    <ion-option-button class="button-assertive" on-tap="ctrl.deleteDraft(item)">Delete</ion-option-button>
+                                </ion-item>
+                            </ion-list>
+                            <div ng-show="!ctrl.showLoader && (!ctrl.inventoryEntries.draft || ctrl.inventoryEntries.draft.length < 1)" style="padding:120px 16px 16px 16px;text-align: center;font-size: 25px;">
+                                No Inventories to Show!
+                            </div>
+                        </ion-content>
+                    </ion-content> -->
+                </ion-nav-view>
+            </ion-tab>
+            <!-- <ion-tab title="Trends" icon-on="ion-ios-copy" icon-off="ion-ios-copy-outline" on-select="trendsClick()">
+                <ion-nav-view name="trends-tab">
+                    <ion-content padding="true" >
+                        <ion-content class="has-one-footer" padding="true">
+                            <ion-list>
+
+                            </ion-list>
+                            <div ng-show="!ctrl.showLoader && (!ctrl.inventoryEntries.draft || ctrl.inventoryEntries.draft.length < 1)" style="padding:120px 16px 16px 16px;text-align: center;font-size: 25px;">
+                                No Inventories to Show!
+                            </div>
+                        </ion-content>
+                    </ion-content>
+                </ion-nav-view>
+            </ion-tab> -->
+            <ion-tab title="Config" icon-on="ion-ios-copy" icon-off="ion-ios-copy-outline" on-select="configClick()">
+                <ion-nav-view name="config-tab">
+                    <!-- <map-inventory bar="navBarTitle" items="invItems"></map-inventory> -->
+
+                </ion-nav-view>
+            </ion-tab>
+        </ion-tabs>
+    </ion-content>
+
+    <ion-footer-bar  align-title="left" style="background: #33CD5F;" ng-hide="ctrl.showLoader" ng-click="ctrl.composeClicked()">
+        <div style="width: 100%; text-align: center;font-size: 20px; padding-top: 1%; color: #FFF;">Create Inventory</div><br/>
+    </ion-footer-bar>
+    <!-- <ion-footer-bar style="bottom: 20%;" ng-if="config">
+        <ion-floating-menu id="my-float-inventory" menu-color="#33cd5f" menu-open-color="#84e19f" >
+            <ion-floating-item is-centered="true" icon-color="white" icon="ion-android-checkmark-circle" button-color="#33cd5f"
+                               click="saveMappedData(2)"></ion-floating-item>
+
+        </ion-floating-menu>
+    </ion-footer-bar> -->
+</ion-view>

@@ -1,0 +1,17 @@
+<div ng-show="filtered.length>0" class="card list" style="margin: 35px 0px;overflow-y: scroll;cursor: auto;">
+  <div class="item item-divider item-balanced no-padding">
+    <div class="row" on-tap="toggleDisplayItemsLimit()" >
+      <div class="col col-75 justlighter text-dark-gray" on-hold="showReportPopover($event,'Group Name')">{{ ::(section.groupDisplayName | titleCase) }}</div>
+      <div class="col col-20 justlighter text-dark-gray" on-hold="showReportPopover($event,'Aggregated Cost')">{{ ::((section.costPercent*100) | number:0)}}%</div>
+      <div class="col justlighter text-dark-gray" ng-hide="hidemore">&nbsp;&nbsp;&nbsp;<i ng-class="expansionIconClass"></i></div>
+    </div>
+  </div>
+  <ion-list class="item paddingzero">
+    <span ng-repeat="item in ((displayItems | filter:searchmenuPerText | orderBy:sortingclass) | filter:greaterThan('dollarSales', 0)) | limitTo:itemdisplaylimit as filtered" ng-if="!item.searchHidden">
+
+                <marginoptimizermenuitem item="item" detaillink="true"
+                                     ifeven="false" showdetails="false"  menuitemlist="menuItemList"
+                                      ></marginoptimizermenuitem>
+            </span>
+  </ion-list>
+</div>

@@ -1,0 +1,253 @@
+<link href="css/appmenu.css" rel="stylesheet">
+
+<ion-side-menus enable-menu-with-back-views="true">
+
+    <!-- side menu -->
+    <ion-side-menu side="left">
+
+        <!-- side menu header bar -->
+
+        <ion-header-bar class="expanded" style="margin-top: 15px;">
+
+        </ion-header-bar>
+
+        <ion-content ng-controller="AppMenuCtrl" padding="true">
+            <ion-list>
+                <ion-item for="selectedStore" class="item-borderless" ng-click="$event.stopPropagation()">
+                    <span style="padding-left: 0px;" class="item-select item-input">
+                      <i class="icon x-large ion-location"></i>
+                      <select style="left: 25px; padding:5px; width:100%;"  name="selectedStore" id="selectedStore"
+                              ng-model="selectedStore" ng-options="store as store.name+ ' - ' +store.location for store in stores" ng-change="storeChanged(selectedStore)"
+                              >
+                      </select>
+                      <!-- <select id="selectedStore" name="selectedStore" style="left: 25px; padding:5px; width:100%;" ng-model="selectedStore"  ng-change="storeChanged(selectedStore)">
+                          <option ng-repeat="store in stores track by $index" value="{{store.name}}" >{{store.name}}</option>
+                      </select> -->
+                    </span>
+                </ion-item>
+
+                <!-- <ion-item class="item-borderless item-icon-left" ui-sref="app.dashboard.summary"
+                          ng-class="sideMenuActive('/dashboard/summary')"
+                          ng-click="dashboardClickHandler()">
+                    <i class="icon ion-ios-speedometer"></i> My Dashboard
+                </ion-item>
+
+                <ion-item class="item-borderless side-menu-item item-icon-left" ui-sref="app.healthTracker"
+                ng-class="sideMenuActive('/healthtracker/overallcharts')"
+                ng-click="healthTrackerClickHandler()">
+                    <i class="icon ion-arrow-graph-up-right"></i> Health Tracker
+                </ion-item> -->
+
+               <!-- /************ set submenu  ******************/ -->
+
+               <!-- <div ng-repeat="group in overviewGroups">
+                   <ion-item class="item-stable item-borderless"
+                           ng-click="toggleGroup(group, $index)"
+                           ng-class="{setactive: group.show , setinactive: !group.show}">
+                      <i class="icon" ng-class="{'ion-minus' : group.show ,'ion-plus': !group.show}"></i>
+                      {{group.name}}
+                   </ion-item>
+
+                   <div class="test">
+                   <ion-item class="item-accordion item-borderless item-icon-left sidemenu-setting" ui-sref="{{group.uisref[$index]}}"
+                         ng-class="{{group.class[$index]}}"
+                           ng-click="{{group.click[$index]}}"
+                           ng-repeat="item in group.items"
+                           ng-show="group.show">
+                      <i class="{{group.icons[$index]}}"></i> {{item}}
+                   </ion-item>
+                   </div>
+                </div> -->
+                <div ng-repeat="group in overviewGroups" ng-if="group.showOnWeb">
+                    <ion-item class="item-stable item-borderless"
+                              ng-click="toggleGroup(group)"
+                              ng-class="{setactive: isGroupShown(group)}">
+                        <i class="icon" ng-class="isGroupShown(group) ? 'ion-minus' : 'ion-plus'"></i>
+                        <i class="{{::group.mainIcon}}" style="padding-left: 0.3em"></i>
+                     {{::group.name}}
+                    </ion-item>
+                    <!-- ui-sref="{{group.uisref[$index]}}" -->
+                    <ion-item class="item-accordion item-borderless item-icon-left"
+                              ng-repeat="item in group.items"
+                              ng-show="isGroupShown(group)"
+                              ng-class="{{::item.classFn}}"
+                              ng-click="{{::item.clickFn}}">
+                        <i class="{{::item.icon}}"></i> {{::item.name}}
+                    </ion-item>
+                  </div>
+
+               <!-- /************ set submenu ******************/ -->
+
+<!--                <ion-item class="item-borderless side-menu-item item-icon-left" ui-sref="app.plTracker"
+                ng-class="sideMenuActive('/pltracker/overallcharts')"
+                ng-click="plTrackerClickHandler()">
+                      <i class="icon ion-social-bitcoin"></i> P &amp; L Tracker
+                </ion-item> -->
+<!--
+                <ion-item class="item-borderless side-menu-item item-icon-left" ui-sref="app.marginoptimizer.Food"
+                          ng-class="sideMenuActive('/marginoptimizer/Food')"
+                          ng-click="marginoptimizerClickHandler()">
+                    <i class="icon ion-android-restaurant"></i> Menu Optimizer
+                </ion-item>
+-->
+                <!-- <ion-item class="item-borderless side-menu-item item-icon-left"
+                          ng-class="sideMenuActive('/marginoptimizer2/Food')"
+                          ng-click="marginoptimizer2ClickHandler()">
+                    <i class="icon ion-android-restaurant"></i> Menu Performance
+                </ion-item>
+
+                <ion-item class="item-borderless side-menu-item item-icon-left"
+                          ng-class="sideMenuActive('/menuengineering/Food')"
+                          ng-click="menuengineeringClickHandler()">
+                    <i class="icon ion-ios-lightbulb"></i> Menu Engineering
+                </ion-item> -->
+
+                <!--<ion-item class="item-borderless" ui-sref="app.costingoptimizer"-->
+                <!--ng-class="sideMenuActive('/costingoptimizer')"-->
+                <!--ng-click="costingoptimizerClickHandler()">-->
+                    <!--Margin Optimizer-->
+                <!--</ion-item>-->
+
+            <!--  <ion-item class="item-borderless side-menu-item item-icon-left" ui-sref="app.wastage"
+                ng-class="sideMenuActive('/wastage')"
+                ng-click="wastageClickHandler()">
+                  <i class="icon ion-ios-trash"></i>  Wastage
+                </ion-item> -->
+
+                <!--<ion-item class="item-borderless side-menu-item" ui-sref="app.MenuPerformanceoptimizer.Food"-->
+                          <!--ng-class="sideMenuActive('/MenuPerformanceoptimizer/Food')"-->
+                          <!--ng-click="MenuPerformanceoptimizerClickHandler()">-->
+                    <!--Menu Performance Optimizer-->
+                <!--</ion-item>-->
+
+              <!--  <ion-item class="item-borderless side-menu-item item-icon-left" ui-sref="app.promotionOptimizer"
+                          ng-class="sideMenuActive('/promotionOptimizer')"
+                          ng-click="promotionOptimizerClickHandler()">
+                    <i class="icon ion-pricetags"></i>Promotion Optimizer
+                </ion-item> -->
+
+                <!-- <ion-item class="item-borderless side-menu-item item-icon-left" ui-sref="app.inventoryManager"
+                          ng-class="sideMenuActive('/inventoryManager')"
+                          ng-click="inventoryManagerClickHandler()">
+                    <i class="icon ion-ios-list"></i>Inventory Manager
+                </ion-item>
+
+                <ion-item class="item-borderless side-menu-item item-icon-left" ui-sref="app.invoices.trackings"
+                          ng-class="sideMenuActive('/invoices')"
+                          ng-click="documentUploadClickHandler()">
+                      <i class="icon ion-ios-paper"></i>Invoice Tracking
+                </ion-item>
+
+
+                <ion-item class="item-borderless side-menu-item item-icon-left" ui-sref="app.payment"
+                          ng-class="sideMenuActive('/payment')" ng-click="paymentClickHandler()">
+                      <i class="icon ion-ios-paper"></i>Payment
+                </ion-item>
+
+               <ion-item class="item-borderless side-menu-item item-icon-left" ui-sref="app.ordering"
+
+                          ng-class="sideMenuActive('/ordering')"
+                          ng-click="orderingClickHandler()">
+                    <i class="icon ion-ios-pricetag"></i>Ordering
+                </ion-item> -->
+
+<!--                <ion-item class="item-borderless side-menu-item item-icon-left" ui-sref="app.laborOptimizer"
+                          ng-class="sideMenuActive('/labor')" ng-click="laborOptimizerClickHandler()">
+                      <i class="icon ion-android-contacts"></i>Labor Optimizer
+                </ion-item> -->
+
+                <!--<ion-item class="item-borderless" menu-close ui-sref="app.orderOptimizer">-->
+                    <!--Order Optimizer<span style="color:red;"><su><b>*</b></su></span>-->
+                <!--</ion-item>-->
+
+                <!--<ion-item class="item-borderless  side-menu-item" ui-sref="app.Purchaseoptimizer.Food"
+                          ng-class="sideMenuActive('/Purchaseoptimizer/Food')"
+                          ng-click="purchaseOptimizerClickHandler()">
+                    Purchase Optimizer
+                </ion-item> -->
+
+                <!--<ion-item class="item-borderless  side-menu-item" ui-sref="app.purchaseOrders"-->
+                          <!--ng-class="sideMenuActive('/Purchaseoptimizer/Food')"-->
+                          <!--ng-click="purchaseOrdersClickHandler()">-->
+                    <!--Purchase orders-->
+                <!--</ion-item>-->
+
+              <!--  <button class="button button-icon icon ion-upload" ui-sref="app.documentUpload"
+                ng-class="sideMenuActive('/documentUpload')"
+                ng-click="documentUploadClickHandler()">
+                Upload Document
+              </button> -->
+
+
+                <!-- <button class="button button-icon icon ion-settings" ui-sref="app.settings"
+                ng-class="sideMenuActive('/settings')"
+                ng-click="settingsClickHandler()">
+                Data Upload
+              </button> -->
+                <ion-item style="position:fixed; bottom:50px;left:0px;right:0px; background-color:white" class="item-borderless side-menu-item item-icon-left" ui-sref="app.settingsManager"
+                          ng-class="sideMenuActive('/settingsManager')"
+                          ng-click="settingsManagerClickHandler()">
+                    <i class="icon ion-ios-gear"></i>Settings Manager
+                </ion-item>
+
+
+                <!-- <ion-item style="position:fixed; bottom:50px;left:0px;right:0px; background-color:white" class="item-borderless item-icon-left side-menu-item" ui-sref="app.aboutusManager"
+                          ng-class="sideMenuActive('/aboutus')"
+                          ng-click="aboutusClickHandler()">
+                  <i class="icon ion-information-circled"></i> About us
+                </ion-item> -->
+                <!-- <ion-item class="item-icon-left" style="position:fixed; bottom:0px; left:0px; right:0px; background-color:lightgrey" ui-sref="login" ng-click="logout()">
+                 <i class="icon ion-log-out"></i> Logout
+              </ion-item> -->
+              <ion-item class="item-icon-left" style="position:fixed; bottom:0px; left:0px; right:0px; background-color:lightgrey" ng-click="logout()">
+                 <i class="icon ion-log-out"></i> Logout
+              </ion-item>
+            </ion-list>
+        </ion-content>
+
+    </ion-side-menu>
+
+    <!-- main page content -->
+    <ion-side-menu-content>
+        <!-- navigation bar -->
+        <ion-nav-bar class="bar bar-header app-theme-color app-theme-text" align-title="center">
+            <ion-nav-back-button ng-show="!navBarTitle.showToggleButton" class="app-theme-text">
+            </ion-nav-back-button>
+            <ion-nav-buttons side="left">
+                <button class="button icon-left ion-navicon button-clear side-menu-toggle" menu-toggle="left" ng-if="navBarTitle.showToggleButton">
+                </button>
+            </ion-nav-buttons>
+            <ion-nav-buttons side="right">
+                <!--<ionic-datepicker input-obj="datepickerObject">
+                    <button class="button button-clear button-dark icon-left ion-ios-calendar-outline app-theme-text"> </button>
+                </ionic-datepicker> -->
+                <!-- <ion-nav-buttons side="secondary"> -->
+                    <button class="button button-icon icon ion-ios-search-strong" ng-if="navBarTitle.showSearchButton">
+                    </button>
+                    <div
+                    style="position:absolute;right:0vh;" ng-if="canShowLogo">
+                    <img src="img/clean_plate_logo.png" style="
+                    width: 7vh;
+                    border-radius: 2vh;
+                    border: solid #a8eaa7;">
+                    </div>
+                <!-- </ion-nav-buttons> -->
+            </ion-nav-buttons>
+        </ion-nav-bar>
+
+        <!-- navigation view -->
+        <ion-nav-view></ion-nav-view>
+
+        <!-- footer bar -->
+        <ion-footer-bar ng-show="false">
+            <div class="bar bar-footer bar-calm">
+               <div class="button-bar">
+                    <a class="button">Daily</a>
+                    <a class="button">Monthly</a>
+                </div>
+            </div>
+        </ion-footer-bar>
+
+    </ion-side-menu-content>
+
+</ion-side-menus>

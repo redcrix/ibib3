@@ -1,0 +1,15 @@
+<ion-modal-view style="width: 90%; height: 20%; top: 50%; left: 5%; right: 5%; bottom: 30%;">
+    <ion-header align="center middle" class="bar app-theme-color app-theme-text">
+        <div class="title" style="text-align:center;">{{receipeitemoptions.ingredient_name}} <span
+                class="smaller"> ({{receipeitemoptions.ingredient_uom}})</span></div>
+        <div class="button app-theme-color app-theme-text" ng-click="modal.hide()"><i
+                class="icon ion-close"></i></div>
+    </ion-header>
+    <ion-content class="has-header">
+        <div class="row">
+            <div style=" margin-left: auto; margin-right: auto; display: block;" class="col-100">
+                <marginoptimizersupplierlist suppliers="receipeitemoptions.suppliers"></marginoptimizersupplierlist>
+            </div>
+        </div>
+    </ion-content>
+</ion-modal-view>

@@ -1,0 +1,33 @@
+<ion-view  animation="slide-left-right" view-title="Menu Optimizer" ng-controller="MarginOptimizerCtrl" ng-init="onMarginOptimizerInitHandler()">
+    <!--<backbuttonbar navbartitle="navBarTitle"></backbuttonbar>-->
+    <button class="button button-bal icon ion-clipboard float-button button-fab-bottom-right"
+            ui-sref="app.dashboard.tasks()" fab>
+        <!--<div style="font-size:xx-small;margin-top:-8px;">Dashboard</div>-->
+    </button>
+    <!--<button class="button button-positive icon ion-ios-gear float-button button-fab-top-left"-->
+    <!--ng-click="showMenus()" fab>-->
+    <!--&lt;!&ndash;<div style="font-size:xx-small;margin-top:-8px;">Dashboard</div>&ndash;&gt;-->
+    <!--</button>-->
+    <busyspinner spinnerhide="spinnerhide"></busyspinner>
+    <ion-pane>
+    <ion-tabs class="tabs-icon-top tabs-color-active-balanced">
+
+
+        <!-- Food Tab -->
+        <div ng-controller="MarginOptimizerCtrl" >
+            <ion-tab title="Food" icon="ion-android-restaurant" ng-click="FoodtabClickHandler()" ng-if="CategoryExists('Food')">
+                <ion-nav-view animation="slide-left-right" name="tab-Food"></ion-nav-view>
+            </ion-tab>
+        </div>
+        <!-- Liquor Tab -->
+        <div ng-controller="MarginOptimizerCtrl" >
+            <ion-tab title="Liquor" icon="ion-android-bar" ng-click="LiquortabClickHandler()" ng-if="CategoryExists('Liquor')">
+
+                <ion-nav-view animation="slide-left-right" name="tab-Liquor"></ion-nav-view>
+
+            </ion-tab>
+        </div>
+
+    </ion-tabs>
+    </ion-pane>
+</ion-view>

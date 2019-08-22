@@ -1,0 +1,62 @@
+<ion-view title="{{pageTitle}}" ng-init="init()" ng-controller="LaborSettingsCtrl">
+    <backbuttonbar navbartitle="navBarTitle"></backbuttonbar>
+    <busyspinner spinnerhide="spinnerHide"></busyspinner>
+    <span ng-if="spinnerHide">
+    <ion-header-bar class="bar bar-subheader app-theme-color-level2 no-vertical-padding no-horizontal-padding">
+        <div class="app-theme-color-level2">
+            <div class="row">
+                <div class="col col-center no-vertical-padding">
+                    <span ng-repeat="message in saveStatus track by $index" class="{{ message.level }}"> {{ message.text }}</span>
+                </div>
+            </div>
+        </div>
+    </ion-header-bar>
+    <ion-content class="has-header has-big-footer">
+        <a class="button button-block icon-right ion-chevron-right" ui-sref="app.payManager">
+            Pay Manager
+        </a>
+
+        <div class="card list">
+            <span ng-repeat="laborSettingsSkeleton in laborSettingsSkeletons">
+                <ion-item class="item-divider no-horizontal-padding" ng-class="laborSettingsSkeleton.icon==''? '': ' item-icon-left'"
+                          style="background-color: rgb(238, 238, 238)">
+                <i ng-if="laborSettingsSkeleton.icon!=''" class="icon {{::laborSettingsSkeleton.icon}}"></i>
+                    <div class="row item-input-wrapper ">
+                        <div class="col col-67 small item-text-wrap">
+                            {{ ::laborSettingsSkeleton.label }}
+                        </div>
+                        <div class="col col-5">
+                            {{ ::laborSettingsSkeleton.prefix }}
+                        </div>
+                        <div class="col col-20" >
+                            <input class="settings-input" type="number" ng-model="laborSettings[laborSettingsSkeleton.key].settingValue">
+                        </div>
+                        <div class="col col-5">
+                            {{ ::laborSettingsSkeleton.suffix }}
+                        </div>
+                    </div>
+              </ion-item>
+            </span>
+        </div>
+    </ion-content>
+   <!--<ion-footer-bar>
+        <div class="row">
+            <div  style=" margin-left: auto; margin-right: auto; display: block;" class="col col-center no-vertical-padding">
+                    <span ng-repeat="message in saveStatus track by $index" class="{{ message.level }}"> {{ message.text }}</span>
+            </div>
+        </div>
+    </ion-footer-bar>-->
+    <div class="bar bar-footer no-vertical-padding" style="flex-flow: column; height: auto">
+        <div class="row">
+            <div class="col no-vertical-padding small-info" style="text-align:center;">
+                All values are for a period of 28 days.
+            </div>
+        </div>
+        <div class="row">
+        <button class="full-width-button app-theme-color app-theme-text"  ng-click="saveClick()">
+                Save
+        </button>
+        </div>
+    </div>
+    </span>
+</ion-view>

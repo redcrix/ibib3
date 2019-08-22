@@ -1,0 +1,40 @@
+
+<ion-content  ng-class="{'setInvHead': invConfig, 'setPnLHead': !invConfig}" style="margin-bottom: 15%;">
+
+    <span ng-show="dataReceived">
+        <ion-list class="pNlMap">
+            <div class="text-center item app-theme-text-level2 top-map-pnl-nodata" ng-class="{'setInvHead': invConfig}" ng-if="toBeMappedItems.length <= 0 && dataNotReceived">
+                No Information Available
+            </div>
+
+              <!-- <ion-item style="padding: 0px 0px 0px 0px;"
+                        item-height="item.supItemAlias.length > 40 ? 245+'px' : 100+'px'" item-width="100%"
+                        collection-repeat="item in showTBMI | filter:searchText | orderBy:'supItemAlias' track by $index "
+                        repeat-end="setLoader()" > -->
+                <ion-item style="padding: 0px 0px 0px 0px;" ng-repeat="item in filtered = (searchText.length > 0 ? showFilteredTBMI : showTBMI) | orderBy:'supItemAlias' track by $index "
+                        repeat-end="setLoader()" >
+                <div class="row" id="{{item.supItemId}}_item_div">
+                    <div class="col col-33">
+                        <div class="item-text-wrap" style="line-height: 20px;font-size: 14px;">{{item.supItemAlias}}</div>
+                        <div style="font-size: 60%; text-transform: uppercase; font-style: italic;margin-top: 5px; min-width: 108px;white-space: normal;">{{item.supplier}}</div>
+                        <div class="inv-map-supplier" style="margin-top: 0px;">{{item.supItemId}}</div>
+                    </div>
+                    <div class="col col-67 col-center">
+                        <div class="item item-input-inset"  ng-click="setInventory(item)" style="border:none;cursor: auto;width: 90%;margin-top: 2px" >
+                              <ion-search-select title="Search"  options="groupedList" option-selected="groupedList">
+                                <label class="item item-input-inset" style="border:none;padding: 0px;cursor: auto;">
+                                  <div class="item-input-wrapper">
+                                    <i class="icon ion-ios-search"></i>
+                                    <span type="text" ng-model="item.selectedOption" placeholder="Search" style="width: 90%;min-width: 155px;height: 25px;font-size: 14px;margin-left: 3%;margin-top: 3%;" >{{item.selectedOption}}</span>
+                                    <i class="icon ion-arrow-down-b" style="position: absolute;right: 10px;color: {{item.color}}"></i>
+                                  </div>
+                                </label>
+                              </ion-search-select>
+                            </div>
+                    </div>
+                </div>
+            </ion-item>
+        </ion-list>
+        <ion-infinite-scroll immediate-check="false" ng-if="hasMoreData" on-infinite="getMore()" distance="1%"></ion-infinite-scroll>
+    </span>
+</ion-content>

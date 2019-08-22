@@ -1,0 +1,47 @@
+<ion-modal-view>
+    <!--style="width: 90%; height: 60%; top: 20%; left: 5%; right: 5%; bottom: 20%;  min-height: 50%;"-->
+    <form name="itemEdit">
+        <ion-header-bar class="bar error-reporting-modal">
+            <h1 class="title">Menu Item Configuration</h1>
+            <a class="button" ng-click="closeModalCtrl()">Cancel</a>
+        </ion-header-bar>
+        <ion-content>
+            <busyspinner spinnerhide="dataReceived"></busyspinner>
+            <span ng-if="dataReceived">
+
+
+
+
+            <div class="row">
+                <div class="col col-33 col-center">Category: </div>
+
+                <div class="col col-67 col-center no-horizontal-padding">
+                    <slide-box-selector slider-options="categoryOptions" slider-index="configSliders.categorySlider" slide-change-broadcast="'config-category-changed'"></slide-box-selector>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col col-33 col-center">Menu Section: </div>
+
+                <div class="col col-67 col-center no-horizontal-padding">
+                    <slide-box-selector slider-options="menuSectionOptions" slider-index="configSliders.menuSectionSlider" slide-change-broadcast="'config-category-changed'"></slide-box-selector>
+                </div>
+
+            </div>
+
+
+
+
+
+
+
+
+            </span>
+        </ion-content>
+        <div class="bar buttonbar-footer-larger no-vertical-padding">
+            <button class="full-width-button app-theme-text" ng-click="confirmSave()" ng-class="saveButtonColor">
+                {{ saveButtonText }}
+            </button>
+        </div>
+    </form>
+</ion-modal-view>

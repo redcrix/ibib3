@@ -1,0 +1,249 @@
+<!-- <div ng-class="ingredient.ingredientType =='PREP'? 'card' : ''"> -->
+<div class="card" style="margin: 1px 1px;">
+  <!-- <div ng-class="ingredient.ingredientType =='PREP'? 'item item-text-wrap' : ''"> -->
+   <!-- ng-if="ingredient.ingredientName" -->
+  <ion-item class="no-padding" ng-class="ifeven? 'app-back-ground':'white-back-ground'">
+    <form name="form1">
+      <ion-item ng-show="showItemsLoading" style="height:65px;">
+        <div class="row">
+          <busyspinner spinnerhide="!showItemsLoading"></busyspinner>
+        </div>
+      </ion-item>
+    </form>
+    <div ng-class="ifeven? 'app-back-ground':'white-back-ground'" class="row smaller no-vertical-padding">
+      <i ng-class="!isGroupShown(moddatagroup) &&  ingredient.ingredientType =='PREP'? 'ion-plus padding' :  ingredient.ingredientType !='PREP' ? 'padding pad-left-20' :'ion-minus padding'" class="col-center"
+        ng-click="getModdata(ingredient.ingredientType)" style="padding-left: 1.5%;padding-right: 1.5%;">&nbsp</i>
+
+      <div class="col col-40 col-center item-text-wrap no-horizontal-padding" ng-if="!$root.isEditMode" ng-click="getModdata(ingredient.ingredientType)">{{::(ingredient.ingredientName | titleCase) }}
+        <span ng-if="$root.showIds">({{ingredient.ingredientId}})</span>
+      </div>
+
+      <div class="col col-33 col-center item-text-wrap no-horizontal-padding" ng-if="$root.isEditMode" ng-click="getModdata(ingredient.ingredientType)">{{::(ingredient.ingredientName | titleCase) }}
+        <span ng-if="$root.showIds">({{ingredient.ingredientId}})</span>
+      </div>
+      <!-- ingredient.ingredientQuantity>0 &&  -->
+      <div class="col col-15 col-center no-horizontal-padding" ng-if="!editMode" style="text-align:center;">
+        <span ng-if="!isGroupShown(moddatagroup)">
+          <span style="text-indent:5px;" ng-if="!$root.isEditMode">{{ ingredient.ingredientQuantity }}</span>
+          <span style="text-indent:5px;" ng-if="$root.isEditMode">
+            <input type="number"
+                   class="num-no-dropdown"
+                   ng-model="ingredient.ingredientQuantity"
+                   style="width: 80%;text-align:center;border-radius: 11px;border: 1px solid lightgray;"
+                   ng-change="ingQtyUpdated(ingredient)"
+                   ng-model-options="{debounce: 800}"
+                   limit-to="4">
+          </span>
+          <span style="font-size: x-small; opacity: 0.5;margin-right: 24%;word-wrap: break-word;" ng-if="!$root.isEditMode">{{ ::ingredient.ingredientUnit }}</span>
+          <!-- <span class="unit-config2-num-field add-ing-select-box-span col" ng-if="$root.isEditMode" style="border: 1px solid lightgray;border-radius: 12px;height:30px;background-color: lightgray;">
+              <select class="unit-select-box add-ing-select col" name="singleSelect" ng-model="ingredient.ingredientUnit" ng-change="ingQtyUpdated(ingredient)">
+                <option value="">Select</option>
+                <option ng-repeat="measurement in unitlist">{{measurement}}</option>
+              </select>
+          </span> -->
+        </span>
+        <span ng-if="isGroupShown(moddatagroup)">
+          <span style="text-indent:5px; font-weight: 600;">{{ ::ingredient.ingredientYieldQuantity }}</span>
+          <span style="font-size: x-small; opacity: 0.5;">{{ ::ingredient.ingredientYieldQuantityMeasurementId }}
+          </span>
+          <div style="font-size: x-small; opacity: 0.5;">Yield Quantity</div>
+        </span>
+      </div>
+      <div class="col col-25  col-center no-horizontal-padding" ng-if="editMode">
+        <div class="row no-vertical-padding no-horizontal-padding">
+          <div class="col col-75  col-center no-vertical-padding no-horizontal-padding">
+            <input type="number"
+                   class="num-no-dropdown"
+                   placeholder="qty"
+                   ng-change="validateQuantity()"
+                   ng-class="ingredientEdit.validationPassedHighlight"
+                   ng-model="ingredientEdit.stageIngredientQuantity"
+                   ng-model-options="{debounce: 500}"
+              class="recipe-edit-input no-vertical-padding no-horizontal-padding" />
+          </div>
+
+          <div class="col col-25  col-center no-vertical-padding no-horizontal-padding" ng-if="editMode" on-tap="resetIngredientQuantity()">
+            <i class="icon x-large ion-reply success"></i>
+          </div>
+        </div>
+        <div style="font-size: x-small; opacity: 0.5;">{{ ::ingredient.ingredientUnit }}</div>
+      </div>
+
+
+      <div class="col col-30 col-center no-horizontal-padding" style="text-align:center" ng-click="getModdata(ingredient.ingredientType)">
+        <span ng-if="!isGroupShown(moddatagroup)">{{ (ingredient.ingredientCost | currency :"$":4) }}
+        </span>
+
+        <span class="unit-config2-num-field add-ing-select-box-span col" ng-if="$root.isEditMode" style="border: 1px solid lightgray;border-radius: 12px;height:30px;background-color: lightgray;margin-top:unset;width:100% !important;">
+            <select class="unit-select-box add-ing-select col" id="{{ingredient.ingredientUnit}}" name="singleSelect" ng-model="ingredient.ingredientUnit" ng-change="ingQtyUpdated(ingredient)">
+              <option value="">Select</option>
+              <option ng-repeat="measurement in unitlist">{{measurement}}</option>
+            </select>
+            <!-- <i class="icon ion-arrow-down-b inv-config-arrow" style="color: black;"></i> -->
+        </span>
+        <span ng-if="isGroupShown(moddatagroup)" style="font-weight: 600;">{{ (moddatagroup.modDataTotal.ingredientCost | currency:"$":4) }}
+        </span>
+        <div ng-if="isGroupShown(moddatagroup)" style="font-size: x-small; opacity: 0.5; font-weight: 500;">
+          Yield Cost
+        </div>
+
+      </div>
+      <div class="col col-offset-5" ng-if="$root.isEditMode"></div>
+      <div class="col col-5 col-center" ng-click="showReportPopover($event)" ng-if="!$root.isEditMode">
+        <i class="icon larger ion-android-more-vertical"></i>
+      </div>
+      <div class="col col-10 col-center" ng-click="deleteIngOrPrep(ingredient)" ng-if="$root.isEditMode" style="text-align: center;font-size: 1.7em;">
+        <i class="icon ion-android-cancel redflag"></i>
+      </div>
+      <div class="col-10 col-center" ng-if="!isGroupShown(moddatagroup) && ingredient.ingredientType !='PREP' && !$root.isEditMode && $root.showIds">
+        <span ng-class="{'ion-android-arrow-dropup-circle' :ingredient.isItemExpanded,'ion-android-arrow-dropdown-circle':!ingredient.isItemExpanded ,'invtoolButtoncolor2' :category.buttonColor == false,'invtoolButtoncolor' : category.buttonColor}" ng-click="toggleGrp(ingredient)" style="margin-top: 12%;font-size: 1.5em;">
+        </span>
+      </div>
+
+
+
+      <ion-option-button class="button-balanced icon ion-ios-arrow-forward mediumsize" ng-click="decide(ingredient)"> &nbspAdd Task
+      </ion-option-button>
+
+    </div>
+
+  </ion-item>
+
+  <div class="list list-borderless" ng-if="ingredient.ingredientType =='PREP'" ng-class="isGroupShown(moddatagroup) ? 'item item-text-wrap' : ''">
+    <ion-item ng-if="isGroupShown(moddatagroup)" style="padding: 6px;" class="item item-accordion no-vertical-padding" ng-repeat="mod in moddatagroup.modData | orderBy:'-ingredientCost'">
+      <div class="row smaller no-vertical-padding no-horizontal-padding" style="line-height: 1.5em;">
+        <div class="col col-40  col-center item-text-wrap no-horizontal-padding" on-hold="showCoversion(mod)">{{::(mod.ingredientName |
+                    titleCase) }}
+        </div>
+        <!-- <div class="col col-50  col-center item-text-wrap no-horizontal-padding" ng-if="allowEditIng">
+                  <span class="unit-config2-num-field col"  style="background-color: #DDDDDD;">
+                    <select class="unit-select-box col" name="singleSelect" style="background-color: #DDDDDD;" ng-model="current_selected" ng-change="updateIngName(current_selected);">
+                      <option ng-repeat="ing in moddatagroup.modData" ng-selected="mod.ingredientName == ing.ingredientName"  value="{{ing}}">{{ing.ingredientName}}</option>
+                    </select>
+                    <i class="icon ion-arrow-down-b inv-config-arrow" style="color: black;"></i>
+                  </span>
+                </div> -->
+
+        <div class="col col-30 col-center no-horizontal-padding" ng-if="mod.ingredientQuantity>0">
+          <div ng-if="mod.ingredientQuantity>0">
+            <span style="text-indent:5px;">{{ mod.ingredientQuantity }}</span>
+          </div>
+          <div ng-if="mod.ingredientQuantity>0">
+            <span style="font-size: x-small; opacity: 0.5;">
+              {{ ::mod.ingredientUnit }}
+              <!-- <select class="unit-select-box col" name="singleSelect" style="background-color: #DDDDDD;" ng-model="mod.current_selected_unit" ng-change="itemEdited(mod);">
+                            <option ng-repeat="unit in moddatagroup.unit_list" key={{mod.current_selected_unit}} value="{{unit}}">{{unit}}</option>
+                            <i class="icon ion-arrow-down-b inv-config-arrow" style="color: black;"></i>
+                          </select> -->
+            </span>
+          </div>
+        </div>
+        <!-- <div ng-if="allowEditIng" class="col col-30 col-center no-horizontal-padding" ng-if="mod.ingredientQuantity>0">
+                    <span style="text-indent:5px;">{{ mod.ingredientQuantity }}</span>
+                    <span style="font-size: x-small; opacity: 0.5;">{{ ::mod.ingredientUnit }}</span>
+                </div> -->
+        <div class="col col-20 col-center no-horizontal-padding" style="padding-left: 18px;">
+          {{ (mod.ingredientCost |  currency:"$":4) }}
+          <!-- <input type="number" ng-change="itemEdited(mod)" ng-model="mod.ingredientCost" style="width: 100%;text-align:right;"> -->
+        </div>
+        <!-- <div ng-if="allowEditIng" class="col col-20 col-center no-horizontal-padding" style="padding-left: 18px;">{{
+                    (mod.ingredientCost | currency) }}
+                </div> -->
+        <div class="col-10 col-center" ng-if="isGroupShown(moddatagroup) && mod.ingredientType !='PREP'&& !$root.isEditMode && $root.showIds">
+          <span ng-class="{'ion-android-arrow-dropup-circle' :mod.isItemExpanded,'ion-android-arrow-dropdown-circle':!mod.isItemExpanded ,'invtoolButtoncolor2' :category.buttonColor == false,'invtoolButtoncolor' : category.buttonColor}" ng-click="toggleGrp(mod)" style="margin-top: 12%;font-size: 1.5em;">
+          </span>
+        </div>
+      </div>
+
+      <div class="col-5"></div>
+          <div class="container row-line-set-expanded row" ng-if="mod.isItemExpanded">
+            <div class="col-33 col-center" style="text-align: center;">Supplier Name-item #-Description
+
+            </div>
+            <div class="col-12 col-center" style="text-align: center;">Unit
+            </div>
+            <div class="col-12 col-center" style="text-align: center;">Unit Price
+            </div>
+            <div class="col-10 col-center" style="text-align: center;">Purchase Date
+            </div>
+            <div class="col-10 col-center" style="text-align: center;">Invoice Num
+            </div>
+            <div class="col-10 col-center" style="text-align: center;">Billing Units
+            </div>
+            <div class="col-7 col-center" style="text-align: center;">Billing Price
+            </div>
+          </div>
+          <div class="container row-line-set-expanded row" ng-if="mod.isItemExpanded" ng-repeat="supplier in mod.supList track by $index">
+            <div class="col-33 col-center" style="text-align: center;">
+              {{supplier.supp_name}} - {{supplier.item_num}} - {{supplier.desc}}
+            </div>
+            <div class="col-12 col-center" style="text-align: center;">{{supplier.unit}}
+            </div>
+            <div class="col-12 col-center" style="text-align: center;">
+              {{supplier.unit_price | currency}}
+            </div>
+            <div class="col-10 col-center" style="text-align: center;">
+              {{supplier.purchase_date}}
+            </div>
+            <div class="col-10 col-center" style="text-align: center;">
+              {{supplier.invoice_num}}
+            </div>
+            <div class="col-10 col-center" style="text-align: center;">
+              {{supplier.billing_units}}
+            </div>
+            <div class="col-7 col-center" style="text-align: center;">
+              {{supplier.billing_price | currency}}
+            </div>
+          </div>
+
+    </ion-item>
+
+
+  </div>
+  <div class="col-5"></div>
+          <div class="container row-line-set-expanded row" ng-if="ingredient.isItemExpanded">
+            <div class="col-33 col-center" style="text-align: center;">Supplier Name-item #-Description
+
+            </div>
+            <div class="col-12 col-center" style="text-align: center;">Unit
+              <!-- <select class="unit-select-box col" name="singleSelect" ng-model="supplier.unit" style="color: rgb(2, 166, 255);">
+                <option ng-repeat=" unit in supplierUnits track by $index">{{unit}}</option>
+              </select> -->
+            </div>
+            <div class="col-12 col-center" style="text-align: center;">Unit Price
+            </div>
+            <div class="col-10 col-center" style="text-align: center;">Purchase Date
+            </div>
+            <div class="col-10 col-center" style="text-align: center;">Invoice Num
+            </div>
+            <div class="col-10 col-center" style="text-align: center;">Billing Units
+            </div>
+            <div class="col-8 col-center" style="text-align: center;">Billing Price
+            </div>
+            <!-- <div class="col-8 col-center" style="font-size: 1.6em;margin-top: 1%;color: red;padding-left:20px ;padding-bottom:10px;">
+              <i class="ion-minus-circled"></i>
+            </div> -->
+          </div>
+
+          <div class="container row-line-set-expanded row" ng-if="ingredient.isItemExpanded" ng-repeat="supplier in ingredient.supList track by $index">
+            <div class="col-33 col-center" style="text-align: center;">
+              {{supplier.supp_name}} - {{supplier.item_num}} - {{supplier.desc}}
+            </div>
+            <div class="col-12 col-center" style="text-align: center;">{{supplier.unit}}
+            </div>
+            <div class="col-12 col-center" style="text-align: center;">
+              {{supplier.unit_price | currency}}
+            </div>
+            <div class="col-10 col-center" style="text-align: center;">
+              {{supplier.purchase_date}}
+            </div>
+            <div class="col-10 col-center" style="text-align: center;">
+              {{supplier.invoice_num}}
+            </div>
+            <div class="col-10 col-center" style="text-align: center;">
+              {{supplier.billing_units}}
+            </div>
+            <div class="col-8 col-center" style="text-align: center;">
+              {{supplier.billing_price | currency}}
+            </div>
+          </div>

@@ -1,0 +1,99 @@
+<div class="card" style="margin-bottom: 70%;">
+  <busyspinner spinnerhide="$root.listSpinnerHide"></busyspinner>
+  <div ng-scrollbars style="overflow-y: scroll;">
+    <button ng-if="$root.showIds"  style="display:hidden" class="button upload-btn" id="my_recipe_ing" modal-select="" ng-model="mySelect" options="ingredientList"  modal-title="Select Ingredient" hide-reset='true' on-select="shoutLoud(newValue, oldValue)" modal-class="camera-set" has-search="true"  on-close="closeModal()" on-reset="shoutReset()" >
+        <div class="option">
+          <h2  ng-style="option.ingredientName== 'Create New Ingredient' ? {'color':'blue'} : {'color':'black'}">{{option.ingredientName}} ( {{option.supplierItemId}})</h2>
+        </div>
+    </button>
+  </div>
+
+  <button ng-if="!$root.showIds"  style="display:hidden" class="button upload-btn" id="my_recipe_ing" modal-select="" ng-model="mySelect" options="ingredientList"  modal-title="Select Ingredient" hide-reset='true' on-select="shoutLoud(newValue, oldValue)" modal-class="camera-set" has-search="true"  on-close on-reset="shoutReset()" >
+      <div class="option">
+        <h2  ng-style="option.ingredientName== 'Create New Ingredient' ? {'color':'blue'} : {'color':'black'}">{{option.ingredientName}}</h2>
+      </div>
+  </button>
+  <!-- <button style="display:hidden" class="button upload-btn" id="my_recipe_ing" modal-select="" ng-model="mySelect" options="menuandingdata"  modal-title="Select Ingredient" hide-reset='true' on-select="shoutLoud(newValue, oldValue)" modal-class="camera-set" has-search="true"  on-close on-reset="shoutReset()" >
+      <div class="option">
+        <h2 ng-style="option.ingredientName== 'Create New Ingredient' ? {'color':'blue'} : {'color':'black'}">{{option.ingredientName}}</h2>
+      </div>
+  </button> -->
+    <span ng-if="isRecipeZero()">
+        <div style="padding-right: 10px" class="item item-balanced no-padding ">
+            <div class="row">
+                <div class="col col-10 item-icon-left">
+                    <i style="color: red;" class="icon ion-alert-circled app-back-ground"></i>
+                </div>
+                <div class="col">Recipe information unavailable</div>
+            </div>
+        </div>
+    </span>
+    <span ng-if="!isRecipeZero()" style="overflow-y: scroll;cursor: auto;">
+      <div style="padding-right: 10px" class="item item-divider item-balanced no-padding">
+          <div class="row">
+              <div class="col col-40 item-text-wrap">Cost</div>
+              <div class="col col-30"></div>
+              <div style="padding-left: 9px" class="col col-20">{{ (totalingredientscost | currency:"$":4)}}</div>
+          </div>
+      </div>
+
+      <ion-list class="item paddingzero" ng-if="unitListLoaded" style="overflow-y: scroll;cursor: auto;">
+          <span ng-repeat="ingredient in ingredients | orderBy:'-ingredientCost'">
+            <marginoptimizeringredientitem ingredients="ingredient"  inglist="ingredients" ifeven="$even" itemparams="itemparams" unitlist="unitList"></marginoptimizeringredientitem>
+          </span>
+      </ion-list>
+
+    </span>
+    <div class="" ng-if="$root.isEditMode && addRow" ng-repeat= "item in current_selected_list">
+       <!-- ng-if="expandAddIng" -->
+       <div class="row smaller no-vertical-padding app-back-ground">
+         <div class="col col-center" style="max-width:3%;"></div>
+         <div class="col col-33 col-center item-text-wrap no-horizontal-padding ng-binding" >
+           <div class="item item-input-inset" ng-click="setIngredient(item,1,$index)" style="border:none;padding: 0px;cursor: auto;width: 95%;" >
+               <div class="item-input-wrapper" style="background: {{items.bg}}">
+                 <i class="icon ion-ios-search" ></i>
+                <b> <input type="text" ng-model="item.ingredientName" placeholder="Search" class="map-inv-drop-down"  disabled></b>
+                 <i class="icon ion-arrow-down-b" style="position: absolute;right: 10px;color: {{items.color}}"></i>
+               </div>
+           </div>
+         </div>
+         <div class="col col-15 col-center no-horizontal-padding" >
+           <span>
+             <span style="text-indent: 5px;">
+               <input type="number"
+                      class="num-no-dropdown"
+                      ng-model="item.portion"
+                      style="width: 85%;text-align:center;border-radius: 11px;border: 1px solid lightgray;"
+                      ng-change="addIngUpdated(item.portion)"
+                      ng-model-options="{debounce: 800}"
+                      limit-to="4">
+               <div style="text-align: center; color: lightgray;font-size:12px;padding-right: 20px;">Portion</div>
+             </span>
+           </span>
+         </div>
+         <div class="col col-30 col-center no-horizontal-padding" style="text-align:center">
+           <span class="ng-binding">
+           </span>
+           <span class="unit-config2-num-field add-ing-select-box-span col" style="border: 1px solid lightgray; border-radius: 12px; height: 30px; background-color: lightgray; margin-top: unset; width: 100% !important;">
+             <select class="unit-select-box add-ing-select col" name="singleSelect" ng-model="item.unit" style="border-radius: 12px;">
+               <option value="">Select</option>
+               <option ng-repeat="measurement in unitList">{{measurement}}</option>
+             </select>
+           </span>
+         </div>
+         <div class="col col-offset-5" ng-if="$root.isEditMode" style=""></div>
+         <div class="col col-10 col-center" ng-click="deleteMenuIng(item)" ng-if="$root.isEditMode" style="text-align: center;font-size: 1.9em;">
+           <i class="icon ion-android-cancel redflag"></i>
+         </div>
+       </div>
+    </div>
+    <hr style="margin-bottom:unset">
+    <div class="row" ng-click="addIngClick()" ng-if="$root.isEditMode" ng-class="{'add-ing-margin':isIos}">
+      <div class="col-10 add-ing-plus">
+        <i class="icon  icon-left" ng-class="expandAddIng ? 'ion-ios-minus-outline' : 'ion-ios-plus-outline'"></i>
+      </div>
+      <div class="col-80 add-ing">
+        Add More Ingredient
+      </div>
+    </div>
+</div>

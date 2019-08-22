@@ -1,0 +1,45 @@
+<ion-view title="{{title}}" ng-init="initializeView()">
+    <ion-nav-buttons side="secondary">
+          <!-- <button ng-if="showSearchBtn" class="button button-icon icon ion-ios-search-strong" ng-click="showSearchBar()"> -->
+          <!-- </button> -->
+
+        <button class="button button-icon icon ion-ios-search-strong" ng-if="!spinnerShow" ng-click="showFilterBar()">
+        </button>
+
+          <!-- <div class="item-input-wrapper" style="background: white;" ng-if="searchItem">
+            <i class="icon ion-android-arrow-back back-inv-config-search" ng-click="closeSearch()"></i>
+            <input type='text' ng-model='invoiceData.searchText' class="search-inventory-config" placeholder="Search item name or id" />
+          </div> -->
+
+    </ion-nav-buttons>
+
+
+    <busyspinner spinnerhide="!spinnerShow" class="purchase-track-spinner"></busyspinner>
+    <div class="spinner" ng-show="uploadSpinnerShow">
+        <ion-spinner  icon="lines" class="spinner-calm"></ion-spinner><p  style="color:#0091bd">Uploading ...</p>
+    </div>
+
+    <!--<span ng-if="data.invoicesList>0">-->
+    <div class="text-center item app-theme-text-level2" ng-show=" dataNotReceived" style="padding-top: 300px">
+        No Invoice Available
+    </div>
+    <invoiceselector ng-show="!showSearchData"></invoiceselector>
+
+    <ion-floating-menu id="my-float-invoiceTracking" has-footer="false" menu-color="#33cd5f" menu-open-color="#84e19f">
+        <ion-floating-item is-centered="true" icon-color="white" icon="ion-funnel" text="Group By" button-color="#33cd5f"
+                           click="showSortingFiltersheet()">
+        </ion-floating-item>
+        <ion-floating-item id="inv-summary" is-centered="true" icon-color="white" icon="ion-android-mail" text="Export Invoice Summary" button-color="#33cd5f" click="openPrompt()">
+       </ion-floating-item>
+
+    </ion-floating-menu>
+
+
+  <!-- <ion-content delegate-handle="scroller"  ng-hide="spinnerShow || uploadSpinnerShow" on-scroll="checkScroll()" direction="y" >      -->
+   <ion-content  ng-hide="spinnerShow || uploadSpinnerShow" style="overflow-y:scroll;">
+       <!--<ion-scroll style="width: 100%; height: 100%">-->
+        <invoicelist invoices="data.invoicesList" fetching-more="isFetchingMore()"></invoicelist>
+       <!--</ion-scroll>-->
+   </ion-content>
+
+</ion-view>

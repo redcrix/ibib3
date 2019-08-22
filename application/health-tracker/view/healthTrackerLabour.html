@@ -1,0 +1,44 @@
+<ion-view view-title="Business Health Tracker" align-title="center" ng-init="onHealthTrackerInitHandler()">
+  <ion-nav-bar class="bar bar-header app-theme-color app-theme-text" align-title="center">
+    <ion-nav-back-button ng-show="!navBarTitle.showToggleButton" class="app-theme-text">
+      </ion-nav-back-button>
+      <ion-nav-buttons side="left">
+          <button class="button icon-left ion-navicon button-clear side-menu-toggle" menu-toggle="left" ng-if="navBarTitle.showToggleButton">
+          </button>
+      </ion-nav-buttons>
+  </ion-nav-bar>
+
+  <ion-header-bar style="width:100%" class="bar bar-subheader bar-stable app-theme-color-level2 app-theme-text-level2 has-header" has-header="true">
+    <b class="button button-clear icon-right ion-arrow-down-b app-theme-text2" ng-click= "showPeriod()" style="font-weight:bold; float: left;"> {{PeriodDisplay}}</b>
+   <div style="float:left"> &emsp; &emsp; &emsp; {{textDisplay()}} {{latestDate}}</div>
+   <button class="button button-clear icon-right ion-ios-calendar-outline app-theme-text2" ng-click= "openDatePicker()" style="float: right;"> </button>
+ </ion-header-bar>
+
+    <ion-content class="app-back-ground">
+      <!-- <div class="button-bar ">
+          <a ng-repeat="filterbutton in filterButtons track by $index"
+             style="text-overflow: inherit; max-width:{{ filterbutton.max_width }}"
+             class="button button-bal no-horizontal-padding"
+             ng-class="filterbutton.clicked ? '' : 'button-out'"
+             ng-click="filterbuttonclick($index)">
+             <i ng-show="filterbutton.icon" class="icon icon-left {{ filterbutton.icon }}" style="vertical-align: sub;"></i>
+             <span style="vertical-align: sub;">{{ filterbutton.label }}</span></a>
+      </div> -->
+      
+        <div class="spinner" ng-hide="spinnerHide">
+            <ion-spinner icon="lines" class="spinner-calm"></ion-spinner>
+        </div>
+
+  <span ng-show="spinnerHide">
+        
+        <!-- <div  class="card" ng-click="chartClickHandler('food_sales')" ng-show="healthTrackerData.foodSalesData.length > 1">
+          
+            <isb-line-chart data="healthTrackerData.foodSalesData" horizontal-axis-labels="healthTrackerData.dates"
+                            legend-labels="healthTrackerData.foodSalesSeriesLabels" title="healthTrackerData.foodSalesTitle"
+                            show-legend="true"  scaleprefix="'$'"></isb-line-chart>
+        </div> -->
+
+
+        
+    </ion-content>
+</ion-view>

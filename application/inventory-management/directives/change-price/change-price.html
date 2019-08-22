@@ -1,0 +1,71 @@
+    <ion-modal-view class="inventory-changeprice-height">
+    <!--style="width: 90%; height: 60%; top: 20%; left: 5%; right: 5%; bottom: 20%;  min-height: 50%;"-->
+    <form name="changePrice">
+        <ion-header-bar class="bar error-reporting-modal">
+            <h1 class="title">Change Price</h1>
+            <a class="button" ng-click="closeModalCtrl()">Cancel</a>
+        </ion-header-bar>
+        <ion-content>
+            <busyspinner spinnerhide="dataReceived"></busyspinner>
+            <div class="row no-horizontal-padding">
+                <div class="col col-center no-horizontal-padding">
+            <span ng-if="dataReceived">
+            <div class="row">
+                <div class="col col-25 col-center">
+                    Ingredient:
+                </div>
+                <div class="col col-75 col-center">
+                    {{ configModifierItem.ingredient_alias_name | titleCase }}
+                </div>
+            </div>
+
+            <div class="row " style="padding-bottom: 10%;">
+                <div class="col col-25 col-center">Unit Price: </div>
+                <div class="col col-75 col-center no-horizontal-padding">
+                    <div class="row no-horizontal-padding">
+                        <div class="col col-75 col-center no-horizontal-padding" ng-if="!editUnitPrice" ng-click="editUnitPriceFn('edit')">
+                        {{ configModifierItem.ingredient_price_display | currency }} / {{ configModifierItem.quantity_units }}
+                        </div>
+
+                        <div class="col col-75 col-center no-horizontal-padding" ng-if="editUnitPrice">
+                          <!-- real-time-currency -->
+                            <input sync-focus-with="measurementUnitsFocus"
+                                   class="inventory-config-input"
+                                   style="width:100%; font-size: x-large; text-align: center;"
+                                   type="text" inputmode="numeric"
+                                   ng-model="configModifierItem.ingredient_price_stage"
+                                   ng-model-options="{ debounce: 800 }"
+                                   ng-change="toTwoDigit(configModifierItem.ingredient_price_stage)"
+                                   >
+                        </div>
+                        <div class="col col-25 col-center justbolder" ng-if="editUnitPrice">
+                              / {{ configModifierItem.quantity_units }}
+                        </div>
+                        <!--<div ng-click="editUnitPriceFn('edit')" class="col col-25 col-center  no-horizontal-padding" ng-if="!editUnitPrice"><i class="button button-stable icon ion-edit"></i></div>-->
+                        <!--<div ng-click="editUnitPriceFn('set')"  class="col col-10 col-center  no-horizontal-padding" ng-if="editUnitPrice"><i class="button  button-small  button-balanced icon ion-checkmark"></i></div>-->
+                        <!--<div class="col col-5 col-center no-horizontal-padding" ng-if="editUnitPrice"></div>-->
+                        <!--<div ng-click="editUnitPriceFn('cancel')"  class="col col-10 col-center  no-horizontal-padding"ng-if="editUnitPrice"><i class="button button-assertive icon ion-android-cancel" ></i></div>-->
+                    </div>
+
+                </div>
+            </div>
+
+
+            </span>
+                </div>
+            </div>
+        </ion-content>
+
+        <!-- <div class="bar buttonbar-footer-larger no-vertical-padding">
+            <button class="full-width-button app-theme-text" ng-click="confirmChangePrice()" ng-class="changePriceButtonColor">
+                {{ changePriceButtonText }}
+            </button>
+        </div> ng-class="changePriceButtonColor"-->
+        <ion-footer-bar  align-title="left">
+            <button  ng-disabled="changePrice.$invalid || disableSave"  class="full-width-button app-theme-text" style="border: none;" ng-click="confirmChangePrice()" ng-class="{app_theme_color: !disableSave, app_theme_disabled_color: disableSave}" >
+                {{ changePriceButtonText }}
+            </button>
+        </ion-footer-bar>
+
+    </form>
+</ion-modal-view>

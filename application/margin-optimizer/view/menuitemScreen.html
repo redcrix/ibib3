@@ -1,0 +1,64 @@
+<ion-view view-title="{{ item.menuItemName | titleCase }}" ng-controller="menuItemScreenCtrl" ng-init="onMenuItemInit()">
+  <ion-nav-buttons side="secondary">
+    <!-- <div class="tooltip"> -->
+      <button class="button button-icon " ng-click="refreshScreen()" style="color: white;" ng-if="!$root.isEditMode"><i class=" refresh icon ion-refresh"></i>
+      </button>
+      <!-- <span class="tooltiptext">Refresh this page</span> -->
+    <!-- </div> -->
+  </ion-nav-buttons>
+  <backbuttonwindow navbartitle="navBarTitle"></backbuttonwindow>
+  <!--<infobutton></infobutton>-->
+  <busyspinner spinnerhide="spinnerHide"></busyspinner>
+  <div ng-if="spinnerHide">
+    <!-- <tasksfloatbutton></tasksfloatbutton> -->
+    <!-- <ion-floating-menu id="my-float" menu-color="#33cd5f" menu-open-color="#84e19f" ng-if="!isEditMode"> -->
+    <ion-floating-menu id="my-float" menu-color="#33cd5f" menu-open-color="#84e19f" ng-if="$root.showFloatingBtn">
+      <!-- <ion-floating-item icon="ion-edit" click="toggleEditMode({'prompt_confirmation': false})" button-color="#33cd5f" ng-if="!isEditMode" text="Edit"></ion-floating-item> -->
+      <!-- <tasksfloatbutton></tasksfloatbutton> -->
+
+      <ion-floating-item is-centered="true" icon="ion-clipboard" click="goToTask()" button-color="#33cd5f" button-color="white" ng-if="!isEditMode" text="Go To Tasks"></ion-floating-item>
+      <ion-floating-item is-centered="true" icon-color="white" icon="ion-android-mail" text="Export Data" button-color="#33cd5f" click="openPrompt()" ng-if="!ExportData"></ion-floating-item>
+      <ion-floating-item is-centered="true" icon="icon ion-edit" click="allowEdit()" button-color="#33cd5f" button-color="white" ng-if="!isEditMode && $root.listSpinnerHide" text="Edit"></ion-floating-item>
+    </ion-floating-menu>
+
+    <!-- <ion-floating-button ng-if="isEditMode" click="toggleEditMode({'prompt_confirmation': true})" id="my-float" has-footer="false" icon="ion-ios-undo" button-color="#33cd5f" icon-color="white">
+        </ion-floating-button> -->
+
+    <ion-content class="has-header" ng-class="isEditMode?'has-one-footer' :''">
+
+      <ion-list>
+        <marginoptimizermenuitem item="item" detaillink="false" ifeven="true" getdataoninit="false" showdetails="true" menuitemlist="getMenuItemList"></marginoptimizermenuitem>
+      </ion-list>
+
+
+
+      <!-- <marginoptimizeringredientlist ingredients="ingredients"></marginoptimizeringredientlist> -->
+      <marginoptimizeringredientlist ingredients="ingredients" menuitemlist="getMenuItemList" itemparams="itemParams"></marginoptimizeringredientlist>
+    </ion-content>
+    <div ng-if="$root.isEditMode && $root.showIds" class="bar bar-subfooter " style="color:#33CD5F;padding-bottom: 50px;width:75%">
+      <div style="padding-top: 10px;padding-left: 180vh">
+        <button style="position: fixed;padding:0px;width: 15%;" ng-class="{update_cost_color: !$root.disableSave, update_cost_disabled_color: $root.disableSave}" ng-disabled="$root.disableSave" ng-click="$root.updateCost()">Update cost
+        </button>
+      </div>
+    </div>
+
+    <div ng-if="$root.isEditMode" class="bar bar-footer no-vertical-padding" style="flex-flow: column; height: auto">
+      <div class="row">
+        <div class="col-50">
+          <button ng-disabled="$root.disableSave" ng-class="{app_theme_color: !$root.disableSave, app_theme_disabled_color: $root.disableSave}" class="full-width-button col-90 app-theme-text" ng-click="updateRecipe()">
+            Save
+          </button>
+        </div>
+        <div class="col-50">
+          <button style="margin-left: 10%;" class="full-width-button button col-90" ng-click="discardChanges()">
+            Discard
+          </button>
+        </div>
+      </div>
+      <!-- <div class="row">
+          <button ng-disabled="$root.disableSave" ng-class="{app_theme_color: !$root.disableSave, app_theme_disabled_color: $root.disableSave}" class="full-width-button app-theme-text" ng-click="updateRecipe()">
+            Save
+          </button>
+      </div> -->
+    </div>
+</ion-view>

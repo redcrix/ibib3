@@ -1,0 +1,58 @@
+<ion-view title="{{ordering_name}}">
+  <!-- <ion-nav-buttons side="secondary"> -->
+
+    <!-- <div class="item-input-wrapper show-search-inv" style="background: white;" ng-show="searchItem">
+      <i class="icon ion-android-arrow-back back-inv-config-search" ng-click="closeSearch()"></i>
+      <input type='text' ng-model='data.searchText' class="search-inventory-config" placeholder="Search item name or id" />
+    </div> -->
+  <!-- </ion-nav-buttons> -->
+
+  <div class="bar bar-subheader bar-stable  app-theme-color-level2 app-theme-text" style="height: 8%;">
+      <!-- <filterbuttonbar class="inv-config-filter-btn" ng-click="changeTab()" filterbuttons="filterButtons" allowalldeselected="false"></filterbuttonbar> -->
+      <div class="inv-config-filter-btn" style="height:90%;">
+      <div class="button-bar" style="height:inherit;">
+      <a ng-repeat="filterbutton in filterButtons track by $index"
+         style="max-width:50%;text-align: center; font-size: 14px; display: flex;align-items: center;justify-content: center;"
+         class="button button-bal no-horizontal-padding"
+         ng-class="filterbutton.isLocked ? 'is-locked' : !filterbutton.clicked ? 'button-out' : '' "
+         ng-click="changeTab();filterbuttonclick($index)">
+         <i ng-show="filterbutton.icon" class="icon icon-left {{ filterbutton.icon }}" ></i>
+         <span  class="item-text-wrap" style="text-align: center;"><i ng-if="filterbutton.label=='Cart'" class="icon ion-ios-cart" style="vertical-align: middle;
+          padding: 3px 8px 0 0;"></i>{{ filterbutton.label }} </span></a>
+      </div>
+      </div>
+  </div>
+  <ion-floating-menu id="my-float-inventory" menu-color="#33cd5f" menu-open-color="#84e19f">
+      <ion-floating-item
+          is-centered="true"
+          icon-color="white"
+          icon="ion-funnel"
+          text="Group By"
+          button-color="#33cd5f"
+          click="setItemGrouping()">
+     </ion-floating-item>
+  </ion-floating-menu>
+  <ion-content class="has-header has-tabs-top app-back-ground" style="top: 70px;">
+      <div ng-if='recommended'>
+        <!-- <busyspinner spinnerhide="changeScreen"></busyspinner> -->
+        <!-- <span ng-if='invItems'> -->
+            <!-- <map-inventory bar="navBarTitle" items="invItems"></map-inventory> -->
+            <cart-view orderingitemid="orderingId" orderingitemname="ordering_name" cart=false></cart-view>
+        <!-- </span> -->
+      </div>
+      <span ng-if='draft_items'>
+        <!-- <inactive-items bar="navBarTitle"></inactive-items> -->
+        <orderingcompose orderingitemid="orderingId" orderingitemname="ordering_name" storeid="store_id" dateofcreation="date_of_creation" ><orderingcompose>
+        <!-- <orderingcompose></orderingcompose> -->
+      </span>
+      <!-- <ion-tab title="Config" icon="ion-clipboard" on-select="configClickHandler()">
+        <ion-nav-view name="config"> -->
+          <span ng-if='cart'>
+            <cart-view orderingitemid="orderingId" orderingitemname="ordering_name" cart=true></cart-view>
+          </span>
+        <!-- </ion-nav-view>
+      </ion-tab> -->
+
+  </ion-content>
+
+</ion-view>

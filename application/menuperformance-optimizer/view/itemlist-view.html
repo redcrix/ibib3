@@ -1,0 +1,18 @@
+<div ng-show="filtered_menuitems.length>0" class="card list">
+    <div ng-controller="MenuPerformanceOptimizerCtrl" class="item item-divider item-balanced no-padding">
+        <div class="row" ui-sref-if="{{ !hidemore }}"
+             ui-sref-val="app.MenuPerformanceoptimizersection({section_id:'{{section.reference_key}}'})">
+            <div class="col col-90">{{section.section_name | titleCase }}</div>
+            <div class="col" ng-hide="{{ hidemore }}"><i class="ion-android-more-horizontal"></i></div>
+
+        </div>
+    </div>
+    <ion-list class="item paddingzero">
+        <span ng-repeat="item in filtered_menuitems=(section.menu_items | filter:filterperformanceclass) | limitTo:itemdisplaylimit">
+
+
+        <menuperformanceitem userperformanceclass="userperformanceclass" item="item" maxsales="section.max_sales"
+                             ifeven="$even" detaillink="false"></menuperformanceitem>
+        </span>
+    </ion-list>
+</div>

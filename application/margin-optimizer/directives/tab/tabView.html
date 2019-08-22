@@ -1,0 +1,24 @@
+<ion-view view-title="Menu Performance">
+    <busyspinner spinnerhide="spinnerHide"></busyspinner>
+    <span ng-show="spinnerHide" class="margin-opti-span">
+        <div class="bar bar-subheader margin-optimizer-sort-button-bar" style="height: 10% !important;height: 10% !important;
+                                                                        /* box-shadow: -1px 1px 5px 0px rgba(0, 0, 0, 0.25) inset; */
+                                                                        transition: 0.4s linear;
+                                                                        transition-property: width, background-color;
+                                                                        background-color: #dad7d79c;">
+            <filterbuttonbar filterbuttons="filterButtons"></filterbuttonbar>
+        </div>
+        <ion-content class="has-header has-subheader has-tabs-bottom app-back-ground set-margin-opti-footer" style="top: 128px;cursor: auto;overflow-y: scroll;">
+
+            <span ng-repeat="section in ( sections | orderBy:userSortingClass() )">
+                <marginoptimizersection section="section" hidemore="false"
+                                        itemdisplaylimit="3"
+                                        sortingclass="userSortingClass()"></marginoptimizersection>
+            </span>
+
+             <div class="item item-text-wrap text-center" ng-if="!sections.length && spinnerHide" style="top:10%;">
+                   No menu items found in this category. Please contact support
+            </div>
+    </ion-content>
+    </span>
+</ion-view>

@@ -1,0 +1,18 @@
+<div style="display: flex; flex-flow: row; justify-content: space-between;align-items: center;">
+    <div class="col col-60">
+        <div style="font-size: 100%; overflow: hidden; text-overflow: ellipsis;">{{ctrl.Item.name}}</div>
+        <div style="font-size: 60%; text-transform: uppercase; font-style: italic;margin-top: 5px; min-width: 150px">{{ctrl.Item.date}}</div>
+    </div>
+    <!--<div class="col col-33">
+  <div style="font-size: 100%; overflow: hidden; text-overflow: ellipsis;">{{ctrl.Item.actual_food_cost_percentage}}</div>
+  <div style="font-size: 60%; text-transform: uppercase; font-style: italic;margin-top: 5px; min-width: 150px">Food Cost</div>
+</div>
+<div class="col col-33">
+  <div style="font-size: 100%; overflow: hidden; text-overflow: ellipsis;">{{ctrl.Item.wastage}}</div>
+  <div style="font-size: 60%; text-transform: uppercase; font-style: italic;margin-top: 5px; min-width: 150px">Wastage</div>
+</div> -->
+    <div class="col col-40">
+        <div style="font-size: 100%; overflow: hidden; text-overflow: ellipsis;">${{ctrl.Item.total_value_of_ordering}}</div>
+        <div style="font-size: 60%; text-transform: uppercase; font-style: italic; min-width: 150px">Total</div>
+    </div>
+</div>

@@ -1,0 +1,265 @@
+<ion-view title="{{ ctrl.inventory_name }}" align-title="center" ng-init="ctrl.init()" class="inventory-ion-view">
+
+  <backbuttonbaralt showbutton="!connectionLostWatcher()"></backbuttonbaralt>
+  <!-- <ion-nav-bar class="bar bar-header app-theme-text app-theme-color nav-bar-container"> -->
+  <ion-nav-buttons side="secondary">
+    <button class="button button-icon icon ion-ios-search-strong" ng-click="ctrl.showFilterBar()">
+    </button>
+    <button class="button button-icon icon ion-gear-b" ng-click="ctrl.showPopup()" >
+    </button>
+  </ion-nav-buttons>
+  <!-- </ion-nav-bar> -->
+  <!-- <div class="spinner" ng-show="ctrl.showLoader" style="z-index: 10">
+        <ion-spinner icon="lines" class="spinner-calm spinner spinner-lines"></ion-spinner>
+    </div> -->
+  <busyspinner spinnerhide="!ctrl.showLoader"></busyspinner>
+  <span ng-show="!ctrl.showLoader">
+    <ion-header-bar id="headerbar" class="bar bar-subheader app-theme-color-level2 no-vertical-padding no-horizontal-padding">
+      <div class="app-theme-color-level2">
+        <div class="row">
+          <div class="col col-center no-vertical-padding">
+            <span ng-repeat="saveStatus in ctrl.saveStatus track by $index" class="{{ saveStatus.level }}"> {{ saveStatus.text }}</span>
+          </div>
+        </div>
+
+
+
+        <div class="inventory-list-header">
+          <div style="flex-basis:{{ ctrl.rowSize.name }}%; flex-shrink: 0; flex-grow: 1; white-space: normal;">Name</div>
+          <div style="flex-basis: {{ ctrl.rowSize.price }}%; flex-shrink: 0; flex-grow: 1" ng-hide="!(minorCategorySelected)">Price</div>
+          <div style="flex-basis:{{ ctrl.rowSize.qty }}%; flex-shrink: 0; flex-grow: 1" ng-hide="!(minorCategorySelected)">Qty</div>
+          <div style="flex-basis: {{ ctrl.rowSize.units}}%; flex-shrink: 0; flex-grow: 1" ng-hide="!(minorCategorySelected)">Units</div>
+          <div style="flex-basis: 2%; flex-shrink: 0; flex-grow: 1" ng-hide="!(minorCategorySelected)">Par</div>
+          <div style="flex-basis: {{ ctrl.rowSize.value }}%; flex-shrink: 0; flex-grow: 1; text-align: end" ng-hide="!(minorCategorySelected)">Value</div>
+          <div style="flex-basis: {{ ctrl.rowSize.category }}%;flex-shrink: 0; flex-grow: 1; text-align: end" ng-hide="(minorCategorySelected)">{{Category}}</div>
+        </div>
+
+      </div>
+      </div>
+
+
+    </ion-header-bar>
+    <ion-floating-menu id="my-float-inventory" menu-color="#33cd5f" menu-open-color="#84e19f">
+      <ion-floating-item is-centered="true" icon-color="white" icon="ion-funnel" text="Group By" button-color="#33cd5f" click="ctrl.showSortingActionsheet()"></ion-floating-item>
+
+      <ion-floating-item is-centered="true" icon-color="white" icon="ion-android-mail" text="Export Data" button-color="#33cd5f" click="ctrl.openPrompt()"></ion-floating-item>
+
+      <ion-floating-item id="inv-summary" is-centered="true" icon-color="white" icon="ion-clipboard" text="Inventory Summary" button-color="#33cd5f" click="ctrl.openInventorySummary()"></ion-floating-item>
+      <ion-floating-item is-centered="true" icon-color="white" icon="menu-icon ion-plus" text="Add Item" button-color="#33cd5f" click="ctrl.openForm()"></ion-floating-item>
+      <ion-floating-item id="inv-summary" is-centered="true" icon-color="white" icon="ion-clipboard" text="Edit MinorCategory" button-color="#33cd5f" click="ctrl.showEditMinorCategory()"></ion-floating-item>
+    </ion-floating-menu>
+
+    <ion-content class="has-header has-big-footer has-sub-header" style="top:17%;">
+      <!-- <ion-scroll delegate-handle="taskScroll" direction="y"> -->
+      <!-- <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width height=device-height"> -->
+      <ion-list class="ion-cat-list">
+        <ion-item spinnerhide="showItemsLoading" ng-show="!spinnerShow" ng-repeat="item in ctrl.items |filter : searchText" style="border: 0; padding: 0;">
+          <!-- <ion-item spinnerhide="showItemsLoading" ng-if="ctrl.items.length" style="border: 0; padding: 0;"> -->
+          <product-category spinnerhide="showItemsLoading" category-data="item" temp-array="ctrl.items" all-cat-data="ctrl.setCatIng" mode="ctrl.editMode" filter-view="ctrl.currentView" last-name="$last && ctrl.items[$index].name"></product-category>
+        </ion-item>
+      </ion-list>
+      <div style="padding-bottom: 100px;"></div>
+      <!-- </ion-scroll> -->
+    </ion-content>
+
+    <!-- <div class="spinner" ng-show="spinnerShow" style="z-index: 10">
+      <ion-spinner icon="lines" class="spinner-calm spinner spinner-lines"></ion-spinner>
+    </div> -->
+    <busyspinner spinnerhide="!spinnerShow"></busyspinner>
+    <div class="bar bar-footer" align-title="left" style="flex-flow: column; height: auto">
+      <div class="row item-divider" style="padding: 12px;" ng-hide="!(minorCategorySelected)">
+        <div style=" width: 85%; display: flex;justify-content: space-around; align-items: center; flex-flow: row" class="col-100">
+          <div>Total value of Inventory: </div>
+          <div>{{(ctrl.totalValue || 0)| currency }}</div>
+
+          <!-- <ion-floating-button ng-if="!ctrl.connectionLostWatcher()" click="ctrl.showSortingActionsheet()" has-footer="false" icon="ion-funnel" button-color="white" id="my-float-inventory">
+                </ion-floating-button> -->
+
+        </div>
+      </div>
+
+      <!-- PB-591 : ng-style="(ctrl.totalValue == 0) && {'pointer-events': 'none'}"-->
+      <!-- <div class="bar bar-footer no-vertical-padding" style="flex-flow: column; height: auto"> -->
+      <div class="row">
+        <div class="col">
+          <button ng-class="connectionLostWatcher()? 'app-theme-color-level2' : 'app-theme-color'" style="padding: 10px;" class="full-width-button col-90 app-theme-text" ng-click="connectionLostWatcher() || submitInventory()">
+            {{Submit}}
+          </button>
+        </div>
+        <div class="col">
+          <button style="margin-left: 10%;padding: 10px;" class="full-width-button button col-90 aapp-theme-color-level2" ng-click="calculatePrice()">
+            Calculate Cat Totals
+          </button>
+        </div>
+      </div>
+      <!-- </div>  -->
+      <!-- <div class="row"  ng-click="connectionLostWatcher() || submitInventory()" ng-class="connectionLostWatcher()? 'app-theme-color-level2' : 'app-theme-color'"  style="padding: 10px;"  >
+            <div style=" margin-left: auto; margin-right: auto; display: block;" class="col-100 app-theme-text">
+                {{Submit}}
+            </div>
+        </div> -->
+
+    </div>
+  </span>
+  <script id="add-inventory-item-modal.html" type="text/ng-template">
+
+    <ion-modal-view class="my-inv-modal">
+      <ion-header-bar style="background-color: #F5F5F5;">
+        <div class="col col-90">
+          <h1 class="text-center add-inv-header-name">Add New Inventory Item</h1>
+        </div>
+        <div class="col col-10" ng-click="closeModal()"><i class="icon ion-close"></i></div>
+      </ion-header-bar>
+      <hr style="border-top: 10px solid #f8f8f8;margin-top: 12%">
+      <ion-content style="overflow: auto;">
+        <form name="form.addInvItem" ng-submit="addInventoryItem()" novalidate style="padding: 10px;">
+          <div class="row add-inv-name-div">
+            <input placeholder="Inventory Item Name" name="invName" class="add-inv-name" type="text" ng-model="invItem.name" ng-maxlength="30" required />
+          </div>
+          <p ng-show="form.addInvItem.invName.$error.required && form.addInvItem.invName.$touched" class="help-block error">Inventory Item Name is required.</p>
+          <p ng-show="form.addInvItem.invName.$error.maxlength" class="help-block error">Inventory Item Name is too long</p>
+          <div class="list add-inv-type-div">
+            <label class="item item-input item-select add-inv-type-lbl">
+              <div class="input-label" style="font-size:14px;">
+                Category
+              </div>
+              <select ng-model="invItem.category" name="invCategory" required="">
+                <option value="">Select</option>
+                <option ng-repeat="category in categories_list track by $index">{{category}}</option>
+              </select>
+            </label>
+          </div>
+          <p ng-show="form.addInvItem.invCategory.$invalid && form.addInvItem.invCategory.$touched" class="help-block error">Category is required.</p>
+          <div class="list add-inv-type-div">
+            <label class="item item-input item-select add-inv-type-lbl">
+              <div class="input-label" style="font-size:14px;">
+                Minor category
+              </div>
+              <select ng-model="invItem.minorCategory" name="minorCategory" required="">
+                <option value="">Select</option>
+                <option ng-repeat="minorCat in minor_categories_list track by $index">{{minorCat | uppercase}}</option>
+              </select>
+            </label>
+          </div>
+          <p ng-show="form.addInvItem.minorCategory.$invalid && form.addInvItem.minorCategory.$touched" class="help-block error">Minor category is required.</p>
+          <div class="list add-inv-type-div">
+            <label class="item item-input item-select add-inv-type-lbl">
+              <div class="input-label" style="font-size:14px;">
+                PnL category
+              </div>
+              <select ng-model="invItem.pnlCategory" name="pnlCategory" required="">
+                <option value="">Select</option>
+                <option ng-repeat="pnlCat in pnl_categories_list track by $index">{{pnlCat}}</option>
+              </select>
+            </label>
+          </div>
+          <p ng-show="form.addInvItem.pnlCategory.$invalid && form.addInvItem.pnlCategory.$touched" class="help-block error">PnL category is required.</p>
+          <div class="list add-inv-unit-div" style="">
+            <label class="item item-input item-select add-inv-unit-lbl">
+              <div class="input-label" style="font-size:14px;">
+                Unit
+              </div>
+              <select ng-model="invItem.measurement" name="invUnit" required="">
+                <option value="">Select</option>
+                <option ng-repeat="measurement in measurements_list">{{measurement.measurement_id}}</option>
+              </select>
+            </label>
+          </div>
+          <p ng-show="form.addInvItem.invUnit.$invalid && form.addInvItem.invUnit.$touched" class="help-block error">Unit is required.</p>
+          <div class=" item item-input add-inv-price-div">
+            <i class="icon ion-social-usd placeholder-icon add-inv-price-icon"></i>
+            <input type="number" class="add-inv-price" name="invPrice" placeholder="Price" ng-model="invItem.price" ng-model-options="{debounce: 500}" convert-to-decimal-dir required />
+          </div>
+          <p ng-show="form.addInvItem.invPrice.$touched && form.addInvItem.invPrice.$invalid" class="help-block error">Please enter valid Price.</p>
+          <div class="row add-inv-par-div">
+            <input placeholder="Par Value" type="number" class="add-inv-par" name="invPAr" ng-model="invItem.par" ng-model-options="{debounce: 500}" convert-par-to-decimal />
+          </div>
+          <p ng-show="form.addInvItem.invPAr.$invalid && form.addInvItem.invPAr.$touched " class="help-block error">Please enter valid value.</p>
+          <div class="popup-buttons">
+            <button type="button" class="button button-default " ng-class="button-default" ng-click="closeModal()">Cancel</button>
+            <button type="submit" class="button button-bal " ng-disabled="form.addInvItem.$invalid"><b>Add</b></button>
+          </div>
+        </form>
+      </ion-content>
+    </ion-modal-view>
+  </script>
+  <script id="inv-summary-modal.html" type="text/ng-template">
+    <ion-modal-view>
+            <ion-header-bar class="bar error-reporting-modal">
+                <h1 class="title">Inventory Summary</h1>
+                <a class="button" ng-click="closeSummaryModal()">Cancel</a>
+            </ion-header-bar>
+            <ion-content style="top: 13%">
+              <!-- <busyspinner spinnerhide="summaryDataReceived"></busyspinner> -->
+                <div class="spinner" style="height: 260px;" ng-hide="summaryDataReceived">
+                    <ion-spinner icon="lines" class="spinner-calm"></ion-spinner><br/>
+                    <div style="text-align:center;">
+                        <span class="spinner-text">Pepr is working hard,</span> <br/>
+                        <span class="spinner-text">Please wait! (approx 15 sec)</span>
+                    </div>
+                </div>
+                <ion-tabs  class="tabs-bottom tabs-color-active-balanced">
+                    <ion-tab title="P&L Categories">
+                      <ion-nav-view name="P&L Categories">
+                        <ion-content >
+                          <span ng-if="summaryDataReceived">
+                            <span ng-repeat="data in summaryData">
+                                <div style="" class="card tbl-head inv-summary-tbl">
+                                    <div class="row app-back-ground">
+                                        <div class="col col-33"
+                                             style="text-align: left;font-size: 15px;{{data.style}}">{{data.label | titleCase}}
+                                        </div>
+                                        <div class="col col-10"
+                                             style="text-align: center;{{data.style}}">:
+                                        </div>
+                                        <div class="col col-50"
+                                             style="text-align: right;font-size: 15px;{{data.style}}">$ {{data.value }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- <div style="" class="card tbl-head inv-summary-tbl">
+                                    <div class="row app-back-ground">
+                                        <div class="col col-33"
+                                             style="text-align: left;{{data.style}}">aaaaa
+                                        </div>
+                                        <div class="col col-10"
+                                             style="text-align: center;{{data.style}}">:
+                                        </div>
+                                        <div class="col col-50"
+                                             style="text-align: right;{{data.style}}">bbbbb
+                                        </div>
+                                    </div>
+                                </div>       -->
+                            </span>
+                           </span>
+                        </ion-content>
+                      </ion-nav-view>
+                    </ion-tab>
+                    <ion-tab title="Minor Categories">
+                        <ion-nav-view name="Minor Categories">
+                            <ion-content style="position: center;">
+                                <span ng-if="summaryDataReceived">
+                                    <span ng-repeat="data in minorSummaryData">
+                                        <div style="" class="card tbl-head inv-summary-tbl">
+                                            <div class="row app-back-ground">
+                                                <div class="col col-33"
+                                             style="text-align: left;font-size: 15px;{{data.style}}">{{data.minorCategory}}
+                                                </div>
+                                            <div class="col col-10"
+                                             style="text-align: center;{{data.style}}">:
+                                            </div>
+                                            <div class="col col-50"
+                                             style="text-align: right;font-size: 15px;{{data.style}}">$ {{data.myCalculatedData|number:2 }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </span>
+                            </span>
+                          </ion-content>
+                        </ion-nav-view>
+                    </ion-tab>
+                </ion-tabs>
+            </ion-content>
+        </ion-modal-view>
+    </script>
+</ion-view>

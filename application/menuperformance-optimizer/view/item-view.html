@@ -1,0 +1,27 @@
+<ion-item ng-controller="MenuPerformanceOptimizerCtrl" ng-class="ifeven? 'app-back-ground':''">
+    <div ng-class="ifeven? 'app-back-ground':''" class="row smaller" ui-sref-if="{{ detaillink }}"
+         ui-sref-val="app.MenuPerformanceoptimizermenuitem({menuitem_id:'{{item.reference_key}}'})">
+        <div class="col col-75 item-text-wrap"> {{item.item_name | titleCase }}
+            <br>
+            <div>
+                <!--<span class="thresholdmeterlabel"> {{dummysales | number:0}}</span>-->
+                <progress style="margin-top: 6px; margin-bottom: 0px;" class="thresholdmeter" max="{{maxsales}}"
+                          value={{item.sales}}></progress>
+                <div class="subscripttag">(Sales)</div>
+            </div>
+        </div>
+        <div class="col">
+            <div> ${{item.sales | number:0}}
+                <div class="subscripttag">(Sales)</div>
+            </div>
+            <!--<br>-->
+            <!--<div ng-class="item.sales_change<0? 'redflag':'greenflag'"> {{item.sales_change | makePositive | currency}}-->
+                <!--<div class="subscripttag">(Change)</div>-->
+            <!--</div>-->
+        </div>
+    </div>
+    <ion-option-button class="button-balanced icon ion-ios-arrow-forward mediumsize"
+                       ng-click="decide('Menu Performance Optimizer','Change Price', item, item.item_name)"> &nbspChange
+        price
+    </ion-option-button>
+</ion-item>

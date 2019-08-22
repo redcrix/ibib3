@@ -1,0 +1,63 @@
+<ion-view title={{laborType }}>
+    <busyspinner spinnerhide="spinnerHide"></busyspinner>
+    <span ng-if="spinnerHide">
+        <ion-header-bar class="bar bar-subheader bar-stable app-theme-color-level2 app-theme-text-level2 no-vertical-padding no-horizontal-padding">
+            <div class="row no-vertical-padding">
+                <div class="col col-30 col-center">
+                    <button class="button button-clear icon-right ion-arrow-down-b" ng-click="showPeriod()"
+                            style="font-weight:600; float: left; color: #000000;"> {{timePeriod('display')}}
+                    </button>
+                </div>
+                <div class="col col-60 col-center" style="font-weight:600; float: left; color: #000000; text-align: left">{{ textDisplay() }}</div>
+                <div class="col col-10 col-center">
+                    <button class="button button-clear icon-right ion-ios-calendar-outline app-theme-text2"
+                            ng-click="openDatePicker()" style="float: right;"></button>
+                </div>
+            </div>
+            <!-- <div id="set-spin" ng-show="!showChart"> -->
+                <busyspinner id="labor-loader" spinnerhide="showChart || !showData"></busyspinner>
+            <!-- </div>   ng-class="{'labor-height': !showChart }"-->
+                <span ng-if="showData">
+                <div style="margin-top:0px; margin-bottom:2px; margin-left: 5px; margin-right: 5px;height: {{ ::setChartDivHeight }}" class="card chart-div">
+
+                  <!-- <isb-line-chart data="chartData" horizontal-axis-labels="chartDates" show-legend="false"
+                                  title="chartTitle"></isb-line-chart> -->
+                    <span ng-if="showChart && showData">
+                        <div class='container'><canvas id='chartContainer_{{chartIndex}}'></canvas></div>
+                    </span>
+                </div>
+
+                <div style="margin-top:0px; margin-bottom:0px; margin-left: 5px; margin-right: 5px;" class="card tbl-head">
+                    <div class="row app-back-ground">
+                        <div ng-repeat="headerItem in headerItems" class="col {{ ::headerItem.col_width }}"
+                             style="{{ ::headerItem.specialStyle }}">{{ ::headerItem.label }}
+                        </div>
+
+                    </div>
+                </div>
+            </span>
+
+
+        </ion-header-bar>
+
+        <!-- <ion-content class="has-header has-subheader has-tabs-bottom" id="chartTblHead" ng-class="showData ? 'half-height' :''"> -->
+        <ion-content class="has-header has-subheader has-tabs-bottom" id="chartTblHead" style="top:{{ ::setContentHeight }}">
+            <h2 ng-if="!showData" class="item item-borderless item-text-wrap text-center">
+                No Information Available
+            </h2>
+            <span ng-if="showData">
+                <div class="card" style="margin-top:0px; margin-bottom:0px; margin-left: 5px; margin-right: 5px;">
+                    <ion-list>
+                    <ion-item class="row item" ng-class="row.selected? 'ingredient-price-selected-row': ''"
+                        ng-repeat="row in tableData" ng-click="change_chart(row)" style="padding-top: 3%;padding-bottom: 3%;">
+                        <div class="col col-67 col-center " ng-style="row.name == 'Total' ? {'font-weight':'bold'} : {'font-weight':'none'}">{{ ::row.name}}</div>
+                        <div class="col col-33 col-center text-center item-text-wrap labor-currancy" ng-style="row.name == 'Total' ? {'font-weight':'bold'} : {'font-weight':'none'}">{{ ::row.value | currency}}</div>
+                     </ion-item>
+                    </ion-list>
+                </div>
+            </span>
+
+        </ion-content>
+
+        </span>
+</ion-view>

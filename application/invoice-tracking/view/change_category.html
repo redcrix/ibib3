@@ -1,0 +1,27 @@
+
+<ion-modal-view class="PandL-add-height">
+  <ion-header-bar class="bar error-reporting-modal">
+    <h1 class="title" style="text-align: center;right: none;">P&L Category</h1>
+  </ion-header-bar>
+  <ion-content style="overflow: auto;">
+        <ion-item style="padding: 48px 0px 0px 35px;padding-top:20px;"> 
+        <div >
+          <span ng-repeat="PnLOptionChunk in PnLOptionsChunks">
+            <div class="button-bar no-vertical-padding" style="width:90%;">                                            
+              <a ng-repeat="PnLOption in PnLOptionChunk track by $index" class="button button-small btn {{PnLOption.buttonStyle}} "  ng-model="PnLOption.selected" ng-click="PnLOptionClick(PnLOption.name)" style="padding: 0 10px;">
+                <div class="row no-vertical-padding no-horizontal-padding" style="text-align: center;">
+                  {{PnLOption.name | titleCase}} 
+                </div>
+              </a>
+              </div>                                                   
+            </div>
+            </span>
+        </div>
+      </ion-item>
+        <div class="row" style="margin-bottom: 20px;"></div>
+      <div class="popup-buttons">
+        <button type="button" class="button button-bal " ng-click="updateCategory()">Save</button>
+        <button type="button" class="button button-bal " ng-click="closeCategoryModal()">Cancel</button>
+    </div>
+  </ion-content>
+</ion-modal-view>

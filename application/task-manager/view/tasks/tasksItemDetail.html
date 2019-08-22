@@ -1,0 +1,25 @@
+<ion-item ng-click="getDetialsView()" ng-hide="isGroupShown(taskDataGroup)" style="padding: 10px;" class=" paddingzero" ng-class="ifeven? 'app-back-ground':''">
+    <div class="row paddingzero smaller">
+        <div class="col"></div>
+        <div class="col col-center">
+            <i class="ion-arrow-down-b">&nbsp</i> &nbspTask details &nbsp
+            <i class="ion-arrow-down-b">&nbsp</i>
+        </div>
+        <div class="col"></div>
+    </div>
+</ion-item>
+<ion-item ng-click="toggleGroup(taskDataGroup)" ng-show="isGroupShown(taskDataGroup)" class=" paddingzero" ng-class="ifeven? 'app-back-ground':''">
+    <div class="row paddingzero smaller">
+        <div class="col"></div>
+        <div class="col col-center">
+            <i class="ion-arrow-up-b">&nbsp</i> &nbspTask details &nbsp
+            <i class="ion-arrow-up-b">&nbsp</i>
+        </div>
+        <div class="col"></div>
+    </div>
+</ion-item>
+<span ng-show="isGroupShown(taskDataGroup)" bind-html-compile="template">
+
+    <!--<anydetailview task="task" ifeven="ifeven" data="taskDataGroup"></anydetailview>-->
+
+</span>

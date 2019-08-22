@@ -1,0 +1,17 @@
+<div class="card list">
+    <div class="item item-divider item-balanced no-padding">
+        <div class="row" ui-sref-if="{{ !hidemore }}" ui-sref-val="app.marginoptimizersection({section_id:'{{section.reference_key}}'})">
+            <div class="col col-75">{{section.section_name | titleCase }}</div>
+            <div class="col">{{section.section_cost_percent | number:0}}%</div>
+            <div class="col" ng-hide="hidemore">&nbsp&nbsp&nbsp<i class="ion-chevron-right"></i></div>
+        </div>
+    </div>
+    <ion-list class="item paddingzero">
+        <span ng-repeat="item in (section.menu_items | orderBy:sortingclass) | limitTo:itemdisplaylimit">
+
+
+            <marginoptimizeritem item="item" detaillink="true"
+                                 ifeven="$even"></marginoptimizeritem>
+        </span>
+    </ion-list>
+</div>

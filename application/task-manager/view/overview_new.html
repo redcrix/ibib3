@@ -1,0 +1,94 @@
+<ion-modal-view class="modal-custom">
+  <ion-header-bar class="bar bar-header app-theme-color app-theme-text">
+    <span class="title"> {{pageTitleOverView}}</span>
+    <button class="button button-clear icon icon-right ion-android-cancel" style="color:white" ng-click="hideModal()"></button>
+    <!-- <button class = "icon icon-right ion-ios-close-outline" -->
+    <!-- ng-click="hideModal()"></button> -->
+  </ion-header-bar>
+  <ion-content>
+    <!-- <ion-header-bar class="bar app-theme-color-level2 no-vertical-padding no-horizontal-padding" ng-if="headerShow">
+      <div class="row pl-font">
+        <div class="button icon-right ion-arrow-down-b col-33" ng-click="showPeriodOverView()" style="font-weight:bold;">
+          {{ periodDetailSelectionOverView() }}
+        </div>
+        <div style="margin-top: 8px;text-align: center;" class="col-67">{{subHeaderTextOverView()}} </div>
+      </div>
+    </ion-header-bar> -->
+
+    <!-- <ion-tabs class="tabs-icon-top tabs-color-active-balanced">
+      <ion-tab title="Period" icon="ion-clipboard" on-select="periodClickHandlerOverView()">
+        <ion-nav-view name="period"> -->
+  <!--   <div class="bar bar-subheader" ng-if="filterButtons.length">
+      <div class="button-bar ">
+        <a ng-repeat="filterbutton in filterButtons track by $index" style="text-overflow: inherit; max-width:{{ filterbutton.max_width }}" class="button button-bal no-horizontal-padding" ng-class="filterbutton.selected ? '' : 'button-out'" ng-click="filterbuttonclickOverView($index)">
+                <i ng-show="filterbutton.icon" class="icon icon-left {{ filterbutton.icon }}" style="vertical-align: sub;"></i>
+                <span style="vertical-align: sub; font-size: x-small; font-weight: 600;">{{ filterbutton.label }} <br/>{{filterbutton.dateLabel}}</span></a>
+      </div>
+    </div> -->
+    <busyspinner spinnerhide="spinnerHideOverView"></busyspinner>
+    <span ng-if="spinnerHideOverView">
+             <ion-content class="has-header has-subheader app-back-ground" style="top: 140px;background-color:white">
+               <span ng-repeat="business in businessList">
+                 <div class="row no-vertical-padding" ng-click="switch(business)">
+                   <div class="col col-center no-vertical-padding">
+                     <div class="card" ng-style="check(business) && {'border-left': '5px solid rgb(17, 205, 255)'}">
+                       <!-- {{business}} -->
+                       <div class="row">
+                         <div class="col-25" style="display: -webkit-box;display: -webkit-flex;display: -moz-box;display: -ms-flexbox;display: flex;-webkit-flex-align: center;-ms-flex-align: center;-webkit-align-items: center;align-items: center;">
+                           <div class="item item-text-wrap" style="max-width: 95%;">
+                             {{business.business_name}}
+                           </div>
+                         </div>
+                         <div class="card col-33" style="height:100%; margin-right: 10px;margin-left: 0px;">
+
+                           <div class="item item-text-wrap text-center">
+                             <!-- {{ dataCards[0].name }} -->
+                             <i class="ion-social-usd"></i><br/>
+                             {{ overViewData[business.business_id+ ":" +dataCardsOverView[0].field] }}
+                           </div>
+                         </div>
+                         <div class="card col-33" style="height:100%; margin-right: 10px;">
+
+                           <div class="item item-text-wrap text-center">
+                             <!-- {{ dataCards[1].name }} -->
+                             <i class="ion-cash"></i><br/>
+                             {{ overViewData[business.business_id+ ":" +dataCardsOverView[1].field] }}
+                           </div>
+                         </div>
+                       </div>
+                       <div class="row">
+                         <div class="col-25" style="height:100%">
+                           &nbsp;
+                         </div>
+                         <!-- <div class="col-25" style="display: -webkit-box;display: -webkit-flex;display: -moz-box;display: -ms-flexbox;display: flex;-webkit-flex-align: center;-ms-flex-align: center;-webkit-align-items: center;align-items: center;">
+                           <div class="item item-text-wrap">
+                             LOGO
+                           </div>
+                         </div> -->
+                         <div class="card col-33" style="height:100%; margin-right: 10px;margin-left: 0px;">
+                           <div class="item item-text-wrap text-center">
+                             <!-- {{ dataCards[2].name }} -->
+                             <i class="ion-social-usd"></i><br/>
+                             {{ overViewData[business.business_id+ ":" +dataCardsOverView[2].field] }}
+                           </div>
+                         </div>
+                         <div class="card col-33" style="height:100%; margin-right: 10px;">
+                           <div class="item item-text-wrap text-center">
+                             <!-- {{ dataCards[3].name }} -->
+                             <i class="ion-person-stalker"></i><br/>
+                             {{ overViewData[business.business_id+ ":" +dataCardsOverView[3].field] }}
+                           </div>
+                         </div>
+                       </div>
+                     </div>
+                   </div>
+                 </div>
+               </span>
+             </ion-content>
+    </span>
+    <!-- </ion-nav-view>
+    </ion-tab>
+    </ion-tabs> -->
+  </ion-content>
+
+</ion-modal-view>
