@@ -1,4 +1,5 @@
-<ion-view view-title="Invoice Entry" align-title="center" class="invoice-entry">
+<div class=wrap>
+<ion-view view-title="Invoice Entry" style="overflow-y: scroll;" align-title="center" class="invoice-entry">
   <!-- HEADER PART -->
   <!-- <backbuttonbar navbartitle="navBarTitle"></backbuttonbar> -->
   <ion-nav-buttons side="left">
@@ -367,71 +368,12 @@
       <div class="row Header" style="background-image: linear-gradient(0deg, #FFFFFFFF, #FFFFFFFF 50%, #FFFFFFFF 50%);">
         <div class="col-100" style="    background: #f8f8f8;">
 
-            <!-- moblie view start -->
-            <span class="pr-show-moblie" style="display: none;">
-              <div class="row content-data" style="padding-bottom:unset;background-image: linear-gradient(0deg, #b2b2b20d, #b2b2b205 50%, transparent 50%);">
-                  <div class="col-50 Inv">
-                      <div class="inoice-entry-label">Business:</div>
-                      <div style="width:90%;">
-                        <button class="invoice-select-button" ng-click="">
-                          <div class="item item-input-inset invoice-list-input-div" ng-click="setBusiness(item,1,$index)">
-                            <div class="item-input-wrapper invoice-input-wrapper" style="background: {{items.bg}} ;  padding-top: 5px;">
-                              <!-- <i class="icon ion-ios-search"></i> -->
-                              <b> <input type="text" style="font-weight:500;" ng-model="current_selected.bussNameSelected"
-                                  placeholder="Select" class="map-inv-drop-down" disabled></b>
-                            </div>
-                            <i class="ion-arrow-down-b week-price-change-arrow-ibtn"></i>
-                          </div>
-                        </button>
-                      </div>
-                    </div>
-                    <div class="col-50 Inv">
-                      <div style="" class="inoice-entry-label">Supplier:</div>
-                      <div style="width:90%;">
-                        <button class="invoice-select-button" ng-click="">
-                          <div class="item item-input-inset invoice-list-input-div" ng-click="setSupplier(item,1,$index)">
-                            <div class="item-input-wrapper invoice-input-wrapper" style="background: {{items.bg}};    padding-top: 5px;">
-                              <!-- <i class="icon ion-ios-arrow-dropdown"></i> -->
-                              <b> <input type="text" style="font-weight:500;" ng-model="current_selected.supplierNameSelected"
-                                  placeholder="Select" class="map-inv-drop-down" disabled></b>
-                            </div>
-                            <i class="ion-arrow-down-b week-price-change-arrow-ibtn"></i>
-                          </div>
-                        </button>
-                      </div>
-                    </div>
-              </div>
-
-              <div class="row content-data" style="padding-bottom:unset;background-image: linear-gradient(0deg, #b2b2b20d, #b2b2b205 50%, transparent 50%); padding: 0 10px; margin-top: 8px;">
-                  <div class="col-50 Inv">
-                      <div style="" class="inoice-entry-label">Invoice No:</div>
-                      <div style="width:90%;">
-                        <div class="invoice-entry-inv-no">
-                          <input type="text" ng-model="current_selected_form.invoiceNo" class="invoice-text" alt="invoice-no"
-                            placeholder="" style="padding-bottom: 0px;">
-        
-                        </div>
-                        <!-- <i class="ion-arrow-down-b week-price-change-arrow-ibtn custom"></i> -->
-                      </div>
-                    </div>
-                    <div class="col-50 Inv">
-                      <div style="" class="inoice-entry-label">Total <span class="pr-hide-text" >Invoice</span> Amount:</div>
-                      <div style="width:90%;">
-                        <div class="invoice-entry-inv-no">
-                          <input type="number" ng-model="current_selected_form.totalinvoiceNo" class="invoice-text"
-                            alt="invoice-no" placeholder="">
-                        </div>
-                      </div>
-                    </div> 
-              </div>
-            </span>
-            <!-- moblie view end here -->
-
-          <div class="row content-data pr-hide-display" style="padding-bottom:unset;background-image: linear-gradient(0deg, #b2b2b20d, #b2b2b205 50%, transparent 50%);">
-            <div class="col-25 Inv">
+          <div class="wrapper content-data pr-hide-display" style="padding-bottom:unset;background-image: linear-gradient(0deg, #b2b2b20d, #b2b2b205 50%, transparent 50%);">
+            <div class="pr-hide-me Inv"></div>
+            <div class=" Inv">
               <div class="inoice-entry-label">Business:</div>
               <div style="width:90%;">
-                <button class="invoice-select-button" ng-click="">
+                <button class="fill-width invoice-select-button" ng-click="">
                   <div class="item item-input-inset invoice-list-input-div" ng-click="setBusiness(item,1,$index)">
                     <div class="item-input-wrapper invoice-input-wrapper" style="background: {{items.bg}} ;  padding-top: 5px;">
                       <!-- <i class="icon ion-ios-search"></i> -->
@@ -443,10 +385,10 @@
                 </button>
               </div>
             </div>
-            <div class="col-25 Inv">
+            <div class=" Inv">
               <div style="" class="inoice-entry-label">Supplier:</div>
               <div style="width:90%;">
-                <button class="invoice-select-button" ng-click="">
+                <button class="fill-width invoice-select-button" ng-click="">
                   <div class="item item-input-inset invoice-list-input-div" ng-click="setSupplier(item,1,$index)">
                     <div class="item-input-wrapper invoice-input-wrapper" style="background: {{items.bg}};    padding-top: 5px;">
                       <!-- <i class="icon ion-ios-arrow-dropdown"></i> -->
@@ -458,19 +400,19 @@
                 </button>
               </div>
             </div>
-            <div class="col-25 Inv">
+            <div class=" Inv">
               <div style="" class="inoice-entry-label">Invoice No:</div>
               <div style="width:90%;">
                 <div class="invoice-entry-inv-no">
-                  <input type="text" ng-model="current_selected_form.invoiceNo" class="invoice-text" alt="invoice-no"
+                  <input type="text" ng-model="current_selected_form.invoiceNo" class=" invoice-text" alt="invoice-no"
                     placeholder="" style="padding-bottom: 0px;">
 
                 </div>
                 <!-- <i class="ion-arrow-down-b week-price-change-arrow-ibtn custom"></i> -->
               </div>
             </div>
-            <div class="col-25 Inv">
-              <div style="" class="inoice-entry-label">Total <span class="pr-hide-text" >Invoice</span> Amount:</div>
+            <div class=" Inv">
+              <div style="" class="inoice-entry-label">Total Invoice Amount:</div>
               <div style="width:90%;">
                 <div class="invoice-entry-inv-no">
                   <input type="number" ng-model="current_selected_form.totalinvoiceNo" class="invoice-text"
@@ -478,56 +420,12 @@
                 </div>
               </div>
             </div>
+            <div class="pr-hide-me Inv"></div>
           </div>
-
-          <!-- moblie view start -->
-          <span class="pr-show-moblie" style="display: none;">
-            <div class="row content-data" style="margin-top:1%;padding-bottom:unset;background-image: linear-gradient(0deg, #b2b2b20d, #b2b2b205 50%, transparent 50%); padding: 0 10px; margin-top: 8px;">
-              <div class="col-50 Inv">
-                <div class="inoice-entry-label">Order Date:</div>
-                <div style="width:90%;">
-                  <div class="invoice-entry-inv-no">
-                    <datepicker date-format="dd/MM/yyyy" class="in-calender">
-                      <input class="calender-input" ng-model="current_selected_form.orderDate" type="text"
-                        placeholder="Select" />
-                    </datepicker>
-                  </div>
-                </div>
-              </div>
-              <div class="col-50 Inv">
-                <div style="" class="inoice-entry-label">Delivery Date::</div>
-                <div style="width:90%;">
-                  <div class="invoice-entry-inv-no">
-                    <datepicker date-format="dd/MM/yyyy" class="in-calender">
-                      <input class="calender-input" ng-model="current_selected_form.deliveryDate" type="text"
-                        placeholder="Select" />
-                    </datepicker>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="row content-data" style="margin-top:1%;padding-bottom:unset;background-image: linear-gradient(0deg, #b2b2b20d, #b2b2b205 50%, transparent 50%); padding: 0 10px;">
-                <div class="col-50 Inv">
-                  <div style="" class="inoice-entry-label">Due Date:</div>
-                  <div style="width:90%;">
-                    <div class="invoice-entry-inv-no">
-                      <datepicker date-format="dd/MM/yyyy" class="in-calender">
-                        <input class="calender-input" ng-model="current_selected_form.dueDate" type="text"
-                          placeholder="Select" />
-                      </datepicker>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-50 Inv">
-                    <button class="config-invoice-entry" style="margin-top:1.4em;" ng-click="loadData()">Enter
-                      Item Level Details</button>
-                </div>
-            </div>
-          </span>
-          <!-- moblie view end here -->
           
-          <div class="row content-data pr-hide-display" style="margin-top:1%;padding-bottom:unset;background-image: linear-gradient(0deg, #b2b2b20d, #b2b2b205 50%, transparent 50%);">
-            <div class="col-25 Inv">
+          <div class="wrapper content-data pr-hide-display" style="margin-top:1%;padding-bottom:unset;background-image: linear-gradient(0deg, #b2b2b20d, #b2b2b205 50%, transparent 50%);">
+            <div class="pr-hide-me Inv"></div>
+            <div class="Inv">
               <div class="inoice-entry-label">Order Date:</div>
               <div style="width:90%;">
                 <div class="invoice-entry-inv-no">
@@ -538,7 +436,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-25 Inv">
+            <div class="Inv">
               <div style="" class="inoice-entry-label">Delivery Date::</div>
               <div style="width:90%;">
                 <div class="invoice-entry-inv-no">
@@ -549,7 +447,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-25 Inv">
+            <div class="Inv">
               <div style="" class="inoice-entry-label">Due Date:</div>
               <div style="width:90%;">
                 <div class="invoice-entry-inv-no">
@@ -560,105 +458,15 @@
                 </div>
               </div>
             </div>
-            <div class="col-25 Inv">
-                <button class="config-invoice-entry" style="margin-top:1.4em;" ng-click="loadData()">Enter
+            <div class="Inv">
+                <button class="config-invoice-entry pr-my-lable" style="margin-top:1.4em;" ng-click="loadData()">Enter
                   Item Level Details</button>
-              </div>
-
-
+            </div>
+            <div class="pr-hide-me Inv"></div>
               <!-- <div col="20">
             
               </div> -->
         
-          </div>
-
-          <!-- mobile view start here -->
-          <span class="pr-show-moblie" style="display: none;">
-            <div class="row">
-              <div class="col-50">
-                <div class="Modal-button" ng-click="openModal()">
-                  <span class="Modal-fix">
-                    <button class="button button-balanced f" style="width: 80%; margin-top: 14px;">
-                      <ion-icon name="calculator"></ion-icon> Conversion Factor
-                    </button>
-                  </span>
-                </div>               
-              </div>
-              <div class="col-50">
-                <div class="Modal-button">
-                  <span class="Modal-fix">
-                    <button class="button button-balanced f" style="width: 80%; background-color:red; margin-top: 14px;" ng-click="ResetFields()">
-                      <ion-icon name="refresh"></ion-icon> ResetFields
-                    </button> 
-                  </span>
-                </div>                
-              </div>
-            </div>
-
-            <div class="row">
-              <div class="col-50">
-                  <div class="Modal-button">
-                      <span class="Modal-fix">
-                        <button class="button button-balanced f" style="width: 80%;  margin-top: 14px;" ng-click="saveDraft()">
-                            <ion-icon name="bookmark"></ion-icon> Save Draft
-                        </button>
-                      </span>
-                  </div>               
-              </div>
-              <div class="col-50">
-                <div class="Modal-button">
-                  <span class="Modal-fix">
-                    <button class="button button-balanced f" style="width: 80%; margin-top: 14px;">
-                      <ion-icon name="save"></ion-icon> Submit
-                    </button>
-                  </span>
-                </div>                
-              </div>
-            </div>
-          </span>
-          <!-- moblie view end here -->
-
-          <div class="row  pr-hide-display">
-            <div class="col-25">
-              <div class="Modal-button" ng-click="openModal()">
-                <span class="Modal-fix">
-                  <button class="button button-balanced f" style="width: 80%; margin-top: 14px; min-width: 156px;">
-                      <ion-icon name="calculator"></ion-icon> Conversion Factor
-                  </button>
-                </span>
-              </div>
-            </div>
-
-            <div class="col-25">
-              <div class="Modal-button">
-                <span class="Modal-fix">
-                  <button class="button button-balanced f" style="width: 80%; background-color:red; margin-top: 14px;" ng-click="ResetFields()">
-                      <ion-icon name="refresh"></ion-icon> ResetFields
-                  </button> 
-                </span>
-              </div>
-            </div>
-
-            <div class="col-25">
-              <div class="Modal-button">
-                <span class="Modal-fix">
-                  <button class="button button-balanced f" style="width: 80%;  margin-top: 14px;" ng-click="saveDraft()">
-                      <ion-icon name="bookmark"></ion-icon> Save Draft
-                  </button>
-                </span>
-              </div>
-            </div>
-
-            <div class="col-25">
-              <div class="Modal-button">
-                <span class="Modal-fix">
-                  <button class="button button-balanced f" style="width: 80%; margin-top: 14px;">
-                      <ion-icon name="save"></ion-icon> Submit
-                  </button>
-                </span>
-              </div>
-            </div>
-
           </div>
         </div>
       </div>
@@ -666,12 +474,54 @@
       <!-- <div class="" style="height:10px;background-image: linear-gradient(0deg, #b2b2b20d, #b2b2b205 50%, transparent 50%);">
       </div> -->
 
+      <div class="wrapper pr-hide-display">
+        <div class="pr-hide-me Inv"></div>
+        <div class="Inv">
+          <div class="Modal-button" ng-click="openModal()">
+            <span class="Modal-fix">
+              <button class="pr-my-button" style="width: 63%; margin-top: 14px; min-width: 156px;">
+                  <ion-icon name="calculator"></ion-icon> Conversion Factor
+              </button>
+            </span>
+          </div>
+        </div>
 
+        <div class="Inv">
+          <div class="Modal-button">
+            <span class="Modal-fix">
+              <button class="pr-my-button" style="width: 63%; background-color:red; margin-top: 14px;" ng-click="ResetFields()">
+                  <ion-icon name="refresh"></ion-icon> Reset Fields
+              </button> 
+            </span>
+          </div>
+        </div>
+
+        <div class="Inv">
+          <div class="Modal-button">
+            <span class="Modal-fix">
+              <button class="pr-my-button" style="width: 63%;  margin-top: 14px;" ng-click="saveDraft()">
+                  <ion-icon name="bookmark"></ion-icon> Save Draft
+              </button>
+            </span>
+          </div>
+        </div>
+
+        <div class="Inv">
+          <div class="Modal-button">
+            <span class="Modal-fix">
+              <button class="pr-my-button" style="width: 63%; margin-top: 14px;">
+                  <ion-icon name="save"></ion-icon> Submit
+              </button>
+            </span>
+          </div>
+        </div>
+        <div class="pr-hide-me Inv"></div>
+      </div>
 
 
 
   <!-- <busyspinner spinnerhide="spinnerHide"></busyspinner> -->
-  <ion-content class="content row no-scroll" style="overflow: hidden;">
+  <ion-content scroll="false" class="content" style="overflow: hidden;">
 
  
     <!-- <span ng-if="spinnerHide"> -->
@@ -848,8 +698,9 @@
      
 
     <div class="last contentFooter" >
-      <div class="row">
-        <div class="col-offset-10 col-40">
+      <div class="wrapper2">
+        <div class="pr-hide-me"></div>
+        <div class="">
           <div class="card tblHead col-90"  style="margin-top: unset;">
 
               <div class="row item smaller heading" style="padding-top: 10px;padding-bottom: 10px;height: 55px;"
@@ -917,29 +768,27 @@
 
 
         </div>
-        <div class="row">
-          <div class="col-50" >
+        <div class="">
             <!-- <div class="col-50"> -->
-            <div class="col-90 last">
+
+            <div class="col-90 last" style="margin-left: 14px;">
               <div style="" class="inoice-entry-label">Invoice Doc Page Nos:</div>
               <div style="width:90%;">
                 <div class="invoice-entry-inv-no">LOREMIPSUM</div>
               </div>
-            </div> 
-            <div class="col-90 last">
+            </div>
+
+            <div class="col-90 last" style="margin-left: 14px;">
               <div style="" class="inoice-entry-label">Invoice Picture Link:</div>
               <div style="width:90%;">
                 <div class="invoice-entry-inv-no">
-                    <input type="text" ng-model="current_selected_form.pictureLink" class="invoice-text" alt="invoice-no" placeholder="Picture Link" style="    padding-top: 12px;">
-      
-
+                  <input type="text" ng-model="current_selected_form.pictureLink" class="invoice-text" alt="invoice-no" placeholder="Picture Link" style="padding-top: 12px;">
                 </div>
               </div>
             </div>
             <!-- </div> -->
-          </div>
-        
         </div>
+        <div class="pr-hide-me"></div>
       </div>
     </div>
 
@@ -949,3 +798,4 @@
   </ion-content>
 
  </ion-view>
+</div>

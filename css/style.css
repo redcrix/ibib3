@@ -4042,7 +4042,7 @@ table.invoice-tbl th {
   background-image: linear-gradient(-90deg, #33cd5f, #f8f8f8);
   border-radius: 8px;
   height: 40px;
-  width: 63%;
+  width: 62%;
   color: white;
   margin-top: 5%;
   color: black;
@@ -4076,6 +4076,7 @@ table.invoice-tbl th {
 button.invoice-select-button {
   background: none;
   border: none;
+  width: 70%;
 }
 
 
@@ -4868,11 +4869,11 @@ input#inv {
   transform: none !important;
   overflow-y: hidden !important;
 }
-.invoice-entry tbody{
-  display:block;
-  overflow:auto;
-  height:400px;
-  width:100%;
+.invoice-entry tbody {
+  display: block;
+  overflow: auto;
+  height: 289px;
+  width: 100%;
 }
 .invoice-entry thead tr{
   display:block;
@@ -4886,7 +4887,7 @@ input#inv {
 /* 22-08-2019 */
 
 th, td {
-  min-width: 156px;
+  min-width: 159px;
   width: 159px;
   text-align: center;
 }
@@ -4896,30 +4897,109 @@ input.invoice-create-input.ng-pristine.ng-untouched.ng-valid.ng-empty {
 }
 
 
-@media only screen and (max-width: 734px){
+.wrapper {
+  display: grid;
+  padding: 2px 2px;
+  grid-template-columns: 0.5fr 1fr 1fr 1fr 1fr 0.2fr;
+}
 
-.pr-hide-text{
+.wrapper2 {
+  display: grid;
+  padding: 2px 2px;
+  grid-template-columns: 0.5fr 1fr 1fr 1fr; 
+}
+
+.has-header {
+  top: 50px !important;
+}
+
+@media only screen and (max-width: 768px){
+
+.pr-hide-me{
   display: none;
 }
 
-.pr-show-moblie{
+/* .pr-show-moblie{
   display: block !important;
 }
 
 .pr-hide-display{
   display: none !important;
+} */
+
+button.invoice-select-button {
+  background: none;
+  border: none;
+  width: 100% !important;
+}
+.wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding-left: 16px;
+  padding-right: 0px;
+}
+
+.wrapper2 {
+  display: grid;
+  padding: 2px 2px;
+  grid-template-columns: 1fr; 
+  margin-left: 19%;
+}
+
+.wrapper > div {
+  padding: 9px;
+}
+
+.fill-width {
+  width: -webkit-fill-available;
+  padding-left: 0;
 }
 
 button.config-invoice-entry {
   font-size: 12px;
   width: auto;
-  margin-left: 14px;
+  margin-right: 17px;
+  margin-left: 9px;
   margin-top: 18px !important;
 }
 
 button.button.button-balanced.f {
   margin: 8px;
 }
+
+.pr-my-button{
+  width: 90% !important;
+}
+
+.pr-my-lable{
+  width: 86% !important;
+}
+
   
 }
 
+
+.pr-my-button{
+  width: 62%;
+  text-transform: uppercase;
+  min-width: 11.1em;
+  margin-top: 14px;
+  padding: 10px 7px;
+  color: white;
+  background: #35cd5f;
+  border: 0;
+  border-radius: 4px;
+}
+
+button.fill-width.invoice-select-button {
+  padding: 0;
+}
+ion-content.content.scroll-content.ionic-scroll.scroll-content-false.has-header {
+  position: initial;
+  display: block;
+  margin: 0;
+}
+
+::-webkit-scrollbar {
+  width: 1px;
+}
